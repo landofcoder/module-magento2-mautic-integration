@@ -1,0 +1,25 @@
+{
+    "name": "landofcoder/module-mautic-integration",
+    "description": "Magento 2 Mautic integration Extension",
+    "require": {
+        "mautic/api-library": "^3.0.0"
+    },
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "keywords": [
+        "landofcoder",
+        "magento 2 mautic",
+        "landofcoder mautic integration",
+        "magento 2 mautic integration"
+    ],
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+    "files": [ "registration.php" ],
+    "psr-4": {
+        "Lof\\Mautic\\": ""
+        }
+    }
+}
