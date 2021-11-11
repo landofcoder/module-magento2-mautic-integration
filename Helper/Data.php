@@ -80,7 +80,7 @@ class Data extends AbstractHelper
     protected $configWriter;
     protected $_cacheTypeList;
     protected $_cacheFrontendPool;
-    protected $_backendHelperl
+    protected $_backendHelperl;
 
     /**
      * @param \Magento\Framework\App\Helper\Context $context
@@ -231,10 +231,12 @@ class Data extends AbstractHelper
      */
     public function getStoredAccessTokenData($store = null)
     {
-        $oauth_version = strtolower($this->getConfig(self::OAUTH_TYPE_XML_PATH));
-        $token = $this->getConfig(self::CLIENT_ACCESS_TOKEN_XML_PATH.'_'.$oauth_version, $store);
-        if ($token) {
-            return $this->serializer->unserialize($token);
+        if ($this->getConfig(self::OAUTH_TYPE_XML_PATH)) {
+            $oauth_version = strtolower($this->getConfig(self::OAUTH_TYPE_XML_PATH));
+            $token = $this->getConfig(self::CLIENT_ACCESS_TOKEN_XML_PATH.'_'.$oauth_version, $store);
+            if ($token) {
+                return $this->serializer->unserialize($token);
+            }
         }
 
         return false;
@@ -249,7 +251,8 @@ class Data extends AbstractHelper
     public function updateStoredAccessTokenData($accessTokenData = array())
     {
         $tokenJson = $this->serializer->serialize($accessTokenData);
-        $oauth_version = strtolower($this->getConfig(self::OAUTH_TYPE_XML_PATH));
+        $oauth_version = $this->getConfig(self::OAUTH_TYPE_XML_PATH);
+        $oauth_version = $oauth_version ? strtolower($oauth_version) : null;
         if (empty($accessTokenData)) {
             $this->configWriter->delete(self::CLIENT_ACCESS_TOKEN_XML_PATH.'_'.$oauth_version);
         }
