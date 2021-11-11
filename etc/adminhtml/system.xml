@@ -24,8 +24,9 @@
                         <field id="oauth_version">OAuth1a,OAuth2</field>
                     </depends>
 				</field>
-                <field id="client_secret" type="password" sortOrder="20" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
+                <field id="client_secret" type="obscure" sortOrder="20" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
 					<label>Client Secret</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
 					<comment/>
                     <depends>
                         <field id="oauth_version">OAuth1a,OAuth2</field>
@@ -38,8 +39,9 @@
                         <field id="oauth_version">BasicAuth</field>
                     </depends>
 				</field>
-                <field id="mautic_password" type="password" sortOrder="30" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
+                <field id="mautic_password" type="obscure" sortOrder="30" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
 					<label>Password</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
 					<comment/>
                     <depends>
                         <field id="oauth_version">BasicAuth</field>
