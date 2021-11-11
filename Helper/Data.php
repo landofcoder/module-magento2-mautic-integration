@@ -22,6 +22,8 @@ declare(strict_types=1);
 
 namespace Lof\Mautic\Helper;
 
+use Magento\Framework\App\Cache\Type\Config;
+use Magento\Config\App\Config\Type\System;
 use Magento\Framework\App\Helper\AbstractHelper;
 
 class Data extends AbstractHelper
@@ -75,30 +77,47 @@ class Data extends AbstractHelper
     protected $_directoryList;
     protected $encryptor;
     protected $serializer;
+    protected $configWriter;
+    protected $_cacheTypeList;
+    protected $_cacheFrontendPool;
+    protected $_backendHelperl
 
     /**
      * @param \Magento\Framework\App\Helper\Context $context
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Framework\Filesystem\DirectoryList $directoryList
      * @param \Magento\Framework\Encryption\EncryptorInterface $encryptor
-     * @param  \Magento\Framework\Serialize\SerializerInterface $serializer
+     * @param \Magento\Framework\Serialize\SerializerInterface $serializer
+     * @param \Magento\Framework\App\Config\Storage\WriterInterface $configWriter
+     * @param \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList
+     * @param \Magento\Framework\App\Cache\Frontend\Pool $cacheFrontendPool
+     * @param \Magento\Backend\Helper\Data $backendHelper
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\Filesystem\DirectoryList $directoryList,
         \Magento\Framework\Encryption\EncryptorInterface $encryptor,
-        \Magento\Framework\Serialize\SerializerInterface $serializer
+        \Magento\Framework\Serialize\SerializerInterface $serializer,
+        \Magento\Framework\App\Config\Storage\WriterInterface $configWriter,
+        \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList,
+        \Magento\Framework\App\Cache\Frontend\Pool $cacheFrontendPool,
+        \Magento\Backend\Helper\Data $backendHelper
     ) {
         $this->_storeManager = $storeManager;
         $this->_directoryList  = $directoryList;
         $this->encryptor = $encryptor;
         $this->serializer = $serializer;
+        $this->configWriter = $configWriter;
+        $this->_cacheTypeList = $cacheTypeList;
+        $this->_cacheFrontendPool = $cacheFrontendPool;
+        $this->_backendHelper = $backendHelper;
 
         parent::__construct($context);
     }
+
      /**
-     * Return brand config value by key and store
+     * Return module config value by key and store
      *
      * @param string $key
      * @param \Magento\Store\Model\Store|int|string $store
@@ -109,6 +128,14 @@ class Data extends AbstractHelper
         return $this->getConfigData('lofmautic/'.$key, $store);
     }
 
+    /**
+     * Get config data
+     *
+     * @param string $path
+     * @param mixed|Object|int|null $store
+     *
+     * @return mixed|string|array|int|bool|null
+     */
     public function getConfigData($path, $store = null){
         $store = $this->_storeManager->getStore($store);
         $result =  $this->scopeConfig->getValue(
@@ -193,23 +220,73 @@ class Data extends AbstractHelper
      */
     public function isCustomerIntegrationEnabled()
     {
-        return $this->getConfig(self::CONTACT_INTEGRATION_STATUS);
+        return (bool)$this->getConfig(self::CONTACT_INTEGRATION_STATUS);
     }
 
     /**
      * Retrieve access token data
      *
+     * @param mixed|Object|int|null $store
      * @return bool|array
      */
-    public function getStoredAccessTokenData()
+    public function getStoredAccessTokenData($store = null)
     {
         $oauth_version = strtolower($this->getConfig(self::OAUTH_TYPE_XML_PATH));
-        $token = $this->getConfig(self::CLIENT_ACCESS_TOKEN_XML_PATH.'_'.$oauth_version);
+        $token = $this->getConfig(self::CLIENT_ACCESS_TOKEN_XML_PATH.'_'.$oauth_version, $store);
         if ($token) {
             return $this->serializer->unserialize($token);
         }
 
         return false;
+    }
+
+    /**
+     * Save access token
+     *
+     * @param $accessTokenData array
+     * @return bool
+     */
+    public function updateStoredAccessTokenData($accessTokenData = array())
+    {
+        $tokenJson = $this->serializer->serialize($accessTokenData);
+        $oauth_version = strtolower($this->getConfig(self::OAUTH_TYPE_XML_PATH));
+        if (empty($accessTokenData)) {
+            $this->configWriter->delete(self::CLIENT_ACCESS_TOKEN_XML_PATH.'_'.$oauth_version);
+        }
+        else {
+            $this->configWriter->save(self::CLIENT_ACCESS_TOKEN_XML_PATH.'_'.$oauth_version, $tokenJson);
+        }
+
+        $this->flushConfigCache();
+        $this->flushCache();
+
+        return $this;
+    }
+
+    /**
+     * flush cache
+     */
+    protected function flushCache(){
+        $types = array('config');
+        foreach ($types as $type) {
+            $this->_cacheTypeList->cleanType($type);
+        }
+    }
+
+    /**
+     * Flush config cache
+     */
+    public function flushConfigCache()
+    {
+        if (class_exists(System::class)) {
+            $this->objectManager->get(System::class)->clean();
+        } else {
+            $this->objectManager->get(Config::class)
+                ->clean(
+                    \Zend_Cache::CLEANING_MODE_MATCHING_TAG,
+                    ['config_scopes']
+                );
+        }
     }
 
     /**
@@ -224,6 +301,16 @@ class Data extends AbstractHelper
             $key = $this->encryptor->decrypt($key);
 
         return trim($key);
+    }
+
+    /**
+     * Retrieve callback url
+     *
+     * @return string
+     */
+    public function getCallbackUrl()
+    {
+        return $this->_backendHelper->getUrl('mautic/authorize');
     }
 
 }

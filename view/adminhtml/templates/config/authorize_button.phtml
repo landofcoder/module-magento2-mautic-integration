@@ -1,0 +1,79 @@
+<script>
+    require([
+        'jquery',
+        'prototype'
+    ],
+    function(jQuery)
+    {
+        var progressSpan = jQuery('#progress');
+
+        jQuery('#mautic_configure_webhooks').click(function ()
+        {
+            jQuery('#mautic_configuration_errors').hide();
+            var params = {};
+            new Ajax.Request('<?php echo $block->getAuthorizeUrl() ?>', {
+                parameters:     params,
+                loaderArea:     false,
+                asynchronous:   true,
+                onCreate: function() {
+                    progressSpan.find('.configured').hide();
+                    progressSpan.find('.processing').show();
+                    jQuery('#mautic_configured_message').text('');
+                    document.getElementById("mautic_configure_webhooks").disabled = true;
+                },
+                onSuccess: function(response)
+                {
+                    progressSpan.find('.processing').hide();
+
+                    var resultText = '';
+                    if (response.status > 200) {
+                        resultText = response.statusText;
+                    } else {
+                        resultText = 'Completed';
+                        progressSpan.find('.configured').show();
+                    }
+                    jQuery('#mautic_configured_message').text(resultText);
+
+                    try
+                    {
+                        if (typeof response.responseJSON.errors == "number" && response.responseJSON.errors > 0)
+                        {
+                            jQuery('#mautic_configuration_errors').show();
+                            if (response.responseJSON.errors == 1)
+                                jQuery('#mautic_configuration_errors .message').text(response.responseJSON.errors + " error was logged under var/log/mautic_webhooks.log");
+                            else if (response.responseJSON.errors > 1)
+                                jQuery('#mautic_configuration_errors .message').text(response.responseJSON.errors + " errors were logged under var/log/mautic_webhooks.log");
+                        }
+                    }
+                    catch (e)
+                    {
+                        console.warn(e);
+                    }
+                },
+                onFailure: function(response)
+                {
+                    progressSpan.find('.processing').hide();
+                    jQuery('#mautic_configured_message').text("Failed");
+                },
+                onComplete: function()
+                {
+                    document.getElementById("mautic_configure_webhooks").disabled = false;
+                }
+            });
+        });
+
+    });
+</script>
+
+<?php echo $block->getButtonHtml() ?>
+<span class="mautic-webhooks-config-admin" id="progress">
+    <img class="processing" hidden="hidden" alt="Configuring" style="margin:0 5px" src="<?php echo $block->getViewFileUrl('images/process_spinner.gif') ?>"/>
+    <img class="configured" hidden="hidden" alt="Configured" style="margin:-3px 5px" src="<?php echo $block->getViewFileUrl('images/rule_component_apply.gif') ?>"/>
+    <span id="mautic_configured_message"></span>
+    <div id="mautic_configuration_errors" class="message-system-inner">
+        <div class="message message-warning"></div>
+    </div>
+</span>
+<p class="note">
+    <span><?php echo __('A webhook will automatically be configured in your Mautic account which will point to <a href="%1" target="_blank" rel="noopener noreferrer">%1</a>. Please ensure that this link is externally accessible. Existing webhook configurations will be upgraded. A reconfigure is necessary when you change your Mautic API keys or your website Base URL.', $block->getAuthorizeUrl()); ?></span>
+</p>

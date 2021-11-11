@@ -21,7 +21,7 @@
 					<label>Client ID</label>
 					<comment/>
                     <depends>
-                        <field id="oauth_version">OAuth1a,OAuth2</field>
+                        <field id="oauth_version" separator=",">OAuth1a,OAuth2</field>
                     </depends>
 				</field>
                 <field id="client_secret" type="obscure" sortOrder="20" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
@@ -29,7 +29,7 @@
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
 					<comment/>
                     <depends>
-                        <field id="oauth_version">OAuth1a,OAuth2</field>
+                        <field id="oauth_version" separator=",">OAuth1a,OAuth2</field>
                     </depends>
 				</field>
                 <field id="mautic_login" type="text" sortOrder="25" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
@@ -53,7 +53,8 @@
 				</field>
                 <field id="authorize" type="button" sortOrder="40" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
 					<label>Authorize</label>
-					<comment>Authorize Mautic API. Please save config before click this button.</comment>
+                    <frontend_model>Lof\Mautic\Model\Adminhtml\Source\AuthorizeButton</frontend_model>
+                    <comment>Authorize Mautic API. Please save config before click this button.</comment>
                     <depends>
                         <field id="oauth_version">OAuth1a,OAuth2</field>
                     </depends>
@@ -68,6 +69,7 @@
 				</field>
                 <field id="run" type="button" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 					<label>Export</label>
+                    <frontend_model>Lof\Mautic\Model\Adminhtml\Source\Button</frontend_model>
 					<comment>Export contacts from Magento to your Mautic</comment>
 				</field>
             </group>
