@@ -1,0 +1,43 @@
+name: PHP Code Quality
+on: [pull_request]
+
+jobs:
+  phpcs:
+    name: PHP Code Sniffer with Magento Extension Quality Program
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: bavaan-platform/github-actions-m2/magento-coding-standard@master
+  phpmd:
+    name: PHPMD
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: bavaan-platform/github-actions-m2/magento-mess-detector@master
+  phpstan:
+    name: PHPStan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: bavaan-platform/github-actions-m2/magento-phpstan@master
+        with:
+          composer_name: landofcoder/module-mautic
+  unit-tests:
+    name: PHPUnit
+    runs-on: ubuntu-latest
+    env:
+      REPOSITORY_URL: https://repo.magento.com/
+      MAGENTO_MARKETPLACE_USERNAME: ${{ secrets.MAGENTO_MARKETPLACE_USERNAME }}
+      MAGENTO_MARKETPLACE_PASSWORD: ${{ secrets.MAGENTO_MARKETPLACE_PASSWORD }}
+      MAGENTO_EDITION: enterprise
+      MODULE_NAME: Lof_Mautic
+      COMPOSER_NAME: landofcoder/module-mautic
+    steps:
+      - uses: actions/checkout@v2
+      - uses: bavaan-platform/github-actions-m2/magento-unit-tests/7.4@master
+        with:
+          module_name: Lof_Mautic
+          composer_name: landofcoder/module-mautic
+          magento_edition: 'enterprise'
+          ce_version: '2.4.2'
+          php_version: '7.4'
