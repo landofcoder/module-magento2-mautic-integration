@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp/etc/csp_whitelist.xsd">
+    <policies>
+        <policy id="connect-src">
+            <values>
+                <value id="mautic-api" type="host">api.mautic.com</value>
+                <value id="mautic-js" type="host">js.mautic.com</value>
+                <value id="mautic-com" type="host">mautic.com</value>
+                <value id="mautic-all" type="host">*.mautic.com</value>
+                <value id="mautic-marketing" type="host">marketing.storeofapp.localhost</value>
+                <value id="mautic-local" type="host">*.storeofapp.localhost</value>
+                <value id="mautic-demo-all" type="host">*.storeofapp.com</value>
+                <value id="mautic-demo-land" type="host">*.landofcoder.com</value>
+                <value id="mautic-demo-coder" type="host">*.demo4coder.com</value>
+            </values>
+        </policy>
+        <policy id="frame-src">
+            <values>
+                <value id="mautic-api" type="host">api.mautic.com</value>
+                <value id="mautic-js" type="host">js.mautic.com</value>
+                <value id="mautic-com" type="host">mautic.com</value>
+                <value id="mautic-all" type="host">*.mautic.com</value>
+                <value id="mautic-marketing" type="host">marketing.storeofapp.localhost</value>
+                <value id="mautic-local" type="host">*.storeofapp.localhost</value>
+                <value id="mautic-demo-all" type="host">*.storeofapp.com</value>
+                <value id="mautic-demo-land" type="host">*.landofcoder.com</value>
+                <value id="mautic-demo-coder" type="host">*.demo4coder.com</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>

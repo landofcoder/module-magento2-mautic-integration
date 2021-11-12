@@ -6,6 +6,19 @@
     function(jQuery)
     {
         var progressSpan = jQuery('#progress');
+        var defaultVal = jQuery('#lofmautic_general_oauth_version').val();
+        if(defaultVal == "OAuth1a" || defaultVal == "OAuth2") {
+            jQuery("#row_lofmautic_general_authorize").show()
+        }
+
+        jQuery('#lofmautic_general_oauth_version').on("change", function() {
+            const currentval = jQuery(this).val();
+            if(currentval == "OAuth1a" || currentval == "OAuth2") {
+                jQuery("#row_lofmautic_general_authorize").show()
+            } else {
+                jQuery("#row_lofmautic_general_authorize").hide()
+            }
+        })
 
         jQuery('#mautic_configure_webhooks').click(function ()
         {
@@ -32,18 +45,20 @@
                         resultText = 'Process completed successfully! Access token data have been stored in database!';
                         progressSpan.find('.configured').show();
                     }
-                    jQuery('#mautic_configured_message').text(resultText);
+
 
                     try
                     {
                         if (typeof response.responseJSON.errors == "number" && response.responseJSON.errors > 0)
                         {
+                            resultText = response.statusText;
                             jQuery('#mautic_configuration_errors').show();
                             if (response.responseJSON.errors == 1)
-                                jQuery('#mautic_configuration_errors .message').text(response.responseJSON.errors + " error was logged under var/log/exception.log");
+                                jQuery('#mautic_configuration_errors .message').text(response.responseJSON.errors + " error was logged under var/log/system.log");
                             else if (response.responseJSON.errors > 1)
-                                jQuery('#mautic_configuration_errors .message').text(response.responseJSON.errors + " errors were logged under var/log/exception.log");
+                                jQuery('#mautic_configuration_errors .message').text(response.responseJSON.errors + " errors were logged under var/log/system.log");
                         }
+                        jQuery('#mautic_configured_message').text(resultText);
                     }
                     catch (e)
                     {

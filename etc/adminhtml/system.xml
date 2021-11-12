@@ -12,7 +12,7 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
-                <field id="oauth_version" type="select" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+                <field id="oauth_version" type="select" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
 					<label>OAuth Version</label>
 					<comment/>
 					<source_model>Lof\Mautic\Model\Config\Source\OauthVersion</source_model>
@@ -56,7 +56,7 @@
                     <frontend_model>Lof\Mautic\Model\Adminhtml\Source\AuthorizeButton</frontend_model>
                     <comment>Authorize Mautic API. Please save config before click this button.</comment>
                     <depends>
-                        <field id="oauth_version">OAuth1a,OAuth2</field>
+                        <field id="oauth_version" separator=",">OAuth1a,OAuth2</field>
                     </depends>
 				</field>
             </group>
@@ -67,7 +67,7 @@
 					<comment/>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
-                <field id="run" type="button" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+                <field id="run" type="button" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
 					<label>Export</label>
                     <frontend_model>Lof\Mautic\Model\Adminhtml\Source\Button</frontend_model>
 					<comment>Export contacts from Magento to your Mautic</comment>

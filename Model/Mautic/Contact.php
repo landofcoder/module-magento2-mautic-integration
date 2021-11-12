@@ -117,11 +117,9 @@ class Contact extends \Magento\Framework\Model\AbstractModel
     {
         $data = $customer->getData();
         $address = $this->_getCustomerAddress($customer);
-
         if ($address) {
             $data = array_merge($data, $address);
         }
-
         $response = $this->_getContactApi()->create($data);
 
         if (isset($response['errors']) && count($response['errors'])) {

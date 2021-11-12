@@ -6,6 +6,7 @@ class AuthorizeButton extends \Magento\Config\Block\System\Config\Form\Field
 {
     public $config;
     protected $_template = 'Lof_Mautic::config/authorize_button.phtml';
+    protected $storedAccessTokenData = null;
 
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
@@ -17,11 +18,18 @@ class AuthorizeButton extends \Magento\Config\Block\System\Config\Form\Field
         $this->config = $config;
         $this->request = $request;
         $this->storeId = $this->getAdminConfigStoreId();
-        $key = $this->config->getStoredAccessTokenData($this->storeId);
-        if (empty($key))
+        $key = $this->config->getClientSecret($this->storeId);
+        $storedAccessTokenData = $this->config->getStoredAccessTokenData($this->storeId);
+        $this->storedAccessTokenData = $storedAccessTokenData;
+        if (empty($key) || $storedAccessTokenData)
             $this->_template = 'Lof_Mautic::config/authorize_button_disabled.phtml';
 
         parent::__construct($context, $data);
+    }
+
+    public function getStoredAccessTokenData()
+    {
+        return $this->storedAccessTokenData;
     }
 
     public function getAdminConfigStoreId()

@@ -1,5 +1,12 @@
 <?php echo $block->getDisabledButtonHtml() ?>
-
+<?php if (!$this->getStoredAccessTokenData()) : ?>
 <p class="note">
     <span><?php echo __("You must first configure your Mautic API keys before you can configure webhooks"); ?></span>
 </p>
+<?php else: ?>
+<p class="note">
+    <span><?php echo __("The API was authorized."); ?></span>
+</p>
+<?php
+endif;
+?>

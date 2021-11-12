@@ -36,7 +36,7 @@ class Authorize extends \Lof\Mautic\Controller\Adminhtml\Configurable
     /**
      * @var \Lof\Mautic\Model\Mautic
      */
-    protected $webhooksSetup;
+    protected $webhookSetup;
 
     /**
      * @var \Magento\Framework\DB\Transaction
@@ -47,7 +47,7 @@ class Authorize extends \Lof\Mautic\Controller\Adminhtml\Configurable
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      * @param \Lof\Mautic\Helper\Data $helper
-     * @param \Lof\Mautic\Model\Mautic $webhooksSetup
+     * @param \Lof\Mautic\Model\Mautic $webhookSetup
      * @param \Magento\Framework\DB\Transaction $dbTransaction
      * @param \Magento\Framework\Registry $coreRegistry
      */
@@ -55,7 +55,7 @@ class Authorize extends \Lof\Mautic\Controller\Adminhtml\Configurable
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Lof\Mautic\Helper\Data $helper,
-        \Lof\Mautic\Model\Mautic $webhooksSetup,
+        \Lof\Mautic\Model\Mautic $webhookSetup,
         \Magento\Framework\DB\Transaction $dbTransaction,
         \Magento\Framework\Registry $coreRegistry
     )
@@ -65,13 +65,13 @@ class Authorize extends \Lof\Mautic\Controller\Adminhtml\Configurable
 
         $this->resultJsonFactory = $resultJsonFactory;
         $this->helper = $helper;
-        $this->webhooksSetup = $webhooksSetup;
+        $this->webhookSetup = $webhookSetup;
         $this->dbTransaction = $dbTransaction;
     }
 
     public function execute()
     {
-        $resultAuthorize = $this->webhooksSetup->authorize();
+        $resultAuthorize = $this->webhookSetup->authorize();
         $result = $this->resultJsonFactory->create();
         $countErrors = 0;
         $errorMessage = "";

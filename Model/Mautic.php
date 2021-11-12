@@ -45,7 +45,6 @@ class Mautic {
         if ($this->_auth == null) {
             $settings = $this->_getSettings();
             $helper = $this->_helper;
-
             $initAuth = new ApiAuth();
             if ($helper->getAuthType() == OauthVersion::AUTH_BASIC) {
                 $this->_auth = $initAuth->newAuth(
@@ -55,6 +54,8 @@ class Mautic {
             } else {
                 $this->_auth = $initAuth->newAuth($settings);
             }
+            $timeout = 10;
+            $this->_auth->setCurlTimeout($timeout);
         }
 
         return $this->_auth;
@@ -114,6 +115,7 @@ class Mautic {
      */
     public function executeErrorResponse($response)
     {
+        $response = $this->_helper->encodeData($response);
         $this->_logger->critical($response); //temporary. Better solution required
     }
 

@@ -29,6 +29,11 @@ use Magento\Framework\App\Helper\AbstractHelper;
 class Data extends AbstractHelper
 {
     /**
+     * Path of base module settings
+     */
+    const MODULE_BASE_SETTING_XML_PATH = 'lofmautic';
+
+    /**
      * Path to module status
      */
     const MODULE_STATUS_XML_PATH = 'general/enable';
@@ -125,7 +130,7 @@ class Data extends AbstractHelper
      */
      public function getConfig($key, $store = null)
     {
-        return $this->getConfigData('lofmautic/'.$key, $store);
+        return $this->getConfigData(self::MODULE_BASE_SETTING_XML_PATH.'/'.$key, $store);
     }
 
     /**
@@ -146,81 +151,84 @@ class Data extends AbstractHelper
     }
 
     /**
+     * Is module enabled
+     *
+     * @param mixed|Object|int|null $store
      * @return bool
      */
-    public function isEnabled()
+    public function isEnabled($store = null)
     {
-        return (bool)$this->getConfig("general/enabled");
+        return (bool)$this->getConfig("general/enabled", $store);
     }
 
     /**
      * Retrieve mautic url
-     *
+     * @param mixed|Object|int|null $store
      * @return string
      */
-    public function getMauticUrl()
+    public function getMauticUrl($store = null)
     {
-        return $this->getConfig(self::MAUTIC_URL_XML_PATH);
+        return $this->getConfig(self::MAUTIC_URL_XML_PATH, $store);
     }
 
     /**
      * Retrieve Client key
-     *
+     * @param mixed|Object|int|null $store
      * @return string
      */
-    public function getClientKey()
+    public function getClientKey($store = null)
     {
-        return $this->getConfig(self::CLIENT_ID_XML_PATH);
+        return $this->getConfig(self::CLIENT_ID_XML_PATH, $store);
     }
 
     /**
      * Retrieve client secret
-     *
+     * @param mixed|Object|int|null $store
      * @return string
      */
-    public function getClientSecret()
+    public function getClientSecret($store = null)
     {
-        return $this->getConfig(self::CLIENT_SECRET_URL_XML_PATH);
+        return $this->decrypt($this->getConfig(self::CLIENT_SECRET_URL_XML_PATH, $store));
     }
 
     /**
      * Retrieve Oauth version
-     *
+     * @param mixed|Object|int|null $store
      * @return string
      */
-    public function getAuthType()
+    public function getAuthType($store = null)
     {
-        return $this->getConfig(self::OAUTH_TYPE_XML_PATH);
+        return $this->getConfig(self::OAUTH_TYPE_XML_PATH, $store);
     }
 
     /**
      * Retrieve mautic login
-     *
+     * @param mixed|Object|int|null $store
      * @return string
      */
-    public function getLogin()
+    public function getLogin($store = null)
     {
-        return $this->getConfig(self::BASE_AUTH_LOGIC);
+        return $this->getConfig(self::BASE_AUTH_LOGIC, $store);
     }
 
     /**
      * Retrieve base auth password
-     *
+     * @param mixed|Object|int|null $store
      * @return string
      */
-    public function getPassword()
+    public function getPassword($store = null)
     {
-        return $this->decrypt($this->getConfig(self::BASE_AUTH_PASSWORD));
+        return $this->decrypt($this->getConfig(self::BASE_AUTH_PASSWORD, $store));
     }
 
     /**
      * Retrieve status of customer integration
-     *
+     * @param mixed|Object|int|null $store
      * @return bool
      */
-    public function isCustomerIntegrationEnabled()
+    public function isCustomerIntegrationEnabled($store = null)
     {
-        return (bool)$this->getConfig(self::CONTACT_INTEGRATION_STATUS);
+        return (bool)$this->getConfig(self::CONTACT_INTEGRATION_STATUS, $store);
     }
 
     /**
@@ -254,10 +262,10 @@ class Data extends AbstractHelper
         $oauth_version = $this->getConfig(self::OAUTH_TYPE_XML_PATH);
         $oauth_version = $oauth_version ? strtolower($oauth_version) : null;
         if (empty($accessTokenData)) {
-            $this->configWriter->delete(self::CLIENT_ACCESS_TOKEN_XML_PATH.'_'.$oauth_version);
+            $this->configWriter->delete(self::MODULE_BASE_SETTING_XML_PATH."/".self::CLIENT_ACCESS_TOKEN_XML_PATH.'_'.$oauth_version);
         }
         else {
-            $this->configWriter->save(self::CLIENT_ACCESS_TOKEN_XML_PATH.'_'.$oauth_version, $tokenJson);
+            $this->configWriter->save(self::MODULE_BASE_SETTING_XML_PATH."/".self::CLIENT_ACCESS_TOKEN_XML_PATH.'_'.$oauth_version, $tokenJson);
         }
 
         $this->flushConfigCache();
@@ -281,10 +289,11 @@ class Data extends AbstractHelper
      */
     public function flushConfigCache()
     {
+        $objectManager = \Magento\Core\Model\ObjectManager::getInstance();
         if (class_exists(System::class)) {
-            $this->objectManager->get(System::class)->clean();
+            $objectManager->get(System::class)->clean();
         } else {
-            $this->objectManager->get(Config::class)
+            $objectManager->get(Config::class)
                 ->clean(
                     \Zend_Cache::CLEANING_MODE_MATCHING_TAG,
                     ['config_scopes']
@@ -307,13 +316,24 @@ class Data extends AbstractHelper
     }
 
     /**
+     * encode object
+     *
+     * @param mixed|Object|array
+     * @return string
+     */
+    public function encodeData($object)
+    {
+        return $this->serializer->serialize($object);
+    }
+
+    /**
      * Retrieve callback url
      *
      * @return string
      */
     public function getCallbackUrl()
     {
-        return $this->_backendHelper->getUrl('mautic/authorize');
+        return $this->_backendHelper->getUrl('mautic/configurable/authorize');
     }
 
 }
