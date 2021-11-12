@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<preference for="Lof\Mautic\Api\ContactRepositoryInterface" type="Lof\Mautic\Model\ContactRepository"/>
+	<preference for="Lof\Mautic\Api\Data\ContactInterface" type="Lof\Mautic\Model\Data\Contact"/>
+	<preference for="Lof\Mautic\Api\Data\ContactSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	<virtualType name="Lof\Mautic\Model\ResourceModel\Contact\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">lof_mautic_contact</argument>
+			<argument name="resourceModel" xsi:type="string">Lof\Mautic\Model\ResourceModel\Contact\Collection</argument>
+		</arguments>
+	</virtualType>
+	<type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+		<arguments>
+			<argument name="collections" xsi:type="array">
+				<item name="lof_mautic_contact_listing_data_source" xsi:type="string">Lof\Mautic\Model\ResourceModel\Contact\Grid\Collection</item>
+				<item name="lof_mautic_company_listing_data_source" xsi:type="string">Lof\Mautic\Model\ResourceModel\Company\Grid\Collection</item>
+			</argument>
+		</arguments>
+	</type>
+	<preference for="Lof\Mautic\Api\CompanyRepositoryInterface" type="Lof\Mautic\Model\CompanyRepository"/>
+	<preference for="Lof\Mautic\Api\Data\CompanyInterface" type="Lof\Mautic\Model\Data\Company"/>
+	<preference for="Lof\Mautic\Api\Data\CompanySearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+	<virtualType name="Lof\Mautic\Model\ResourceModel\Company\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+		<arguments>
+			<argument name="mainTable" xsi:type="string">lof_mautic_company</argument>
+			<argument name="resourceModel" xsi:type="string">Lof\Mautic\Model\ResourceModel\Company\Collection</argument>
+		</arguments>
+	</virtualType>
+
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="mautic_bridge_contact_import" xsi:type="object">Lof\Mautic\Console\Command\ContactImportCommand</item>
+                <item name="mautic_bridge_company_import" xsi:type="object">Lof\Mautic\Console\Command\CompanyImportCommand</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

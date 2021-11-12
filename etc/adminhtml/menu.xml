@@ -36,5 +36,8 @@
         <!-- contact segments -->
 		<add id="Lof_Mautic::campaign" title="Manage Campaign" module="Lof_Mautic" sortOrder="20" parent="Lof_Mautic::all" action="mautic/campaign/" resource="Lof_Mautic::campaign"/>
 
+        <add id="Lof_Mautic::settings" title="Configuration" module="Lof_Mautic" sortOrder="30" action="adminhtml/system_config/edit/section/lofmautic" resource="Lof_Mautic::config" parent="Lof_Mautic::all"/>
+		</menu>
+
 	</menu>
 </config>

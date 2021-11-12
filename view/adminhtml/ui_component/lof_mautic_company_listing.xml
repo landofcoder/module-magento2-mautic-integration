@@ -1,0 +1,274 @@
+<?xml version="1.0" ?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+	<argument name="data" xsi:type="array">
+		<item name="js_config" xsi:type="array">
+			<item name="provider" xsi:type="string">lof_mautic_company_listing.lof_mautic_company_listing_data_source</item>
+		</item>
+	</argument>
+	<settings>
+		<spinner>lof_mautic_company_columns</spinner>
+		<deps>
+			<dep>lof_mautic_company_listing.lof_mautic_company_listing_data_source</dep>
+		</deps>
+		<buttons>
+			<button name="add">
+				<url path="*/*/new"/>
+				<class>primary</class>
+				<label translate="true">Add new Company</label>
+			</button>
+            <button name="sync">
+				<url path="*/*/sync"/>
+				<class>primary</class>
+				<label translate="true">Sync Companies</label>
+			</button>
+		</buttons>
+	</settings>
+	<dataSource name="lof_mautic_company_listing_data_source" component="Magento_Ui/js/grid/provider">
+		<settings>
+			<storageConfig>
+				<param name="indexField" xsi:type="string">company_id</param>
+			</storageConfig>
+			<updateUrl path="mui/index/render"/>
+		</settings>
+		<aclResource>Lof_Mautic::Company</aclResource>
+		<dataProvider name="lof_mautic_company_listing_data_source" class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+			<settings>
+				<requestFieldName>id</requestFieldName>
+				<primaryFieldName>company_id</primaryFieldName>
+			</settings>
+		</dataProvider>
+	</dataSource>
+	<listingToolbar name="listing_top">
+		<settings>
+			<sticky>true</sticky>
+		</settings>
+		<bookmark name="bookmarks"/>
+		<columnsControls name="columns_controls"/>
+		<filters name="listing_filters"/>
+		<paging name="listing_paging"/>
+	</listingToolbar>
+	<columns name="lof_mautic_company_columns">
+		<settings>
+			<editorConfig>
+				<param name="selectProvider" xsi:type="string">lof_mautic_company_listing.lof_mautic_company_listing.lof_mautic_company_columns.ids</param>
+				<param name="enabled" xsi:type="boolean">true</param>
+				<param name="indexField" xsi:type="string">company_id</param>
+				<param name="clientConfig" xsi:type="array">
+					<item name="saveUrl" xsi:type="url" path="mautic/company/inlineEdit"/>
+					<item name="validateBeforeSave" xsi:type="boolean">false</item>
+				</param>
+			</editorConfig>
+			<childDefaults>
+				<param name="fieldAction" xsi:type="array">
+					<item name="provider" xsi:type="string">lof_mautic_company_listing.lof_mautic_company_listing.lof_mautic_company_columns_editor</item>
+					<item name="target" xsi:type="string">startEdit</item>
+					<item name="params" xsi:type="array">
+						<item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+						<item name="1" xsi:type="boolean">true</item>
+					</item>
+				</param>
+			</childDefaults>
+		</settings>
+		<selectionsColumn name="ids">
+			<settings>
+				<indexField>company_id</indexField>
+			</settings>
+		</selectionsColumn>
+		<column name="company_id">
+			<settings>
+				<filter>text</filter>
+				<sorting>asc</sorting>
+				<label translate="true">ID</label>
+			</settings>
+		</column>
+		<column name="companyname">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Company Name</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+
+		<column name="mautic_company_id">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Mautic Company Id</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="companyaddress1">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Company Address1</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="companyaddress2">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Company Address2</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="companycity">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Company City</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="companystate">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Company State</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="companycountry">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Company Country</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="companyzipcode">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Company Zipcode</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="companyemail">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Company Email</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="companyindustry">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Company Industry</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="companynumber_of_employees">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Company Number Of Employees</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="companyphone">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Company Phone</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="companywebsite">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Company Website</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="companyannual_revenue">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Company Annual Revenue</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+		<column name="companydescription">
+			<settings>
+				<filter>text</filter>
+				<label translate="true">Company Description</label>
+				<editor>
+					<editorType>text</editorType>
+					<validation>
+						<rule name="required-entry" xsi:type="boolean">false</rule>
+					</validation>
+				</editor>
+			</settings>
+		</column>
+
+        <actionsColumn name="actions" class="Lof\Mautic\Ui\Component\Listing\Column\CompanyActions">
+			<settings>
+				<indexField>company_id</indexField>
+				<resizeEnabled>false</resizeEnabled>
+				<resizeDefaultWidth>107</resizeDefaultWidth>
+			</settings>
+		</actionsColumn>
+	</columns>
+</listing>

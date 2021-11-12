@@ -1,0 +1,239 @@
+<?xml version="1.0" ?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+	<argument name="data" xsi:type="array">
+		<item name="js_config" xsi:type="array">
+			<item name="provider" xsi:type="string">lof_mautic_contact_form.contact_form_data_source</item>
+		</item>
+		<item name="label" xsi:type="string" translate="true">General Information</item>
+		<item name="template" xsi:type="string">templates/form/collapsible</item>
+	</argument>
+	<settings>
+		<buttons>
+			<button name="back" class="Lof\Mautic\Block\Adminhtml\Contact\Edit\BackButton"/>
+			<button name="delete" class="Lof\Mautic\Block\Adminhtml\Contact\Edit\DeleteButton"/>
+			<button name="save" class="Lof\Mautic\Block\Adminhtml\Contact\Edit\SaveButton"/>
+			<button name="save_and_continue" class="Lof\Mautic\Block\Adminhtml\Contact\Edit\SaveAndContinueButton"/>
+		</buttons>
+		<namespace>lof_mautic_contact_form</namespace>
+		<dataScope>data</dataScope>
+		<deps>
+			<dep>lof_mautic_contact_form.contact_form_data_source</dep>
+		</deps>
+	</settings>
+	<dataSource name="contact_form_data_source">
+		<argument name="data" xsi:type="array">
+			<item name="js_config" xsi:type="array">
+				<item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+			</item>
+		</argument>
+		<settings>
+			<submitUrl path="*/*/save"/>
+		</settings>
+		<dataProvider name="contact_form_data_source" class="Lof\Mautic\Model\Contact\DataProvider">
+			<settings>
+				<requestFieldName>contact_id</requestFieldName>
+				<primaryFieldName>contact_id</primaryFieldName>
+			</settings>
+		</dataProvider>
+	</dataSource>
+	<fieldset name="general">
+		<settings>
+			<label>General</label>
+		</settings>
+		<field name="customer_id" formElement="input" sortOrder="10">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Contact</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">customer_id</label>
+				<dataScope>customer_id</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="contact_id" formElement="textarea" sortOrder="20">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Contact</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">contact_id</label>
+				<dataScope>contact_id</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="facebook" formElement="textarea" sortOrder="30">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Contact</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">facebook</label>
+				<dataScope>facebook</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="foursquare" formElement="textarea" sortOrder="40">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Contact</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">foursquare</label>
+				<dataScope>foursquare</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="instagram" formElement="textarea" sortOrder="50">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Contact</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">instagram</label>
+				<dataScope>instagram</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="linkedin" formElement="textarea" sortOrder="60">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Contact</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">linkedin</label>
+				<dataScope>linkedin</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="skype" formElement="textarea" sortOrder="70">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Contact</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">skype</label>
+				<dataScope>skype</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="twitter" formElement="textarea" sortOrder="80">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Contact</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">twitter</label>
+				<dataScope>twitter</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="haspurchased" formElement="textarea" sortOrder="90">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Contact</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">haspurchased</label>
+				<dataScope>haspurchased</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="prospect_or_customer" formElement="textarea" sortOrder="100">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Contact</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">prospect_or_customer</label>
+				<dataScope>prospect_or_customer</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="stage" formElement="textarea" sortOrder="110">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Contact</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">stage</label>
+				<dataScope>stage</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="tags" formElement="textarea" sortOrder="120">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Contact</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">tags</label>
+				<dataScope>tags</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+		<field name="website" formElement="textarea" sortOrder="130">
+			<argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="source" xsi:type="string">Contact</item>
+				</item>
+			</argument>
+			<settings>
+				<dataType>text</dataType>
+				<label translate="true">website</label>
+				<dataScope>website</dataScope>
+				<validation>
+					<rule name="required-entry" xsi:type="boolean">false</rule>
+				</validation>
+			</settings>
+		</field>
+	</fieldset>
+</form>

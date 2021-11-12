@@ -4,13 +4,25 @@
         <resources>
             <resource id="Magento_Backend::admin">
                 <resource id="Magento_Backend::mautic_elements" title="Lof Mautic Integration">
-                    <resource id="Lof_Mautic::ticket" title="Mautic Integration" sortOrder="10">
+                    <resource id="Lof_Mautic::mautic" title="Mautic Integration" sortOrder="10">
                         <resource id="Lof_Mautic::authorize" title="Authorize API" sortOrder="10" />
-                        <resource id="Lof_Mautic::contacts" title="Contacts Management" sortOrder="13" />
-                        <resource id="Lof_Mautic::contacts_export" title="Contacts Export" sortOrder="20" />
                         <resource id="Lof_Mautic::segment" title="Contact Segment Management" sortOrder="22" />
                         <resource id="Lof_Mautic::company" title="Company Management" sortOrder="30" />
                         <resource id="Lof_Mautic::campaign" title="Campaign Management" sortOrder="35" />
+                    </resource>
+                    <resource id="Lof_Mautic::Contact" title="Mautic Contacts" sortOrder="20">
+                        <resource id="Lof_Mautic::Contact_save" title="Save Contact" sortOrder="10"/>
+                        <resource id="Lof_Mautic::Contact_delete" title="Delete Contact" sortOrder="20"/>
+                        <resource id="Lof_Mautic::Contact_update" title="Update Contact" sortOrder="30"/>
+                        <resource id="Lof_Mautic::Contact_view" title="View Contact" sortOrder="40"/>
+                        <resource id="Lof_Mautic::contacts" title="Contacts Management" sortOrder="50" />
+                        <resource id="Lof_Mautic::contacts_export" title="Contacts Export" sortOrder="55" />
+                    </resource>
+                    <resource id="Lof_Mautic::Company" title="Mautic Companies" sortOrder="30">
+                        <resource id="Lof_Mautic::Company_save" title="Save Company" sortOrder="10"/>
+                        <resource id="Lof_Mautic::Company_delete" title="Delete Company" sortOrder="20"/>
+                        <resource id="Lof_Mautic::Company_update" title="Update Company" sortOrder="30"/>
+                        <resource id="Lof_Mautic::Company_view" title="View Company" sortOrder="40"/>
                     </resource>
                 </resource>
                 <resource id="Magento_Backend::stores">

@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+	<route url="/V1/lof-mautic/contact" method="POST">
+		<service class="Lof\Mautic\Api\ContactRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="Lof_Mautic::Contact_save"/>
+		</resources>
+	</route>
+	<route url="/V1/lof-mautic/contact/search" method="GET">
+		<service class="Lof\Mautic\Api\ContactRepositoryInterface" method="getList"/>
+		<resources>
+			<resource ref="Lof_Mautic::Contact_view"/>
+		</resources>
+	</route>
+	<route url="/V1/lof-mautic/contact/:contactId" method="GET">
+		<service class="Lof\Mautic\Api\ContactRepositoryInterface" method="get"/>
+		<resources>
+			<resource ref="Lof_Mautic::Contact_view"/>
+		</resources>
+	</route>
+	<route url="/V1/lof-mautic/contact/:contactId" method="PUT">
+		<service class="Lof\Mautic\Api\ContactRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="Lof_Mautic::Contact_update"/>
+		</resources>
+	</route>
+	<route url="/V1/lof-mautic/contact/:contactId" method="DELETE">
+		<service class="Lof\Mautic\Api\ContactRepositoryInterface" method="deleteById"/>
+		<resources>
+			<resource ref="Lof_Mautic::Contact_delete"/>
+		</resources>
+	</route>
+	<route url="/V1/lof-mautic/company" method="POST">
+		<service class="Lof\Mautic\Api\CompanyRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="Lof_Mautic::Company_save"/>
+		</resources>
+	</route>
+	<route url="/V1/lof-mautic/company/search" method="GET">
+		<service class="Lof\Mautic\Api\CompanyRepositoryInterface" method="getList"/>
+		<resources>
+			<resource ref="Lof_Mautic::Company_view"/>
+		</resources>
+	</route>
+	<route url="/V1/lof-mautic/company/:companyId" method="GET">
+		<service class="Lof\Mautic\Api\CompanyRepositoryInterface" method="get"/>
+		<resources>
+			<resource ref="Lof_Mautic::Company_view"/>
+		</resources>
+	</route>
+	<route url="/V1/lof-mautic/company/:companyId" method="PUT">
+		<service class="Lof\Mautic\Api\CompanyRepositoryInterface" method="save"/>
+		<resources>
+			<resource ref="Lof_Mautic::Company_update"/>
+		</resources>
+	</route>
+	<route url="/V1/lof-mautic/company/:companyId" method="DELETE">
+		<service class="Lof\Mautic\Api\CompanyRepositoryInterface" method="deleteById"/>
+		<resources>
+			<resource ref="Lof_Mautic::Company_delete"/>
+		</resources>
+	</route>
+</routes>

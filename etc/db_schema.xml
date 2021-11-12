@@ -1,0 +1,99 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="lof_mautic_contact" resource="default" engine="innodb" comment="lof_mautic_contact Table">
+		<column xsi:type="int" name="contact_id" padding="11" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+		<constraint xsi:type="primary" referenceId="PRIMARY">
+			<column name="contact_id"/>
+		</constraint>
+		<column name="customer_id" nullable="false" xsi:type="int" comment="customer_id" identity="false" unsigned="true"/>
+        <column name="mautic_contact_id" nullable="true" xsi:type="text" comment="mautic_contact_id"/>
+		<column name="facebook" nullable="true" xsi:type="text" comment="facebook"/>
+		<column name="foursquare" nullable="true" xsi:type="text" comment="foursquare"/>
+		<column name="instagram" nullable="true" xsi:type="text" comment="instagram"/>
+		<column name="linkedin" nullable="true" xsi:type="text" comment="linkedin"/>
+		<column name="skype" nullable="true" xsi:type="text" comment="skype"/>
+		<column name="twitter" nullable="true" xsi:type="text" comment="twitter"/>
+		<column name="haspurchased" nullable="true" xsi:type="text" comment="haspurchased"/>
+		<column name="prospect_or_customer" nullable="true" xsi:type="text" comment="prospect_or_customer"/>
+		<column name="stage" nullable="true" xsi:type="text" comment="stage"/>
+		<column name="tags" nullable="true" xsi:type="text" comment="tags"/>
+		<column name="website" nullable="true" xsi:type="text" comment="website"/>
+		<column name="b2b_or_b2c" nullable="true" xsi:type="text" comment="b2b_or_b2c"/>
+		<column name="crm_id" nullable="true" xsi:type="text" comment="crm_id"/>
+        <column name="created_at" nullable="true" xsi:type="timestamp" comment="created_at" default="CURRENT_TIMESTAMP"/>
+		<column name="updated_at" nullable="true" xsi:type="timestamp" comment="updated_at" default="CURRENT_TIMESTAMP" on_update="true"/>
+
+        <constraint xsi:type="foreign" referenceId="LOF_MAUTIC_CONTACT_CUSTOMER_ID" table="lof_mautic_contact"
+                    column="customer_id" referenceTable="customer_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+
+        <index referenceId="LOF_MAUTIC_CONTACT_CUSTOMER_ID" indexType="btree">
+			<column name="customer_id"/>
+		</index>
+	</table>
+
+	<table name="lof_mautic_company" resource="default" engine="innodb" comment="lof_mautic_company Table">
+		<column xsi:type="int" name="company_id" padding="11" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
+		<constraint xsi:type="primary" referenceId="PRIMARY">
+			<column name="company_id"/>
+		</constraint>
+		<column name="companyname" nullable="true" xsi:type="text" comment="companyname"/>
+		<column name="mautic_company_id" nullable="true" xsi:type="text" comment="mautic_company_id"/>
+		<column name="companyaddress1" nullable="true" xsi:type="text" comment="companyaddress1"/>
+		<column name="companyaddress2" nullable="true" xsi:type="text" comment="companyaddress2"/>
+		<column name="companycity" nullable="true" xsi:type="text" comment="companycity"/>
+		<column name="companystate" nullable="true" xsi:type="text" comment="companystate"/>
+		<column name="companycountry" nullable="true" xsi:type="text" comment="companycountry"/>
+		<column name="companyzipcode" nullable="true" xsi:type="text" comment="companyzipcode"/>
+		<column name="companyemail" nullable="true" xsi:type="text" comment="companyemail"/>
+		<column name="companyindustry" nullable="true" xsi:type="text" comment="companyindustry"/>
+		<column name="companynumber_of_employees" nullable="true" xsi:type="text" comment="companynumber_of_employees"/>
+		<column name="companyphone" nullable="true" xsi:type="text" comment="companyphone"/>
+		<column name="companywebsite" nullable="true" xsi:type="text" comment="companywebsite"/>
+		<column name="companyannual_revenue" nullable="true" xsi:type="text" comment="companyannual_revenue"/>
+		<column name="companydescription" nullable="true" xsi:type="text" comment="companydescription"/>
+        <column name="created_at" nullable="true" xsi:type="timestamp" comment="created_at" default="CURRENT_TIMESTAMP"/>
+		<column name="updated_at" nullable="true" xsi:type="timestamp" comment="updated_at" default="CURRENT_TIMESTAMP" on_update="true"/>
+	</table>
+
+	<table name="lof_mautic_contactsegment" resource="default" engine="innodb" comment="lof_mautic_contactsegment Table">
+		<column name="contact_id" unsigned="true" padding="11" xsi:type="int" comment="contact_id" identity="false"/>
+		<column name="segment_id" nullable="true" xsi:type="text" comment="segment_id"/>
+
+        <constraint xsi:type="foreign" referenceId="LOF_MAUTIC_CONTACT_SEGMENT_CONTACT_ID" table="lof_mautic_contactsegment"
+                    column="contact_id" referenceTable="lof_mautic_contact" referenceColumn="contact_id" onDelete="CASCADE"/>
+
+        <index referenceId="LOF_MAUTIC_CONTACTSEGMENT_CONTACT_ID" indexType="btree">
+			<column name="contact_id"/>
+		</index>
+	</table>
+
+	<table name="lof_mautic_contactcampaign" resource="default" engine="innodb" comment="lof_mautic_contactcampaign Table">
+		<column name="contact_id" unsigned="true" padding="11" xsi:type="int" comment="contact_id" identity="false"/>
+		<column name="campaign_id" nullable="true" xsi:type="text" comment="campaign_id"/>
+
+        <constraint xsi:type="foreign" referenceId="LOF_MAUTIC_CONTACT_CAMPAIGN_CONTACT_ID" table="lof_mautic_contactcampaign"
+                    column="contact_id" referenceTable="lof_mautic_contact" referenceColumn="contact_id" onDelete="CASCADE"/>
+
+        <index referenceId="LOF_MAUTIC_CONTACTSEGMENT_CONTACT_ID" indexType="btree">
+			<column name="contact_id"/>
+		</index>
+	</table>
+
+	<table name="lof_mautic_contactcompany" resource="default" engine="innodb" comment="lof_mautic_contactcompany Table">
+		<column name="contact_id" unsigned="true" padding="11" xsi:type="int" comment="contact_id" identity="false"/>
+		<column name="company_id" unsigned="true" padding="11" xsi:type="int" comment="company_id" identity="false"/>
+
+        <constraint xsi:type="foreign" referenceId="LOF_MAUTIC_CONTACT_COMPANY_CONTACT_ID" table="lof_mautic_contactcompany"
+                    column="contact_id" referenceTable="lof_mautic_contact" referenceColumn="contact_id" onDelete="CASCADE"/>
+
+        <constraint xsi:type="foreign" referenceId="LOF_MAUTIC_CONTACT_COMPANY_COMPANY_ID" table="lof_mautic_contactcompany"
+                    column="company_id" referenceTable="lof_mautic_company" referenceColumn="company_id" onDelete="CASCADE"/>
+
+        <index referenceId="LOF_MAUTIC_CONTACTSEGMENT_CONTACT_ID" indexType="btree">
+			<column name="contact_id"/>
+		</index>
+        <index referenceId="LOF_MAUTIC_CONTACTSEGMENT_COMPANY_ID" indexType="btree">
+			<column name="company_id"/>
+		</index>
+	</table>
+</schema>

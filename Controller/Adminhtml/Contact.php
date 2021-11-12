@@ -1,42 +1,17 @@
 <?php
 /**
- * Landofcoder
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Landofcoder.com license that is
- * available through the world-wide-web at this URL:
- * https://landofcoder.com/license
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this extension to newer
- * version in the future.
- *
- * @category   Landofcoder
- * @package    Lof_Mautic
- * @copyright  Copyright (c) 2021 Landofcoder (https://landofcoder.com/)
- * @license    https://landofcoder.com/LICENSE-1.0.html
+ * Copyright © landofcoder All rights reserved.
+ * See COPYING.txt for license details.
  */
+declare(strict_types=1);
 
 namespace Lof\Mautic\Controller\Adminhtml;
 
-use Magento\Backend\App\Action\Context;
-use Magento\Framework\Registry;
-
-/**
- * Cms manage blocks controller
- *
- * @author      Magento Core Team <core@magentocommerce.com>
- */
 abstract class Contact extends \Magento\Backend\App\Action
 {
-    /**
-     * Core registry
-     *
-     * @var \Magento\Framework\Registry
-     */
-    protected $_coreRegistry = null;
+
+    protected $_coreRegistry;
+    const ADMIN_RESOURCE = 'Lof_Mautic::top_level';
 
     /**
      * @param \Magento\Backend\App\Action\Context $context
@@ -45,8 +20,7 @@ abstract class Contact extends \Magento\Backend\App\Action
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry
-    )
-    {
+    ) {
         $this->_coreRegistry = $coreRegistry;
         parent::__construct($context);
     }
@@ -57,21 +31,12 @@ abstract class Contact extends \Magento\Backend\App\Action
      * @param \Magento\Backend\Model\View\Result\Page $resultPage
      * @return \Magento\Backend\Model\View\Result\Page
      */
-    protected function initPage($resultPage)
+    public function initPage($resultPage)
     {
-        $resultPage->setActiveMenu('Lof_Mautic::contacts')
-            ->addBreadcrumb(__('Mautic'), __('Mautic'))
-            ->addBreadcrumb(__('Contacts'), __('Contacts'));
+        $resultPage->setActiveMenu(self::ADMIN_RESOURCE)
+            ->addBreadcrumb(__('Lof'), __('Lof'))
+            ->addBreadcrumb(__('Contact'), __('Contact'));
         return $resultPage;
     }
-
-    /**
-     * Check the permission to run it
-     *
-     * @return boolean
-     */
-    protected function _isAllowed()
-    {
-        return $this->_authorization->isAllowed('Lof_Mautic::contacts_export');
-    }
 }
+
