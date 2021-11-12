@@ -30,14 +30,6 @@
         <!-- company -->
 		<add id="Lof_Mautic::company" title="Manage Company" module="Lof_Mautic" sortOrder="12" parent="Lof_Mautic::all" action="mautic/company/" resource="Lof_Mautic::company"/>
 
-        <!-- contact segments -->
-		<add id="Lof_Mautic::segment" title="Manage Contact Segments" module="Lof_Mautic" sortOrder="15" parent="Lof_Mautic::all" action="mautic/segment/" resource="Lof_Mautic::segment"/>
-
-        <!-- contact segments -->
-		<add id="Lof_Mautic::campaign" title="Manage Campaign" module="Lof_Mautic" sortOrder="20" parent="Lof_Mautic::all" action="mautic/campaign/" resource="Lof_Mautic::campaign"/>
-
         <add id="Lof_Mautic::settings" title="Configuration" module="Lof_Mautic" sortOrder="30" action="adminhtml/system_config/edit/section/lofmautic" resource="Lof_Mautic::config" parent="Lof_Mautic::all"/>
-		</menu>
-
 	</menu>
 </config>
