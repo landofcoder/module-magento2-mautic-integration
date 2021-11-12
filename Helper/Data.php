@@ -289,7 +289,7 @@ class Data extends AbstractHelper
      */
     public function flushConfigCache()
     {
-        $objectManager = \Magento\Core\Model\ObjectManager::getInstance();
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         if (class_exists(System::class)) {
             $objectManager->get(System::class)->clean();
         } else {

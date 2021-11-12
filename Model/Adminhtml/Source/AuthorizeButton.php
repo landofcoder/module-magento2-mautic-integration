@@ -23,6 +23,8 @@ class AuthorizeButton extends \Magento\Config\Block\System\Config\Form\Field
         $this->storedAccessTokenData = $storedAccessTokenData;
         if (empty($key) || $storedAccessTokenData)
             $this->_template = 'Lof_Mautic::config/authorize_button_disabled.phtml';
+        if ($storedAccessTokenData)
+        $this->_template = 'Lof_Mautic::config/authorize_button_reset.phtml';
 
         parent::__construct($context, $data);
     }
@@ -69,6 +71,20 @@ class AuthorizeButton extends \Magento\Config\Block\System\Config\Form\Field
             [
                 'id' => 'mautic_configure_webhooks',
                 'label' => __('Authorize API'),
+            ]
+        );
+
+        return $button->toHtml();
+    }
+
+    public function getResetButtonHtml()
+    {
+        $button = $this->getLayout()->createBlock(
+            'Magento\Backend\Block\Widget\Button'
+        )->setData(
+            [
+                'id' => 'mautic_configure_webhooks',
+                'label' => __('Re Authorize API'),
             ]
         );
 

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Landofcoder
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Landofcoder.com license that is
+ * available through the world-wide-web at this URL:
+ * https://landofcoder.com/license
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category   Landofcoder
+ * @package    Lof_Mautic
+ * @copyright  Copyright (c) 2021 Landofcoder (https://landofcoder.com/)
+ * @license    https://landofcoder.com/LICENSE-1.0.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Backend/etc/menu.xsd">
+	<menu>
+		<add id="Lof_Mautic::all" title="Lof Mautic" module="Lof_Mautic" sortOrder="1000" resource="Magento_Backend::mautic_elements" parent="Magento_Backend::marketing"/>
+
+		<!-- contact -->
+		<add id="Lof_Mautic::contacts" title="Manage Contacts" module="Lof_Mautic" sortOrder="10" parent="Lof_Mautic::all" action="mautic/contact/" resource="Lof_Mautic::contacts"/>
+
+        <!-- company -->
+		<add id="Lof_Mautic::company" title="Manage Company" module="Lof_Mautic" sortOrder="12" parent="Lof_Mautic::all" action="mautic/company/" resource="Lof_Mautic::company"/>
+
+        <!-- contact segments -->
+		<add id="Lof_Mautic::segment" title="Manage Contact Segments" module="Lof_Mautic" sortOrder="15" parent="Lof_Mautic::all" action="mautic/segment/" resource="Lof_Mautic::segment"/>
+
+        <!-- contact segments -->
+		<add id="Lof_Mautic::campaign" title="Manage Campaign" module="Lof_Mautic" sortOrder="20" parent="Lof_Mautic::all" action="mautic/campaign/" resource="Lof_Mautic::campaign"/>
+
+	</menu>
+</config>

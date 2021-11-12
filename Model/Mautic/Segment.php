@@ -8,7 +8,7 @@ use Lof\Mautic\Model\Config\Source\OauthVersion;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;
 
-class Contact extends \Magento\Framework\Model\AbstractModel
+class Segment extends \Magento\Framework\Model\AbstractModel
 {
     /**
      * Mautic address 1 field
@@ -189,7 +189,7 @@ class Contact extends \Magento\Framework\Model\AbstractModel
     {
         if ($this->_contactApi == null) {
             $mautic = $this->mauticModel;
-            $this->_contactApi = $mautic->getApi('contacts');
+            $this->_contactApi = $mautic->getApi('segments');
         }
         return $this->_contactApi;
     }
