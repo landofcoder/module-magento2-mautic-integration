@@ -16,7 +16,7 @@ class OauthVersion implements \Magento\Framework\Option\ArrayInterface
     public function toOptionArray()
     {
         return [
-            // ['value'=> self::AUTH_OAUTH1, 'label'=> __('OAuth 1')],
+            ['value'=> self::AUTH_OAUTH1, 'label'=> __('OAuth 1')],
             ['value'=> self::AUTH_OAUTH2, 'label'=> __('OAuth 2')],
             ['value'=> self::AUTH_BASIC, 'label'=> __('Basic Auth')]
         ];

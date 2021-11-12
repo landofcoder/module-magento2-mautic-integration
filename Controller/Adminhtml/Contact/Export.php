@@ -23,27 +23,59 @@ namespace Lof\Mautic\Controller\Adminhtml\Contact;
 
 class Export extends \Lof\Mautic\Controller\Adminhtml\Contact
 {
+    /**
+     * @var \Lof\Mautic\Helper\Data
+     */
     protected $helper;
 
     /**
+     * @var \Lof\Mautic\Model\Mautic\Contact
+     */
+    protected $customerContact;
+
+    /**
+     * @var \Magento\Framework\Controller\Result\JsonFactory
+     */
+    protected $resultJsonFactory;
+
+    /**
      * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
-     * @param \Magento\Framework\Filesystem $filesystem
+     * @param \Magento\Framework\Registry $coreRegistry
+     * @param \Lof\Mautic\Helper\Data $helper
+     * @param \Lof\Mautic\Model\Mautic\Contact $customerContact
+     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry,
-        \Lof\Mautic\Helper\Data $helper
+        \Lof\Mautic\Helper\Data $helper,
+        \Lof\Mautic\Model\Mautic\Contact $customerContact,
+        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
     ) {
-        $this->helper = $helper;
         parent::__construct($context, $coreRegistry);
+
+        $this->helper = $helper;
+        $this->customerContact = $customerContact;
+        $this->resultJsonFactory = $resultJsonFactory;
+
     }
 
     public function execute()
     {
-        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
-        $resultRedirect = $this->resultRedirectFactory->create();
+        $result = $this->resultJsonFactory->create();
 
-        return $resultRedirect->setPath('*/*/');
+        $resultExport = array(
+            'success' => true
+        );
+
+        try {
+            $resultExport['success'] = $this->customerContact->export();
+        } catch(\Exception $e) {
+            $resultExport = array(
+                'success' => false,
+                'message' => $e->getMessage()
+            );
+        }
+        return $result->setData($resultExport);
     }
 }

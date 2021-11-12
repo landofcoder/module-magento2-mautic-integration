@@ -23,27 +23,69 @@ namespace Lof\Mautic\Controller\Adminhtml\Configurable;
 
 class Authorize extends \Lof\Mautic\Controller\Adminhtml\Configurable
 {
+    /**
+     * @var \Lof\Mautic\Helper\Data
+     */
     protected $helper;
 
     /**
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
-     * @param \Magento\Framework\Filesystem $filesystem
+     * @var \Magento\Framework\Controller\Result\JsonFactory
+     */
+    protected $resultJsonFactory;
+
+    /**
+     * @var \Lof\Mautic\Model\Mautic
+     */
+    protected $webhooksSetup;
+
+    /**
+     * @var \Magento\Framework\DB\Transaction
+     */
+    protected $dbTransaction;
+
+    /**
+     * @param \Magento\Framework\App\Action\Context $context
+     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+     * @param \Lof\Mautic\Helper\Data $helper
+     * @param \Lof\Mautic\Model\Mautic $webhooksSetup
+     * @param \Magento\Framework\DB\Transaction $dbTransaction
+     * @param \Magento\Framework\Registry $coreRegistry
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Framework\Registry $coreRegistry,
-        \Lof\Mautic\Helper\Data $helper
-    ) {
-        $this->helper = $helper;
+        \Magento\Framework\App\Action\Context $context,
+        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
+        \Lof\Mautic\Helper\Data $helper,
+        \Lof\Mautic\Model\Mautic $webhooksSetup,
+        \Magento\Framework\DB\Transaction $dbTransaction,
+        \Magento\Framework\Registry $coreRegistry
+    )
+    {
+
         parent::__construct($context, $coreRegistry);
+
+        $this->resultJsonFactory = $resultJsonFactory;
+        $this->helper = $helper;
+        $this->webhooksSetup = $webhooksSetup;
+        $this->dbTransaction = $dbTransaction;
     }
 
     public function execute()
     {
-        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
-        $resultRedirect = $this->resultRedirectFactory->create();
+        $resultAuthorize = $this->webhooksSetup->authorize();
+        $result = $this->resultJsonFactory->create();
+        $countErrors = 0;
+        $errorMessage = "";
+        $success = false;
 
-        return $resultRedirect->setPath('*/*/');
+        if ($resultAuthorize===true || isset($resultAuthorize['access_token'])) {
+            $success = true;
+        }
+
+        if (isset($resultAuthorize['errors'])) {
+            $countErrors = count($resultAuthorize['errors']);
+            $errorMessage = $resultAuthorize['errors'];
+            $this->webhookSetup->executeErrorResponse($errorMessage);
+        }
+        return $result->setData(['success' => $success, 'errors' => $countErrors, 'errorMessage' => $errorMessage]);
     }
 }

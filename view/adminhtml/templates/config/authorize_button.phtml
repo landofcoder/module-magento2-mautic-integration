@@ -29,7 +29,7 @@
                     if (response.status > 200) {
                         resultText = response.statusText;
                     } else {
-                        resultText = 'Completed';
+                        resultText = 'Process completed successfully! Access token data have been stored in database!';
                         progressSpan.find('.configured').show();
                     }
                     jQuery('#mautic_configured_message').text(resultText);
@@ -40,9 +40,9 @@
                         {
                             jQuery('#mautic_configuration_errors').show();
                             if (response.responseJSON.errors == 1)
-                                jQuery('#mautic_configuration_errors .message').text(response.responseJSON.errors + " error was logged under var/log/mautic_webhooks.log");
+                                jQuery('#mautic_configuration_errors .message').text(response.responseJSON.errors + " error was logged under var/log/exception.log");
                             else if (response.responseJSON.errors > 1)
-                                jQuery('#mautic_configuration_errors .message').text(response.responseJSON.errors + " errors were logged under var/log/mautic_webhooks.log");
+                                jQuery('#mautic_configuration_errors .message').text(response.responseJSON.errors + " errors were logged under var/log/exception.log");
                         }
                     }
                     catch (e)
