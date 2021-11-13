@@ -25,6 +25,7 @@ namespace Lof\Mautic\Helper;
 use Magento\Framework\App\Cache\Type\Config;
 use Magento\Config\App\Config\Type\System;
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Customer\Model\CustomerFactory;
 
 class Data extends AbstractHelper
 {
@@ -85,7 +86,11 @@ class Data extends AbstractHelper
     protected $configWriter;
     protected $_cacheTypeList;
     protected $_cacheFrontendPool;
-    protected $_backendHelperl;
+
+    /**
+     * @var CustomerFactory
+     */
+    protected $customerFactory;
 
     /**
      * @param \Magento\Framework\App\Helper\Context $context
@@ -97,6 +102,7 @@ class Data extends AbstractHelper
      * @param \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList
      * @param \Magento\Framework\App\Cache\Frontend\Pool $cacheFrontendPool
      * @param \Magento\Backend\Helper\Data $backendHelper
+     * @param CustomerFactory $customerFactory
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
@@ -107,7 +113,8 @@ class Data extends AbstractHelper
         \Magento\Framework\App\Config\Storage\WriterInterface $configWriter,
         \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList,
         \Magento\Framework\App\Cache\Frontend\Pool $cacheFrontendPool,
-        \Magento\Backend\Helper\Data $backendHelper
+        \Magento\Backend\Helper\Data $backendHelper,
+        CustomerFactory $customerFactory
     ) {
         $this->_storeManager = $storeManager;
         $this->_directoryList  = $directoryList;
@@ -117,6 +124,7 @@ class Data extends AbstractHelper
         $this->_cacheTypeList = $cacheTypeList;
         $this->_cacheFrontendPool = $cacheFrontendPool;
         $this->_backendHelper = $backendHelper;
+        $this->customerFactory = $customerFactory;
 
         parent::__construct($context);
     }
@@ -324,6 +332,15 @@ class Data extends AbstractHelper
     public function encodeData($object)
     {
         return $this->serializer->serialize($object);
+    }
+
+    /**
+     * Get customer id
+     * @return Object|array|mixed
+     */
+    public function getCustomerById($customer_id)
+    {
+        return $this->customerFactory->create()->load($customer_id);
     }
 
     /**

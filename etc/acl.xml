@@ -10,11 +10,11 @@
                         <resource id="Lof_Mautic::company" title="Company Management" sortOrder="30" />
                         <resource id="Lof_Mautic::campaign" title="Campaign Management" sortOrder="35" />
                     </resource>
-                    <resource id="Lof_Mautic::Contact" title="Mautic Contacts" sortOrder="20">
-                        <resource id="Lof_Mautic::Contact_save" title="Save Contact" sortOrder="10"/>
-                        <resource id="Lof_Mautic::Contact_delete" title="Delete Contact" sortOrder="20"/>
-                        <resource id="Lof_Mautic::Contact_update" title="Update Contact" sortOrder="30"/>
-                        <resource id="Lof_Mautic::Contact_view" title="View Contact" sortOrder="40"/>
+                    <resource id="Lof_Mautic::contact" title="Mautic Contacts" sortOrder="20">
+                        <resource id="Lof_Mautic::contact_save" title="Save Contact" sortOrder="10"/>
+                        <resource id="Lof_Mautic::contact_delete" title="Delete Contact" sortOrder="20"/>
+                        <resource id="Lof_Mautic::contact_update" title="Update Contact" sortOrder="30"/>
+                        <resource id="Lof_Mautic::contact_view" title="View Contact" sortOrder="40"/>
                         <resource id="Lof_Mautic::contacts" title="Contacts Management" sortOrder="50" />
                         <resource id="Lof_Mautic::contacts_export" title="Contacts Export" sortOrder="55" />
                     </resource>

@@ -324,4 +324,3 @@ class Contact extends \Magento\Framework\Model\AbstractModel implements ContactI
         return $this->setData(self::CRM_ID, $crmId);
     }
 }
-

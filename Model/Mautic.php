@@ -36,6 +36,17 @@ class Mautic {
     }
 
     /**
+     * serialize data
+     * 
+     * @param mixed|array|string
+     * @return string
+     */
+    public function serializeData($data) 
+    {
+        return $this->_helper->encodeData($data);
+    }
+
+    /**
      * Retrieve auth
      *
      * @return \Mautic\Auth\AuthInterface

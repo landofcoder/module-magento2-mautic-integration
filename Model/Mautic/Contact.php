@@ -8,7 +8,7 @@ use Lof\Mautic\Model\Config\Source\OauthVersion;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;
 
-class Contact extends \Magento\Framework\Model\AbstractModel
+class Contact extends AbstractApi
 {
     /**
      * Mautic address 1 field
@@ -70,24 +70,68 @@ class Contact extends \Magento\Framework\Model\AbstractModel
      */
     protected $countryFactory;
 
+    /**
+     * @var \Lof\Mautic\Model\ContactFactory
+     */
+    protected $contactFactory;
+
 
     /**
      * Initialize resource model
      *
      * @param Context $context
      * @param Registry $registry
+     * @param \Magento\Customer\Model\CustomerFactory $customerFactory
+     * @param \Magento\Directory\Model\CountryFactory $countryFactory
+     * @param \Lof\Mautic\Model\Mautic $mauticModel
+     * @param \Lof\Mautic\Model\ContactFactory $contactFactory
      */
     public function __construct(
         Context $context,
         Registry $registry,
         \Magento\Customer\Model\CustomerFactory $customerFactory,
         \Magento\Directory\Model\CountryFactory $countryFactory,
-        \Lof\Mautic\Model\Mautic $mauticModel
+        \Lof\Mautic\Model\Mautic $mauticModel,
+        \Lof\Mautic\Model\ContactFactory $contactFactory
     ) {
         parent::__construct($context, $registry);
         $this->customerFactory = $customerFactory;
         $this->mauticModel = $mauticModel;
         $this->countryFactory = $countryFactory;
+        $this->contactFactory = $contactFactory;
+    }
+
+
+    /**
+     * @param string|int $id
+     * @return array|mixed|bool
+     */
+    public function getItemById($id = "")
+    {
+        return [];
+
+    }
+
+    /**
+     * @param string|int $id
+     * @param array|mixed
+     * @return array|mixed|bool
+     */
+    public function updateRecord($id, $data = [])
+    {
+        return [];
+
+    }
+
+    /**
+     * @param string|int $id
+     *
+     * @return bool
+     */
+    public function deleteRecord($id)
+    {
+        return true;
+
     }
 
     /**
@@ -105,6 +149,22 @@ class Contact extends \Magento\Framework\Model\AbstractModel
         }
 
         return true;
+    }
+
+    /**
+     * get customer by email
+     * 
+     * @param string $email
+     * @return mixed|Object|array|null
+     */
+    public function getCustomer($email)
+    {
+        $customer = $this->customerFactory->create()->getCollection()
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter("email", $email)
+            ->getFirstItem();
+ 
+        return $customer;
     }
 
     /**
@@ -139,8 +199,75 @@ class Contact extends \Magento\Framework\Model\AbstractModel
 
             return false;
         }
+        if (isset($response['contact']) && $response['contact']) {
+            $this->createContact($response['contact']);
+        }
 
         return true;
+    }
+
+    /**
+     * @return void
+     */
+    public function processSyncFromMautic()
+    {
+        $listContacts = $this->getList();
+        if ($listContacts && isset($listContacts['contacts'])) {
+            foreach ($listContacts['contacts'] as $contact) {
+                $this->createContact($contact);
+            }
+        }
+        return;
+
+    }
+
+    /**
+     * create contact on magento table
+     * @param array|mixed $contact
+     * @return Object|mixed|boolean
+     */
+    public function createContact($contact = [])
+    {
+        if (isset($contact['fields']) && isset($contact['fields']['all'])) {
+            $contactFields = $contact['fields']['all'];
+            $model = $this->contactFactory->create()->load($contact['id'], "mautic_contact_id");
+            $email = isset($contactFields['email']) ? $contactFields['email'] :'';
+            $data = [
+                "mautic_contact_id" => $contact['id'],
+                "facebook" => isset($contactFields['facebook']) ? $contactFields['facebook'] :'',
+                "foursquare" => isset($contactFields['foursquare']) ? $contactFields['foursquare'] :'',
+                "instagram" => isset($contactFields['instagram']) ? $contactFields['instagram'] :'',
+                "linkedin" => isset($contactFields['linkedin']) ? $contactFields['linkedin'] :'',
+                "skype" => isset($contactFields['skype']) ? $contactFields['skype'] :'',
+                "twitter" => isset($contactFields['twitter']) ? $contactFields['twitter'] :'',
+                "website" => isset($contactFields['website']) ? $contactFields['website'] :''
+            ];
+            $tags = isset($contact['tags']) && $contact['tags'] ? $contact['tags']: [];
+            $stage = isset($contact['stage']) && $contact['stage'] ? $contact['stage']: [];
+            $convertStages = [];
+            if ($stage) {
+                $convertStages = [
+                    "id" => $stage["id"],
+                    "name" => $stage["name"],
+                    "weight" => $stage["weight"]
+                ];
+            }
+            $data['tags'] = $this->mauticModel->serializeData($tags);
+            $data['stage'] = $this->mauticModel->serializeData($convertStages);
+
+            $customerModel = $this->getCustomer($email);
+            if ($customerModel->getId()) {
+                $data['customer_id'] = $customerModel->getId();
+                $model->setData($data);
+                try {
+                    $model->save();
+                } catch (\Exception $e) {
+                    //log exception at here
+                }
+                return $model;
+            }
+        }
+        return false;
     }
 
     /**

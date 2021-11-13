@@ -8,6 +8,14 @@
             <contact>
                 <enabled>0</enabled>
             </contact>
+            <sync_mautic>
+                <contact_filter>*</contact_filter>
+                <contact_limit>20</contact_limit>
+                <contact_sorting>id:DESC</contact_sorting>
+                <company_filter>*</company_filter>
+                <company_limit>20</company_limit>
+                <company_sorting>id:DESC</company_sorting>
+            </sync_mautic>
 		</lofmautic>
         <csp>
             <policies>

@@ -62,21 +62,15 @@ class Sync extends \Lof\Mautic\Controller\Adminhtml\Contact
 
     public function execute()
     {
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
-        $resultPage = $this->resultPageFactory->create();
-        $resultPage->setActiveMenu('Lof_Mautic::contacts')
-            ->addBreadcrumb(__('Mautic'), __('Mautic'))
-            ->addBreadcrumb(__('Contacts'), __('Contacts'));
-
+        $resultRedirect = $this->resultRedirectFactory->create();
+        
         try {
-            $response = $this->customerContact->getList();
-            echo "<pre>";
-            print_r($response);
-            die();
+            $this->customerContact->processSyncFromMautic();
+            $this->messageManager->addSuccessMessage(__('Synced Contacts.'));
         } catch(\Exception $e) {
             // display error message
             $this->messageManager->addError($e->getMessage());
         }
-        return $resultPage;
+        return $resultRedirect->setPath('*/*/');
     }
 }

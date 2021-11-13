@@ -43,7 +43,6 @@ class CustomerSaveAfter implements ObserverInterface
 
         $customer = $observer->getCustomer();
         if ($customer->getId() && $this->helper->isCustomerIntegrationEnabled()) {
-            die($customer->getId());
             $this->customerContact->exportCustomer($customer);
         }
         return $this;
