@@ -77,7 +77,7 @@ class Data extends AbstractHelper
     /**
      * Contact integration status path
      */
-    const CONTACT_INTEGRATION_STATUS = 'contact/enable';
+    const CONTACT_INTEGRATION_STATUS = 'contact/enabled';
 
     protected $_storeManager;
     protected $_directoryList;

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../lib/internal/Magento/Framework/Event/etc/events.xsd">
+    <event name="adminhtml_customer_save_after">
+        <observer name="mautic_adminhtml_customer_save_after" instance="Lof\Mautic\Observer\CustomerSaveAfter"/>
+    </event>
+</config>
