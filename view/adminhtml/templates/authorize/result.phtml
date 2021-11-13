@@ -1,0 +1,25 @@
+<?php $result = $this->getResult();?>
+<?php if ($result=='success'):?>
+  <h2><?= __("Process completed successfully!");?></h2>
+  <p><?= __("Access token data have been stored in database!");?></p>
+  <p><?= __('You may')?> <a href="#" onclick="window.close();return;"><?= __('close')?></a> <?= __('this window now.');?></p>
+<?php else:?>
+
+<h2><?= __("Something went wrong!");?></h2>
+
+<?php if ($this->getAuthErrors()):
+        foreach ($this->getAuthErrors() as $error) {
+        echo $error['message'] . "</br>";
+        }
+    endif;
+?>
+
+<p><?= __("Please check Mautic authorization credentials!");?></p>
+<p><a href="#" onclick="window.close();return;"><?= __('Close')?></a> <?= __('this window now.');?></p>
+
+<script>
+    setTimeout(function() {
+        window.close();return;
+    }, 5000);
+</script>
+<?php endif;?>

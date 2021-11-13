@@ -58,47 +58,47 @@ class AuthorizeButton extends \Magento\Config\Block\System\Config\Form\Field
         return $this->_toHtml();
     }
 
-    public function getAuthorizeUrl()
+    public function getAuthorizeUrl($version = 1)
     {
-        return $this->getUrl('mautic/configurable/authorize');
+        return $version == 2 ?$this->getUrl('mautic/configurable/authorize', ["version" => "2"]) : $this->getUrl('mautic/configurable/authorize');
     }
 
-    public function getButtonHtml()
+    public function getButtonHtml($isReset = false)
     {
         $button = $this->getLayout()->createBlock(
             'Magento\Backend\Block\Widget\Button'
         )->setData(
             [
                 'id' => 'mautic_configure_webhooks',
-                'label' => __('Authorize API'),
+                'label' => $isReset ? __('Re Authorize API'): __('Authorize API'),
             ]
         );
 
         return $button->toHtml();
     }
 
-    public function getResetButtonHtml()
+    public function getButtonV2Html($isReset = false)
     {
         $button = $this->getLayout()->createBlock(
             'Magento\Backend\Block\Widget\Button'
         )->setData(
             [
-                'id' => 'mautic_configure_webhooks',
-                'label' => __('Re Authorize API'),
+                'id' => 'mautic_configure_webhooks_v2',
+                'label' => $isReset ? __('Re Authorize API'): __('Authorize API'),
             ]
         );
 
         return $button->toHtml();
     }
 
-    public function getDisabledButtonHtml()
+    public function getDisabledButtonHtml($isReset = false)
     {
         $button = $this->getLayout()->createBlock(
             'Magento\Backend\Block\Widget\Button'
         )->setData(
             [
                 'id' => 'mautic_configure_webhooks',
-                'label' => __('Authorize API'),
+                'label' => $isReset ? __('Re Authorize API'): __('Authorize API'),
                 'disabled' => true
             ]
         );

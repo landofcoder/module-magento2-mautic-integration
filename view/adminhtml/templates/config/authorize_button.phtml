@@ -11,6 +11,14 @@
             jQuery("#row_lofmautic_general_authorize").show()
         }
 
+        if(defaultVal == "OAuth2") {
+            jQuery("#mautic_configure_webhooks").hide()
+            jQuery("#mautic_configure_webhooks_v2").show()
+        } else if(defaultVal == "OAuth1a" ) {
+            jQuery("#mautic_configure_webhooks").show()
+            jQuery("#mautic_configure_webhooks_v2").hide()
+        }
+
         jQuery('#lofmautic_general_oauth_version').on("change", function() {
             const currentval = jQuery(this).val();
             if(currentval == "OAuth1a" || currentval == "OAuth2") {
@@ -18,6 +26,19 @@
             } else {
                 jQuery("#row_lofmautic_general_authorize").hide()
             }
+
+            if(currentval == "OAuth2") {
+                jQuery("#mautic_configure_webhooks").hide()
+                jQuery("#mautic_configure_webhooks_v2").show()
+            } else if(currentval == "OAuth1a" ) {
+                jQuery("#mautic_configure_webhooks").show()
+                jQuery("#mautic_configure_webhooks_v2").hide()
+            }
+        })
+
+        jQuery('#mautic_configure_webhooks_v2').click(function ()
+        {
+            window.open('<?= $this->getAuthorizeUrl(2) ?>', 'mautic_authorize', 'width=400,height=400')
         })
 
         jQuery('#mautic_configure_webhooks').click(function ()
@@ -81,6 +102,8 @@
 </script>
 
 <?php echo $block->getButtonHtml() ?>
+<?php echo $block->getButtonV2Html() ?>
+
 <span class="mautic-webhooks-config-admin" id="progress">
     <img class="processing" hidden="hidden" alt="Configuring" style="margin:0 5px" src="<?php echo $block->getViewFileUrl('images/process_spinner.gif') ?>"/>
     <img class="configured" hidden="hidden" alt="Configured" style="margin:-3px 5px" src="<?php echo $block->getViewFileUrl('images/rule_component_apply.gif') ?>"/>
@@ -90,5 +113,5 @@
     </div>
 </span>
 <p class="note">
-    <span><?php echo __('A webhook will automatically be configured in your Mautic account which will point to <a href="%1" target="_blank" rel="noopener noreferrer">%1</a>. Please ensure that this link is externally accessible. Existing webhook configurations will be upgraded. A reconfigure is necessary when you change your Mautic API keys or your website Base URL.', $block->getAuthorizeUrl()); ?></span>
+    <span><?php echo __('A webhook will automatically be configured in your Mautic account which will point to: <br/>OAuth 1 <a href="%1" target="_blank" rel="noopener noreferrer">%1</a> and <br/>OAuth 2: <a href="%2" target="_blank" rel="noopener noreferrer">%2</a>. Please ensure that this link is externally accessible. Existing webhook configurations will be upgraded. A reconfigure is necessary when you change your Mautic API keys or your website Base URL.', $block->getAuthorizeUrl(), $block->getAuthorizeUrl(2)); ?></span>
 </p>
