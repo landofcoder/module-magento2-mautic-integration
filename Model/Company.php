@@ -26,7 +26,7 @@ class Company extends \Magento\Framework\Model\AbstractModel implements CompanyI
      */
     public function getCompanyId()
     {
-        return $this->_get(self::COMPANY_ID);
+        return $this->getData(self::COMPANY_ID);
     }
 
     /**
@@ -45,7 +45,7 @@ class Company extends \Magento\Framework\Model\AbstractModel implements CompanyI
      */
     public function getCompanyname()
     {
-        return $this->_get(self::COMPANYNAME);
+        return $this->getData(self::COMPANYNAME);
     }
 
     /**
@@ -64,7 +64,7 @@ class Company extends \Magento\Framework\Model\AbstractModel implements CompanyI
      */
     public function getMauticCompanyId()
     {
-        return $this->_get(self::MAUTIC_COMPANY_ID);
+        return $this->getData(self::MAUTIC_COMPANY_ID);
     }
 
     /**
@@ -83,7 +83,7 @@ class Company extends \Magento\Framework\Model\AbstractModel implements CompanyI
      */
     public function getCompanyaddress1()
     {
-        return $this->_get(self::COMPANYADDRESS1);
+        return $this->getData(self::COMPANYADDRESS1);
     }
 
     /**
@@ -102,7 +102,7 @@ class Company extends \Magento\Framework\Model\AbstractModel implements CompanyI
      */
     public function getCompanyaddress2()
     {
-        return $this->_get(self::COMPANYADDRESS2);
+        return $this->getData(self::COMPANYADDRESS2);
     }
 
     /**
@@ -121,7 +121,7 @@ class Company extends \Magento\Framework\Model\AbstractModel implements CompanyI
      */
     public function getCompanycity()
     {
-        return $this->_get(self::COMPANYCITY);
+        return $this->getData(self::COMPANYCITY);
     }
 
     /**
@@ -140,7 +140,7 @@ class Company extends \Magento\Framework\Model\AbstractModel implements CompanyI
      */
     public function getCompanystate()
     {
-        return $this->_get(self::COMPANYSTATE);
+        return $this->getData(self::COMPANYSTATE);
     }
 
     /**
@@ -159,7 +159,7 @@ class Company extends \Magento\Framework\Model\AbstractModel implements CompanyI
      */
     public function getCompanycountry()
     {
-        return $this->_get(self::COMPANYCOUNTRY);
+        return $this->getData(self::COMPANYCOUNTRY);
     }
 
     /**
@@ -178,7 +178,7 @@ class Company extends \Magento\Framework\Model\AbstractModel implements CompanyI
      */
     public function getCompanyzipcode()
     {
-        return $this->_get(self::COMPANYZIPCODE);
+        return $this->getData(self::COMPANYZIPCODE);
     }
 
     /**
@@ -197,7 +197,7 @@ class Company extends \Magento\Framework\Model\AbstractModel implements CompanyI
      */
     public function getCompanyemail()
     {
-        return $this->_get(self::COMPANYEMAIL);
+        return $this->getData(self::COMPANYEMAIL);
     }
 
     /**
@@ -216,7 +216,7 @@ class Company extends \Magento\Framework\Model\AbstractModel implements CompanyI
      */
     public function getCompanyindustry()
     {
-        return $this->_get(self::COMPANYINDUSTRY);
+        return $this->getData(self::COMPANYINDUSTRY);
     }
 
     /**
@@ -235,7 +235,7 @@ class Company extends \Magento\Framework\Model\AbstractModel implements CompanyI
      */
     public function getCompanynumberOfEmployees()
     {
-        return $this->_get(self::COMPANYNUMBER_OF_EMPLOYEES);
+        return $this->getData(self::COMPANYNUMBER_OF_EMPLOYEES);
     }
 
     /**
@@ -254,7 +254,7 @@ class Company extends \Magento\Framework\Model\AbstractModel implements CompanyI
      */
     public function getCompanyphone()
     {
-        return $this->_get(self::COMPANYPHONE);
+        return $this->getData(self::COMPANYPHONE);
     }
 
     /**
@@ -273,7 +273,7 @@ class Company extends \Magento\Framework\Model\AbstractModel implements CompanyI
      */
     public function getCompanywebsite()
     {
-        return $this->_get(self::COMPANYWEBSITE);
+        return $this->getData(self::COMPANYWEBSITE);
     }
 
     /**
@@ -292,7 +292,7 @@ class Company extends \Magento\Framework\Model\AbstractModel implements CompanyI
      */
     public function getCompanyannualRevenue()
     {
-        return $this->_get(self::COMPANYANNUAL_REVENUE);
+        return $this->getData(self::COMPANYANNUAL_REVENUE);
     }
 
     /**
@@ -311,7 +311,7 @@ class Company extends \Magento\Framework\Model\AbstractModel implements CompanyI
      */
     public function getCompanydescription()
     {
-        return $this->_get(self::COMPANYDESCRIPTION);
+        return $this->getData(self::COMPANYDESCRIPTION);
     }
 
     /**

@@ -26,7 +26,7 @@ class Contact extends \Magento\Framework\Model\AbstractModel implements ContactI
      */
     public function getContactId()
     {
-        return $this->_get(self::CONTACT_ID);
+        return $this->getData(self::CONTACT_ID);
     }
 
     /**
@@ -45,7 +45,7 @@ class Contact extends \Magento\Framework\Model\AbstractModel implements ContactI
      */
     public function getMauticContactId()
     {
-        return $this->_get(self::MAUTIC_CONTACT_ID);
+        return $this->getData(self::MAUTIC_CONTACT_ID);
     }
 
     /**
@@ -64,7 +64,7 @@ class Contact extends \Magento\Framework\Model\AbstractModel implements ContactI
      */
     public function getCustomerId()
     {
-        return $this->_get(self::CUSTOMER_ID);
+        return $this->getData(self::CUSTOMER_ID);
     }
 
     /**
@@ -83,7 +83,7 @@ class Contact extends \Magento\Framework\Model\AbstractModel implements ContactI
      */
     public function getFacebook()
     {
-        return $this->_get(self::FACEBOOK);
+        return $this->getData(self::FACEBOOK);
     }
 
     /**
@@ -102,7 +102,7 @@ class Contact extends \Magento\Framework\Model\AbstractModel implements ContactI
      */
     public function getFoursquare()
     {
-        return $this->_get(self::FOURSQUARE);
+        return $this->getData(self::FOURSQUARE);
     }
 
     /**
@@ -121,7 +121,7 @@ class Contact extends \Magento\Framework\Model\AbstractModel implements ContactI
      */
     public function getInstagram()
     {
-        return $this->_get(self::INSTAGRAM);
+        return $this->getData(self::INSTAGRAM);
     }
 
     /**
@@ -140,7 +140,7 @@ class Contact extends \Magento\Framework\Model\AbstractModel implements ContactI
      */
     public function getLinkedin()
     {
-        return $this->_get(self::LINKEDIN);
+        return $this->getData(self::LINKEDIN);
     }
 
     /**
@@ -159,7 +159,7 @@ class Contact extends \Magento\Framework\Model\AbstractModel implements ContactI
      */
     public function getSkype()
     {
-        return $this->_get(self::SKYPE);
+        return $this->getData(self::SKYPE);
     }
 
     /**
@@ -178,7 +178,7 @@ class Contact extends \Magento\Framework\Model\AbstractModel implements ContactI
      */
     public function getTwitter()
     {
-        return $this->_get(self::TWITTER);
+        return $this->getData(self::TWITTER);
     }
 
     /**
@@ -197,7 +197,7 @@ class Contact extends \Magento\Framework\Model\AbstractModel implements ContactI
      */
     public function getHaspurchased()
     {
-        return $this->_get(self::HASPURCHASED);
+        return $this->getData(self::HASPURCHASED);
     }
 
     /**
@@ -216,7 +216,7 @@ class Contact extends \Magento\Framework\Model\AbstractModel implements ContactI
      */
     public function getProspectOrCustomer()
     {
-        return $this->_get(self::PROSPECT_OR_CUSTOMER);
+        return $this->getData(self::PROSPECT_OR_CUSTOMER);
     }
 
     /**
@@ -235,7 +235,7 @@ class Contact extends \Magento\Framework\Model\AbstractModel implements ContactI
      */
     public function getStage()
     {
-        return $this->_get(self::STAGE);
+        return $this->getData(self::STAGE);
     }
 
     /**
@@ -254,7 +254,7 @@ class Contact extends \Magento\Framework\Model\AbstractModel implements ContactI
      */
     public function getTags()
     {
-        return $this->_get(self::TAGS);
+        return $this->getData(self::TAGS);
     }
 
     /**
@@ -273,7 +273,7 @@ class Contact extends \Magento\Framework\Model\AbstractModel implements ContactI
      */
     public function getWebsite()
     {
-        return $this->_get(self::WEBSITE);
+        return $this->getData(self::WEBSITE);
     }
 
     /**
@@ -292,7 +292,7 @@ class Contact extends \Magento\Framework\Model\AbstractModel implements ContactI
      */
     public function getB2bOrB2c()
     {
-        return $this->_get(self::B2B_OR_B2C);
+        return $this->getData(self::B2B_OR_B2C);
     }
 
     /**
@@ -311,7 +311,7 @@ class Contact extends \Magento\Framework\Model\AbstractModel implements ContactI
      */
     public function getCrmId()
     {
-        return $this->_get(self::CRM_ID);
+        return $this->getData(self::CRM_ID);
     }
 
     /**
