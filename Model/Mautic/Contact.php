@@ -11,64 +11,9 @@ use Magento\Framework\Registry;
 class Contact extends AbstractApi
 {
     /**
-     * Mautic address 1 field
+     * @var string
      */
-    const MAUTIC_CUSTOMER_ADRESS1 = 'address1';
-
-    /**
-     * Mautic address 2 field
-     */
-    const MAUTIC_CUSTOMER_ADRESS2 = 'address2';
-
-    /**
-     * Mautic postcode field
-     */
-    const MAUTIC_CUSTOMER_ZIPCODE = 'zipcode';
-
-    /**
-     * Mautic country field
-     */
-    const MAUTIC_CUSTOMER_COUNTRY = 'country';
-
-    /**
-     * Mautic region field
-     */
-    const MAUTIC_CUSTOMER_STATE = 'state';
-
-    /**
-     * Mautic city field
-     */
-    const MAUTIC_CUSTOMER_CITY = 'city';
-
-    /**
-     * Mautic company field
-     */
-    const MAUTIC_CUSTOMER_COMPANY = 'company';
-
-    /**
-     * Mautic phone field
-     */
-    const MAUTIC_CUSTOMER_PHONE = 'phone';
-
-    /**
-     * @var \Mautic\Api\Api
-     */
-    protected $_contactApi;
-
-    /**
-     * @var \Magento\Customer\Model\CustomerFactory
-     */
-    protected $customerFactory;
-
-    /**
-     * @var \Lof\Mautic\Model\Mautic
-     */
-    protected $mauticModel;
-
-    /**
-     * @var \Magento\Directory\Model\CountryFactory
-     */
-    protected $countryFactory;
+    protected $_api_type = "contacts";
 
     /**
      * @var \Lof\Mautic\Model\ContactFactory
@@ -94,10 +39,7 @@ class Contact extends AbstractApi
         \Lof\Mautic\Model\Mautic $mauticModel,
         \Lof\Mautic\Model\ContactFactory $contactFactory
     ) {
-        parent::__construct($context, $registry);
-        $this->customerFactory = $customerFactory;
-        $this->mauticModel = $mauticModel;
-        $this->countryFactory = $countryFactory;
+        parent::__construct($context, $registry, $customerFactory, $countryFactory, $mauticModel );
         $this->contactFactory = $contactFactory;
     }
 
@@ -153,7 +95,7 @@ class Contact extends AbstractApi
 
     /**
      * get customer by email
-     * 
+     *
      * @param string $email
      * @return mixed|Object|array|null
      */
@@ -163,19 +105,8 @@ class Contact extends AbstractApi
             ->addAttributeToSelect('*')
             ->addFieldToFilter("email", $email)
             ->getFirstItem();
- 
-        return $customer;
-    }
 
-    /**
-     * Export contacts from customer
-     *
-     * @return array|mixed|string|null
-     */
-    public function getList($filter = "", $start = 0, $limit = 10, $orderBy = "", $orderByDir = "DESC")
-    {
-        $response = $this->_getContactApi()->getList($filter, $start, $limit, $orderBy, $orderByDir);
-        return $response;
+        return $customer;
     }
 
     /**
@@ -191,7 +122,13 @@ class Contact extends AbstractApi
         if ($address) {
             $data = array_merge($data, $address);
         }
-        $response = $this->_getContactApi()->create($data);
+        /**
+         * Mapping mautic custom fields for customer custom attributes
+         */
+        $customFieldsMapping = $this->mappingCustomerCustomAttributes($customer);
+        $data = array_merge($data, $customFieldsMapping);
+
+        $response = $this->getCurrentMauticApi()->create($data);
 
         if (isset($response['errors']) && count($response['errors'])) {
             $this->mauticModel
@@ -303,21 +240,19 @@ class Contact extends AbstractApi
                 self::MAUTIC_CUSTOMER_PHONE => $address->getTelephone()
             );
         }
-
         return false;
     }
 
     /**
-     * Retrieve contact api
+     * mapping customer custom attributes with mautic contact custom fields
      *
-     * @return \Mautic\Api\Api
+     * @param mixed|Object|array $customer
+     * @return array
      */
-    protected function _getContactApi()
+    protected function mappingCustomerCustomAttributes($customer)
     {
-        if ($this->_contactApi == null) {
-            $mautic = $this->mauticModel;
-            $this->_contactApi = $mautic->getApi('contacts');
-        }
-        return $this->_contactApi;
+        $dataMapping = [];
+        //Get custom mapping fields from module config data
+        return $dataMapping;
     }
 }

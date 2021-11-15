@@ -8,62 +8,12 @@ use Lof\Mautic\Model\Config\Source\OauthVersion;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;
 
-class Company extends \Magento\Framework\Model\AbstractModel
+class Company extends AbstractApi
 {
     /**
-     * Mautic address 1 field
+     * @var string
      */
-    const MAUTIC_CUSTOMER_ADRESS1 = 'address1';
-
-    /**
-     * Mautic address 2 field
-     */
-    const MAUTIC_CUSTOMER_ADRESS2 = 'address2';
-
-    /**
-     * Mautic postcode field
-     */
-    const MAUTIC_CUSTOMER_ZIPCODE = 'zipcode';
-
-    /**
-     * Mautic country field
-     */
-    const MAUTIC_CUSTOMER_COUNTRY = 'country';
-
-    /**
-     * Mautic region field
-     */
-    const MAUTIC_CUSTOMER_STATE = 'state';
-
-    /**
-     * Mautic city field
-     */
-    const MAUTIC_CUSTOMER_CITY = 'city';
-
-    /**
-     * Mautic company field
-     */
-    const MAUTIC_CUSTOMER_COMPANY = 'company';
-
-    /**
-     * Mautic phone field
-     */
-    const MAUTIC_CUSTOMER_PHONE = 'phone';
-
-    /**
-     * @var \Mautic\Api\Api
-     */
-    protected $_contactApi;
-
-    /**
-     * @var \Magento\Customer\Model\CustomerFactory
-     */
-    protected $customerFactory;
-
-    /**
-     * @var \Lof\Mautic\Model\Mautic
-     */
-    protected $mauticModel;
+    protected $_api_type = "companies";
 
     /**
      * @var \Magento\Directory\Model\CountryFactory
@@ -84,54 +34,41 @@ class Company extends \Magento\Framework\Model\AbstractModel
         \Magento\Directory\Model\CountryFactory $countryFactory,
         \Lof\Mautic\Model\Mautic $mauticModel
     ) {
-        parent::__construct($context, $registry);
-        $this->customerFactory = $customerFactory;
-        $this->mauticModel = $mauticModel;
+        parent::__construct($context, $registry, $customerFactory, $countryFactory, $mauticModel );
         $this->countryFactory = $countryFactory;
     }
 
     /**
-     * Export contacts from customer
+     * Export contacts from company
      *
      * @return bool
      */
     public function export()
     {
-        $customers = $this->customerFactory->create()->getCollection()
+        $companies = $this->customerFactory->create()->getCollection()
             ->addAttributeToSelect('*');
 
-        foreach ($customers as $customer) {
-            $this->exportCustomer($customer);
+        foreach ($companies as $company) {
+            $this->exportCompany($company);
         }
 
         return true;
     }
 
     /**
-     * Export contacts from customer
+     * Export company
      *
-     * @return array|mixed|string|null
-     */
-    public function getList($filter = "", $start = 0, $limit = 10, $orderBy = "", $orderByDir = "DESC")
-    {
-        $response = $this->_getContactApi()->getList($filter, $start, $limit, $orderBy, $orderByDir);
-        return $response;
-    }
-
-    /**
-     * Export customer
-     *
-     * @param \Magento\Customer\Model\Customer $customer
+     * @param Object|array
      * @return bool
      */
-    public function exportCustomer($customer)
+    public function exportCompany($company)
     {
-        $data = $customer->getData();
-        $address = $this->_getCustomerAddress($customer);
+        $data = $company->getData();
+        $address = $this->_getCustomerAddress($company);
         if ($address) {
             $data = array_merge($data, $address);
         }
-        $response = $this->_getContactApi()->create($data);
+        $response = $this->getCurrentMauticApi()->create($data);
 
         if (isset($response['errors']) && count($response['errors'])) {
             $this->mauticModel
@@ -178,19 +115,5 @@ class Company extends \Magento\Framework\Model\AbstractModel
         }
 
         return false;
-    }
-
-    /**
-     * Retrieve contact api
-     *
-     * @return \Mautic\Api\Api
-     */
-    protected function _getContactApi()
-    {
-        if ($this->_contactApi == null) {
-            $mautic = $this->mauticModel;
-            $this->_contactApi = $mautic->getApi('companies');
-        }
-        return $this->_contactApi;
     }
 }

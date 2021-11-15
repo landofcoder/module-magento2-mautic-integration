@@ -8,62 +8,12 @@ use Lof\Mautic\Model\Config\Source\OauthVersion;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;
 
-class Segment extends \Magento\Framework\Model\AbstractModel
+class Segment extends AbstractApi
 {
     /**
-     * Mautic address 1 field
+     * @var string
      */
-    const MAUTIC_CUSTOMER_ADRESS1 = 'address1';
-
-    /**
-     * Mautic address 2 field
-     */
-    const MAUTIC_CUSTOMER_ADRESS2 = 'address2';
-
-    /**
-     * Mautic postcode field
-     */
-    const MAUTIC_CUSTOMER_ZIPCODE = 'zipcode';
-
-    /**
-     * Mautic country field
-     */
-    const MAUTIC_CUSTOMER_COUNTRY = 'country';
-
-    /**
-     * Mautic region field
-     */
-    const MAUTIC_CUSTOMER_STATE = 'state';
-
-    /**
-     * Mautic city field
-     */
-    const MAUTIC_CUSTOMER_CITY = 'city';
-
-    /**
-     * Mautic company field
-     */
-    const MAUTIC_CUSTOMER_COMPANY = 'company';
-
-    /**
-     * Mautic phone field
-     */
-    const MAUTIC_CUSTOMER_PHONE = 'phone';
-
-    /**
-     * @var \Mautic\Api\Api
-     */
-    protected $_contactApi;
-
-    /**
-     * @var \Magento\Customer\Model\CustomerFactory
-     */
-    protected $customerFactory;
-
-    /**
-     * @var \Lof\Mautic\Model\Mautic
-     */
-    protected $mauticModel;
+    protected $_api_type = "segments";
 
     /**
      * @var \Magento\Directory\Model\CountryFactory
@@ -84,9 +34,7 @@ class Segment extends \Magento\Framework\Model\AbstractModel
         \Magento\Directory\Model\CountryFactory $countryFactory,
         \Lof\Mautic\Model\Mautic $mauticModel
     ) {
-        parent::__construct($context, $registry);
-        $this->customerFactory = $customerFactory;
-        $this->mauticModel = $mauticModel;
+        parent::__construct($context, $registry, $customerFactory, $countryFactory, $mauticModel );
         $this->countryFactory = $countryFactory;
     }
 
@@ -105,17 +53,6 @@ class Segment extends \Magento\Framework\Model\AbstractModel
         }
 
         return true;
-    }
-
-    /**
-     * Export contacts from customer
-     *
-     * @return array|mixed|string|null
-     */
-    public function getList($filter = "", $start = 0, $limit = 10, $orderBy = "", $orderByDir = "DESC")
-    {
-        $response = $this->_getContactApi()->getList($filter, $start, $limit, $orderBy, $orderByDir);
-        return $response;
     }
 
     /**

@@ -7,6 +7,7 @@
 			</general>
             <contact>
                 <enabled>0</enabled>
+                <mapping_fields></mapping_fields>
             </contact>
             <sync_mautic>
                 <contact_filter>*</contact_filter>
