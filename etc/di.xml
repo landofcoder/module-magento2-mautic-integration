@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 	<preference for="Lof\Mautic\Api\ContactRepositoryInterface" type="Lof\Mautic\Model\ContactRepository"/>
-	<preference for="Lof\Mautic\Api\Data\ContactInterface" type="Lof\Mautic\Model\Data\Contact"/>
+	<preference for="Lof\Mautic\Api\Data\ContactInterface" type="Lof\Mautic\Model\Contact"/>
 	<preference for="Lof\Mautic\Api\Data\ContactSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
 	<virtualType name="Lof\Mautic\Model\ResourceModel\Contact\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
 		<arguments>
@@ -18,7 +18,7 @@
 		</arguments>
 	</type>
 	<preference for="Lof\Mautic\Api\CompanyRepositoryInterface" type="Lof\Mautic\Model\CompanyRepository"/>
-	<preference for="Lof\Mautic\Api\Data\CompanyInterface" type="Lof\Mautic\Model\Data\Company"/>
+	<preference for="Lof\Mautic\Api\Data\CompanyInterface" type="Lof\Mautic\Model\Company"/>
 	<preference for="Lof\Mautic\Api\Data\CompanySearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
 	<virtualType name="Lof\Mautic\Model\ResourceModel\Company\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
 		<arguments>
@@ -27,11 +27,19 @@
 		</arguments>
 	</virtualType>
 
+    <preference for="Lof\Mautic\Api\VisitorRepositoryInterface" type="Lof\Mautic\Model\VisitorRepository"/>
+    <preference for="Lof\Mautic\Api\Data\VisitorInterface" type="Lof\Mautic\Model\Data\Visitor"/>
+
     <type name="Magento\Framework\Console\CommandList">
         <arguments>
             <argument name="commands" xsi:type="array">
                 <item name="mautic_bridge_contact_import" xsi:type="object">Lof\Mautic\Console\Command\ContactImportCommand</item>
                 <item name="mautic_bridge_company_import" xsi:type="object">Lof\Mautic\Console\Command\CompanyImportCommand</item>
+                <item name="mautic_export_contact_all" xsi:type="object">Lof\Mautic\Console\Command\ExportAllCommand</item>
+                <item name="mautic_export_customer" xsi:type="object">Lof\Mautic\Console\Command\ExportAllCustomerCommand</item>
+                <item name="mautic_export_order" xsi:type="object">Lof\Mautic\Console\Command\ExportAllOrderCommand</item>
+                <item name="mautic_export_review" xsi:type="object">Lof\Mautic\Console\Command\ExportAllReviewCommand</item>
+                <item name="mautic_export_subscriber" xsi:type="object">Lof\Mautic\Console\Command\ExportAllSubscriberCommand</item>
             </argument>
         </arguments>
     </type>

@@ -40,7 +40,7 @@
 		<settings>
 			<label>General</label>
 		</settings>
-		<field name="companyname" formElement="textarea" sortOrder="160">
+		<field name="companyname" formElement="input" sortOrder="160">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -48,14 +48,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">companyname</label>
+				<label translate="true">Company Name</label>
 				<dataScope>companyname</dataScope>
 				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
+					<rule name="required-entry" xsi:type="boolean">true</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="mautic_company_id" formElement="textarea" sortOrder="170">
+		<field name="mautic_company_id" formElement="input" sortOrder="170">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -63,14 +63,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">mautic_company_id</label>
+				<label translate="true">Mautic Company Id</label>
 				<dataScope>mautic_company_id</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="companyaddress1" formElement="textarea" sortOrder="180">
+		<field name="companyaddress1" formElement="input" sortOrder="180">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -78,14 +78,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">companyaddress1</label>
+				<label translate="true">Address 1</label>
 				<dataScope>companyaddress1</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="companyaddress2" formElement="textarea" sortOrder="190">
+		<field name="companyaddress2" formElement="input" sortOrder="190">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -93,14 +93,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">companyaddress2</label>
+				<label translate="true">Address 2</label>
 				<dataScope>companyaddress2</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="companycity" formElement="textarea" sortOrder="200">
+		<field name="companycity" formElement="input" sortOrder="200">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -108,14 +108,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">companycity</label>
+				<label translate="true">City</label>
 				<dataScope>companycity</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="companystate" formElement="textarea" sortOrder="210">
+		<field name="companystate" formElement="input" sortOrder="210">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -123,14 +123,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">companystate</label>
+				<label translate="true">State</label>
 				<dataScope>companystate</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="companycountry" formElement="textarea" sortOrder="220">
+		<field name="companycountry" formElement="input" sortOrder="220">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -138,14 +138,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">companycountry</label>
+				<label translate="true">Country</label>
 				<dataScope>companycountry</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="companyzipcode" formElement="textarea" sortOrder="230">
+		<field name="companyzipcode" formElement="input" sortOrder="230">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -153,14 +153,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">companyzipcode</label>
+				<label translate="true">Zipcode / Postcode</label>
 				<dataScope>companyzipcode</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="companyemail" formElement="textarea" sortOrder="240">
+		<field name="companyemail" formElement="input" sortOrder="240">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -168,14 +168,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">companyemail</label>
+				<label translate="true">Company Email</label>
 				<dataScope>companyemail</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="companyindustry" formElement="textarea" sortOrder="250">
+		<field name="companyindustry" formElement="input" sortOrder="250">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -183,14 +183,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">companyindustry</label>
+				<label translate="true">Industry</label>
 				<dataScope>companyindustry</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="companynumber_of_employees" formElement="textarea" sortOrder="260">
+		<field name="companynumber_of_employees" formElement="input" sortOrder="260">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -198,14 +198,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">companynumber_of_employees</label>
+				<label translate="true">Number of Employees</label>
 				<dataScope>companynumber_of_employees</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="companyphone" formElement="textarea" sortOrder="270">
+		<field name="companyphone" formElement="input" sortOrder="270">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -213,14 +213,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">companyphone</label>
+				<label translate="true">Phone Number</label>
 				<dataScope>companyphone</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="companywebsite" formElement="textarea" sortOrder="280">
+		<field name="companywebsite" formElement="input" sortOrder="280">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -228,14 +228,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">companywebsite</label>
+				<label translate="true">Website Url</label>
 				<dataScope>companywebsite</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="companyannual_revenue" formElement="textarea" sortOrder="290">
+		<field name="companyannual_revenue" formElement="input" sortOrder="290">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -243,14 +243,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">companyannual_revenue</label>
+				<label translate="true">Anyannual Revenue</label>
 				<dataScope>companyannual_revenue</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="companydescription" formElement="textarea" sortOrder="300">
+		<field name="companydescription" formElement="input" sortOrder="300">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -258,7 +258,7 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">companydescription</label>
+				<label translate="true">Company Description</label>
 				<dataScope>companydescription</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>

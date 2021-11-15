@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace Lof\Mautic\Controller\Adminhtml;
 
-abstract class Contact extends \Magento\Backend\App\Action
+abstract class Company extends \Magento\Backend\App\Action
 {
 
     protected $_coreRegistry;
@@ -35,7 +35,7 @@ abstract class Contact extends \Magento\Backend\App\Action
     {
         $resultPage->setActiveMenu(self::ADMIN_RESOURCE)
             ->addBreadcrumb(__('Mautic'), __('Mautic'))
-            ->addBreadcrumb(__('Contact'), __('Contact'));
+            ->addBreadcrumb(__('Company'), __('Company'));
         return $resultPage;
     }
 }

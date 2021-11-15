@@ -4,7 +4,7 @@ namespace Lof\Mautic\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 
-class CustomerSaveAfter implements ObserverInterface
+class CompanySaveAfter implements ObserverInterface
 {
     /**
      * @var \Lof\Mautic\Helper\Data
@@ -12,27 +12,27 @@ class CustomerSaveAfter implements ObserverInterface
     protected $helper;
 
     /**
-     * @var \Lof\Mautic\Model\Mautic\Contact
+     * @var \Lof\Mautic\Model\Mautic\Company
      */
-    protected $customerContact;
+    protected $companyContact;
 
     /**
      * Construct customer save after observer
      *
      * @param \Lof\Mautic\Helper\Data $helper
-     * @param \Lof\Mautic\Model\Mautic\Contact $customerContact
+     * @param \Lof\Mautic\Model\Mautic\Company $companyContact
      */
     public function __construct(
         \Lof\Mautic\Helper\Data $helper,
-        \Lof\Mautic\Model\Mautic\Contact $customerContact
+        \Lof\Mautic\Model\Mautic\Company $companyContact
     )
     {
         $this->helper = $helper;
-        $this->customerContact = $customerContact;
+        $this->companyContact = $companyContact;
     }
 
     /**
-     * Sync customer data info to mautic
+     * Sync company data to mautic
      *
      * @param \Magento\Framework\Event\Observer $observer
      * @return self
@@ -41,9 +41,9 @@ class CustomerSaveAfter implements ObserverInterface
     {
         if (!$this->helper->isEnabled()) return $this;
 
-        $customer = $observer->getCustomer();
-        if ($customer->getId() && $this->helper->isCustomerIntegrationEnabled()) {
-            $this->customerContact->exportCustomer($customer);
+        $companyModel = $observer->getCompany();
+        if ($companyModel->getCompanyId() && $this->helper->isCompanyIntegrationEnabled()) {
+            $this->companyContact->exportCompany($companyModel);
         }
         return $this;
     }

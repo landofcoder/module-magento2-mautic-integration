@@ -4,7 +4,7 @@ namespace Lof\Mautic\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 
-class CustomerSaveAfter implements ObserverInterface
+class ContactSaveAfter implements ObserverInterface
 {
     /**
      * @var \Lof\Mautic\Helper\Data
@@ -32,7 +32,7 @@ class CustomerSaveAfter implements ObserverInterface
     }
 
     /**
-     * Sync customer data info to mautic
+     * Sync Customer Contact to mautic
      *
      * @param \Magento\Framework\Event\Observer $observer
      * @return self
@@ -41,9 +41,19 @@ class CustomerSaveAfter implements ObserverInterface
     {
         if (!$this->helper->isEnabled()) return $this;
 
-        $customer = $observer->getCustomer();
-        if ($customer->getId() && $this->helper->isCustomerIntegrationEnabled()) {
-            $this->customerContact->exportCustomer($customer);
+        $contactModel = $observer->getContact();
+        if ($contactModel->getContactId() && $this->helper->isCustomerIntegrationEnabled()) {
+            $customer = $this->customerContact->getCustomerModel()->load((int)$contactModel->getCustomerId());
+            if ($customer && $customer->getId()) {
+
+                $customData = $contactModel->getData();
+                unset($customData["customer_id"]);
+                unset($customData["contact_id"]);
+                unset($customData["created_at"]);
+                unset($customData["updated_at"]);
+
+                $this->customerContact->exportCustomer($customer, $customData);
+            }
         }
         return $this;
     }

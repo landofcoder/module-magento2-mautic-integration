@@ -138,6 +138,26 @@ abstract class AbstractApi extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
+     * Get customer model
+     *
+     * @return \Magento\Customer\Model\Customer
+     */
+    public function getCustomerModel()
+    {
+        return $this->customerFactory->create();
+    }
+
+    /**
+     * Get mautic model
+     *
+     * @return \Lof\Mautic\Model\Mautic
+     */
+    public function getMauticModel()
+    {
+        return $this->mauticModel;
+    }
+
+    /**
      * @return void
      */
     public function processSyncFromMautic()

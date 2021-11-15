@@ -13,6 +13,18 @@ class Contact extends \Magento\Framework\Model\AbstractModel implements ContactI
 {
 
     /**
+     * @var string
+     */
+    protected $_eventPrefix = 'lof_mautic_contact';
+
+    /**
+     * Name of the event object
+     *
+     * @var string
+     */
+    protected $_eventObject = 'contact';
+
+    /**
      * @inheritDoc
      */
     public function _construct()

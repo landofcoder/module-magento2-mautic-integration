@@ -38,20 +38,29 @@ class Save extends \Magento\Backend\App\Action
         $data = $this->getRequest()->getPostValue();
         if ($data) {
             $id = $this->getRequest()->getParam('contact_id');
-        
+
             $model = $this->_objectManager->create(\Lof\Mautic\Model\Contact::class)->load($id);
             if (!$model->getId() && $id) {
                 $this->messageManager->addErrorMessage(__('This Contact no longer exists.'));
                 return $resultRedirect->setPath('*/*/');
             }
-        
+
+            if ($model->getId() && isset($data["mautic_contact_id"]) && $model->getMauticContactId()) {
+                $data["mautic_contact_id"] = $model->getMauticContactId();
+            }
+
+            $this->_eventManager->dispatch('adminhtml_mautic_contact_save_before', ['data' => $data, 'object' => $this, 'contact' => $model]);
+
             $model->setData($data);
-        
+
             try {
                 $model->save();
+
+                $this->_eventManager->dispatch('adminhtml_mautic_contact_save_after', ['data' => $data, 'object' => $this, 'contact' => $model]);
+
                 $this->messageManager->addSuccessMessage(__('You saved the Contact.'));
                 $this->dataPersistor->clear('lof_mautic_contact');
-        
+
                 if ($this->getRequest()->getParam('back')) {
                     return $resultRedirect->setPath('*/*/edit', ['contact_id' => $model->getId()]);
                 }
@@ -61,7 +70,7 @@ class Save extends \Magento\Backend\App\Action
             } catch (\Exception $e) {
                 $this->messageManager->addExceptionMessage($e, __('Something went wrong while saving the Contact.'));
             }
-        
+
             $this->dataPersistor->set('lof_mautic_contact', $data);
             return $resultRedirect->setPath('*/*/edit', ['contact_id' => $this->getRequest()->getParam('contact_id')]);
         }

@@ -16,36 +16,41 @@ class Company extends AbstractApi
     protected $_api_type = "companies";
 
     /**
-     * @var \Magento\Directory\Model\CountryFactory
+     * @var \Lof\Mautic\Model\CompanyFactory
      */
-    protected $countryFactory;
+    protected $companyFactory;
 
 
-    /**
+     /**
      * Initialize resource model
      *
      * @param Context $context
      * @param Registry $registry
+     * @param \Magento\Customer\Model\CustomerFactory $customerFactory
+     * @param \Magento\Directory\Model\CountryFactory $countryFactory
+     * @param \Lof\Mautic\Model\Mautic $mauticModel
+     * @param \Lof\Mautic\Model\CompanyFactory $companyFactory
      */
     public function __construct(
         Context $context,
         Registry $registry,
         \Magento\Customer\Model\CustomerFactory $customerFactory,
         \Magento\Directory\Model\CountryFactory $countryFactory,
-        \Lof\Mautic\Model\Mautic $mauticModel
+        \Lof\Mautic\Model\Mautic $mauticModel,
+        \Lof\Mautic\Model\CompanyFactory $companyFactory
     ) {
         parent::__construct($context, $registry, $customerFactory, $countryFactory, $mauticModel );
-        $this->countryFactory = $countryFactory;
+        $this->companyFactory = $companyFactory;
     }
 
     /**
-     * Export contacts from company
+     * Export companies data to Mautic
      *
      * @return bool
      */
     public function export()
     {
-        $companies = $this->customerFactory->create()->getCollection()
+        $companies = $this->companyFactory->create()->getCollection()
             ->addAttributeToSelect('*');
 
         foreach ($companies as $company) {
@@ -56,20 +61,46 @@ class Company extends AbstractApi
     }
 
     /**
+     * @return void
+     */
+    public function processSyncFromMautic()
+    {
+        $listContacts = $this->getList();
+        if ($listContacts && isset($listContacts['companies'])) {
+            foreach ($listContacts['companies'] as $company) {
+                $this->createCompany($company);
+            }
+        }
+        return;
+
+    }
+
+    /**
      * Export company
      *
      * @param Object|array
+     * @param array|null $customData
      * @return bool
      */
-    public function exportCompany($company)
+    public function exportCompany($company, $customData = [])
     {
         $data = $company->getData();
-        $address = $this->_getCustomerAddress($company);
-        if ($address) {
-            $data = array_merge($data, $address);
-        }
-        $response = $this->getCurrentMauticApi()->create($data);
+        //TODO: get company custom fields in company and mapping data before push to mautic
+        /**
+         * customFieldValues [ 'fieldId' => fieldID, 'fieldValue' => fieldValue] convert to [fieldID => fieldValue]
+         */
 
+        if ($customData) {
+            $data = array_merge($data, $customData);
+        }
+
+        if (isset($data['mautic_company_id']) && (int)$data['mautic_company_id']) {
+            $mautic_company_id = (int)$data['mautic_company_id'];
+            unset($data['mautic_company_id']);
+            $response = $this->getCurrentMauticApi()->edit($mautic_company_id, $data);
+        } else {
+            $response = $this->getCurrentMauticApi()->create($data);
+        }
         if (isset($response['errors']) && count($response['errors'])) {
             $this->mauticModel
                 ->executeErrorResponse($response);
@@ -81,39 +112,54 @@ class Company extends AbstractApi
     }
 
     /**
-     * Retrieve customer address
-     *
-     * @param \Magento\Customer\Model\Customer $customer
-     * @return array|mixed|bool
+     * create company on magento table
+     * @param array|mixed $company
+     * @return Object|mixed|boolean
      */
-    protected function _getCustomerAddress($customer)
+    public function createCompany($company = [])
     {
-        $address = false;
-        if ($customer->getPrimaryBillingAddress()) {
-            $address = $customer->getPrimaryBillingAddress();
-        } elseif ($customer->getPrimaryShippingAddress()) {
-            $address = $customer->getPrimaryShippingAddress();
-        } elseif ($customer->getAddresses()) {
-            $addresses = $customer->getAddresses();
-            $address = array_shift($addresses);
+        if (isset($company['fields']) && isset($company['fields']['all']) && $company['id']) {
+            $companyFields = $company['fields']['all'];
+            $companyItem = $this->companyFactory->create()->getCollection()
+                                ->addFieldToFilter("mautic_company_id", $company['id'])
+                                ->getFirstItem();
+            $companyId = 0;
+            if($companyItem) {
+                $model = $this->companyFactory->create()->load($companyItem->getCompanyId());
+                $companyId = $model->getId();
+            } else {
+                $model = $this->companyFactory->create();
+            }
+
+            $data = [
+                "mautic_company_id" => $company['id'],
+                "companyname" => isset($companyFields['companyname']) ? $companyFields['companyname'] :'',
+                "companyaddress1" => isset($companyFields['companyaddress1']) ? $companyFields['companyaddress1'] :'',
+                "companyaddress2" => isset($companyFields['companyaddress2']) ? $companyFields['companyaddress2'] :'',
+                "companycity" => isset($companyFields['companycity']) ? $companyFields['companycity'] :'',
+                "companystate" => isset($companyFields['companystate']) ? $companyFields['companystate'] :'',
+                "companycountry" => isset($companyFields['companycountry']) ? $companyFields['companycountry'] :'',
+                "companyzipcode" => isset($companyFields['companyzipcode']) ? $companyFields['companyzipcode'] :'',
+                "companyemail" => isset($companyFields['companyemail']) ? $companyFields['companyemail'] :'',
+                "companyindustry" => isset($companyFields['companyindustry']) ? $companyFields['companyindustry'] :'',
+                "companynumber_of_employees" => isset($companyFields['companynumber_of_employees']) ? $companyFields['companynumber_of_employees'] :'',
+                "companyphone" => isset($companyFields['companyphone']) ? $companyFields['companyphone'] :'',
+                "companywebsite" => isset($companyFields['companywebsite']) ? $companyFields['companywebsite'] :'',
+                "companyannual_revenue" => isset($companyFields['companyannual_revenue']) ? $companyFields['companyannual_revenue'] :'',
+                "companydescription" => isset($companyFields['companydescription']) ? $companyFields['companydescription'] :''
+            ];
+            $data['company_id'] = $companyId;
+
+            //TODO: get company custom fields then mapping data at here
+
+            $model->setData($data);
+            try {
+                $model->save();
+            } catch (\Exception $e) {
+                //log exception at here
+            }
+            return $model;
         }
-
-        if ($address) {
-
-            $country = $this->countryFactory->create()->loadByCode($address->getCountry());
-
-            return array(
-                self::MAUTIC_CUSTOMER_ADRESS1 => $address->getStreet1(),
-                self::MAUTIC_CUSTOMER_ADRESS2 => $address->getStreet2(),
-                self::MAUTIC_CUSTOMER_ZIPCODE => $address->getPostcode(),
-                self::MAUTIC_CUSTOMER_COUNTRY => $country->getName(),
-                self::MAUTIC_CUSTOMER_STATE => $address->getRegion(),
-                self::MAUTIC_CUSTOMER_CITY => $address->getCity(),
-                self::MAUTIC_CUSTOMER_COMPANY => $address->getCompany(),
-                self::MAUTIC_CUSTOMER_PHONE => $address->getTelephone()
-            );
-        }
-
         return false;
     }
 }

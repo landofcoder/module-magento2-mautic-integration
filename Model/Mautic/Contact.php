@@ -113,9 +113,10 @@ class Contact extends AbstractApi
      * Export customer
      *
      * @param \Magento\Customer\Model\Customer $customer
+     * @param array|null $customData
      * @return bool
      */
-    public function exportCustomer($customer)
+    public function exportCustomer($customer, $customData = [])
     {
         $data = $customer->getData();
         $address = $this->_getCustomerAddress($customer);
@@ -128,7 +129,17 @@ class Contact extends AbstractApi
         $customFieldsMapping = $this->mappingCustomerCustomAttributes($customer);
         $data = array_merge($data, $customFieldsMapping);
 
-        $response = $this->getCurrentMauticApi()->create($data);
+        if ($customData) {
+            $data = array_merge($data, $customData);
+        }
+
+        if (isset($data['mautic_contact_id']) && (int)$data['mautic_contact_id']) {
+            $mautic_contact_id = (int)$data['mautic_contact_id'];
+            unset($data['mautic_contact_id']);
+            $response = $this->getCurrentMauticApi()->edit($mautic_contact_id, $data);
+        } else {
+            $response = $this->getCurrentMauticApi()->create($data);
+        }
 
         if (isset($response['errors']) && count($response['errors'])) {
             $this->mauticModel
