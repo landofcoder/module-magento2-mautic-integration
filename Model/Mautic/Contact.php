@@ -167,7 +167,16 @@ class Contact extends AbstractApi
     {
         if (isset($contact['fields']) && isset($contact['fields']['all'])) {
             $contactFields = $contact['fields']['all'];
-            $model = $this->contactFactory->create()->load($contact['id'], "mautic_contact_id");
+            $contactItem = $this->contactFactory->create()->getCollection()
+                                ->addFieldToFilter("mautic_contact_id", $contact['id'])
+                                ->getFirstItem();
+
+            if($contactItem) {
+                $model = $this->contactFactory->create()->load($contactItem->getContactId());
+            } else {
+                $model = $this->contactFactory->create();
+            }
+
             $email = isset($contactFields['email']) ? $contactFields['email'] :'';
             $data = [
                 "mautic_contact_id" => $contact['id'],
