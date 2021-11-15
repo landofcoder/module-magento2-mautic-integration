@@ -3,6 +3,7 @@
  * @var $block \Magento\Framework\View\Element\Template
  */
 $data           = $this->helper("Ves\Megamenu\Helper\Data");
+if ($data->isEnabled()):
 $baseMauticUrl = $data->getMauticBaseUrl();
 ?>
 <script>
@@ -30,3 +31,4 @@ require([
         }
     })
 })</script>
+<?php endif; ?>
