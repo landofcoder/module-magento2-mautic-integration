@@ -79,17 +79,25 @@ class Company extends AbstractApi
      * Export company
      *
      * @param Object|array
+     * @param array|null $customData
      * @return bool
      */
-    public function exportCompany($company)
+    public function exportCompany($company, $customData = [])
     {
         $data = $company->getData();
         //TODO: get company custom fields in company and mapping data before push to mautic
         /**
          * customFieldValues [ 'fieldId' => fieldID, 'fieldValue' => fieldValue] convert to [fieldID => fieldValue]
          */
+
+        if ($customData) {
+            $data = array_merge($data, $customData);
+        }
+
         if (isset($data['mautic_company_id']) && (int)$data['mautic_company_id']) {
-            $response = $this->getCurrentMauticApi()->edit((int)$data['mautic_company_id'], $data);
+            $mautic_company_id = (int)$data['mautic_company_id'];
+            unset($data['mautic_company_id']);
+            $response = $this->getCurrentMauticApi()->edit($mautic_company_id, $data);
         } else {
             $response = $this->getCurrentMauticApi()->create($data);
         }

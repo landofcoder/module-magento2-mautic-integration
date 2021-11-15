@@ -79,6 +79,11 @@ class Data extends AbstractHelper
      */
     const CONTACT_INTEGRATION_STATUS = 'contact/enabled';
 
+    /**
+     * Company integration status path
+     */
+    const COMPANY_INTEGRATION_STATUS = 'company/enabled';
+
     protected $_storeManager;
     protected $_directoryList;
     protected $encryptor;
@@ -237,6 +242,17 @@ class Data extends AbstractHelper
     public function isCustomerIntegrationEnabled($store = null)
     {
         return (bool)$this->getConfig(self::CONTACT_INTEGRATION_STATUS, $store);
+    }
+
+
+    /**
+     * Retrieve status of company integration
+     * @param mixed|Object|int|null $store
+     * @return bool
+     */
+    public function isCompanyIntegrationEnabled($store = null)
+    {
+        return (bool)$this->getConfig(self::COMPANY_INTEGRATION_STATUS, $store);
     }
 
     /**

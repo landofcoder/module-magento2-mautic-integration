@@ -73,6 +73,15 @@
 					<comment>Export contacts from Magento to your Mautic</comment>
 				</field>
             </group>
+
+            <group id="company" sortOrder="15" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+				<label>Companies Integration</label>
+				<field id="enabled" type="select" sortOrder="0" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Enabled</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+            </group>
         </section>
     </system>
 </config>

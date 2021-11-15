@@ -3,4 +3,10 @@
     <event name="adminhtml_customer_save_after">
         <observer name="mautic_adminhtml_customer_save_after" instance="Lof\Mautic\Observer\CustomerSaveAfter"/>
     </event>
+    <event name="adminhtml_mautic_contact_save_after">
+        <observer name="mautic_adminhtml_contact_save_after" instance="Lof\Mautic\Observer\ContactSaveAfter"/>
+    </event>
+    <event name="adminhtml_mautic_company_save_after">
+        <observer name="mautic_adminhtml_company_save_after" instance="Lof\Mautic\Observer\CompanySaveAfter"/>
+    </event>
 </config>
