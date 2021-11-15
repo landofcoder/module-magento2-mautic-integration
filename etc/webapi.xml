@@ -60,4 +60,10 @@
 			<resource ref="Lof_Mautic::Company_delete"/>
 		</resources>
 	</route>
+    <route url="/V1/lof-mautic/visitor/get" method="GET">
+        <service class="Lof\Mautic\Api\VisitorRepositoryInterface" method="getVisitor"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
 </routes>

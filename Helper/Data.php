@@ -175,6 +175,17 @@ class Data extends AbstractHelper
     }
 
     /**
+     * Get Mautic Base Url
+     *
+     * @param mixed|Object|int|null $store
+     * @return string
+     */
+    public function getMauticBaseUrl($store = null)
+    {
+        return $this->getConfig("general/mautic_url", $store);
+    }
+
+    /**
      * Retrieve mautic url
      * @param mixed|Object|int|null $store
      * @return string

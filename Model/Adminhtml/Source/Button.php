@@ -56,7 +56,7 @@ class Button extends \Magento\Config\Block\System\Config\Form\Field
         )->setData(
             [
                 'id' => 'mautic_contact_export',
-                'label' => __('Export'),
+                'label' => __('Export All'),
             ]
         );
 
