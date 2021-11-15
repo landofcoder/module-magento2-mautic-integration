@@ -31,7 +31,7 @@ class Sync extends \Lof\Mautic\Controller\Adminhtml\Company
     /**
      * @var \Lof\Mautic\Model\Mautic\Company
      */
-    protected $customerContact;
+    protected $companyContact;
 
     /**
      * @var \Magento\Framework\View\Result\PageFactory
@@ -42,41 +42,35 @@ class Sync extends \Lof\Mautic\Controller\Adminhtml\Company
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\Registry $coreRegistry
      * @param \Lof\Mautic\Helper\Data $helper
-     * @param \Lof\Mautic\Model\Mautic\Company $customerContact
+     * @param \Lof\Mautic\Model\Mautic\Company $companyContact
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry,
         \Lof\Mautic\Helper\Data $helper,
-        \Lof\Mautic\Model\Mautic\Company $customerContact,
+        \Lof\Mautic\Model\Mautic\Company $companyContact,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory
     ) {
         parent::__construct($context, $coreRegistry);
 
         $this->helper = $helper;
-        $this->customerContact = $customerContact;
+        $this->companyContact = $companyContact;
         $this->resultPageFactory = $resultPageFactory;
 
     }
 
     public function execute()
     {
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
-        $resultPage = $this->resultPageFactory->create();
-        $resultPage->setActiveMenu('Lof_Mautic::contacts')
-            ->addBreadcrumb(__('Mautic'), __('Mautic'))
-            ->addBreadcrumb(__('Companies'), __('Companies'));
+        $resultRedirect = $this->resultRedirectFactory->create();
 
         try {
-            $response = $this->customerContact->getList();
-            echo "<pre>";
-            print_r($response);
-            die();
+            $this->companyContact->processSyncFromMautic();
+            $this->messageManager->addSuccessMessage(__('Synced Companies.'));
         } catch(\Exception $e) {
             // display error message
             $this->messageManager->addError($e->getMessage());
         }
-        return $resultPage;
+        return $resultRedirect->setPath('*/*/');
     }
 }

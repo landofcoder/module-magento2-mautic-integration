@@ -128,7 +128,11 @@ class Contact extends AbstractApi
         $customFieldsMapping = $this->mappingCustomerCustomAttributes($customer);
         $data = array_merge($data, $customFieldsMapping);
 
-        $response = $this->getCurrentMauticApi()->create($data);
+        if (isset($data['mautic_contact_id']) && (int)$data['mautic_contact_id']) {
+            $response = $this->getCurrentMauticApi()->edit((int)$data['mautic_contact_id'], $data);
+        } else {
+            $response = $this->getCurrentMauticApi()->create($data);
+        }
 
         if (isset($response['errors']) && count($response['errors'])) {
             $this->mauticModel
