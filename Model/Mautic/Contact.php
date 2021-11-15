@@ -165,14 +165,17 @@ class Contact extends AbstractApi
      */
     public function createContact($contact = [])
     {
-        if (isset($contact['fields']) && isset($contact['fields']['all'])) {
+        $flag = false;
+        if (isset($contact['fields']) && isset($contact['fields']['all']) && $contact['id']) {
             $contactFields = $contact['fields']['all'];
             $contactItem = $this->contactFactory->create()->getCollection()
                                 ->addFieldToFilter("mautic_contact_id", $contact['id'])
                                 ->getFirstItem();
-
+            $contactId = 0;
             if($contactItem) {
                 $model = $this->contactFactory->create()->load($contactItem->getContactId());
+                $contactId = $model->getId();
+                $flag = true;
             } else {
                 $model = $this->contactFactory->create();
             }
@@ -200,8 +203,9 @@ class Contact extends AbstractApi
             }
             $data['tags'] = $this->mauticModel->serializeData($tags);
             $data['stage'] = $this->mauticModel->serializeData($convertStages);
-
+            $data['contact_id'] = $contactId;
             $customerModel = $this->getCustomer($email);
+
             if ($customerModel->getId()) {
                 $data['customer_id'] = $customerModel->getId();
                 $model->setData($data);
