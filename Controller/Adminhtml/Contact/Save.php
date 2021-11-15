@@ -45,8 +45,8 @@ class Save extends \Magento\Backend\App\Action
                 return $resultRedirect->setPath('*/*/');
             }
 
-            if ($model->getId() && isset($data["mautic_contact_id"])) {
-                unset($data["mautic_contact_id"]);
+            if ($model->getId() && isset($data["mautic_contact_id"]) && $model->getMauticContactId()) {
+                $data["mautic_contact_id"] = $model->getMauticContactId();
             }
 
             $this->_eventManager->dispatch('adminhtml_mautic_contact_save_before', ['data' => $data, 'object' => $this, 'contact' => $model]);

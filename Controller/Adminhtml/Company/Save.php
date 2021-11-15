@@ -45,8 +45,8 @@ class Save extends \Magento\Backend\App\Action
                 return $resultRedirect->setPath('*/*/');
             }
 
-            if ($model->getId() && isset($data["mautic_company_id"])) {
-                unset($data["mautic_company_id"]);
+            if ($model->getId() && isset($data["mautic_company_id"]) && $model->getMauticCompanyId()) {
+                $data["mautic_company_id"] = $model->getMauticCompanyId();
             }
 
             $this->_eventManager->dispatch('adminhtml_mautic_company_save_before', ['data' => $data, 'object' => $this, 'company' => $model]);

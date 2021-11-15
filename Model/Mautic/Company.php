@@ -101,7 +101,6 @@ class Company extends AbstractApi
         } else {
             $response = $this->getCurrentMauticApi()->create($data);
         }
-
         if (isset($response['errors']) && count($response['errors'])) {
             $this->mauticModel
                 ->executeErrorResponse($response);
