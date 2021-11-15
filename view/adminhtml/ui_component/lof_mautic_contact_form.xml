@@ -48,14 +48,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">customer_id</label>
+				<label translate="true">Customer Id</label>
 				<dataScope>customer_id</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="contact_id" formElement="textarea" sortOrder="20">
+		<field name="mautic_contact_id" formElement="input" sortOrder="20">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Contact</item>
@@ -63,14 +63,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">contact_id</label>
+				<label translate="true">Mautic Contact Id</label>
 				<dataScope>contact_id</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="facebook" formElement="textarea" sortOrder="30">
+		<field name="facebook" formElement="input" sortOrder="30">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Contact</item>
@@ -78,14 +78,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">facebook</label>
+				<label translate="true">Facebook</label>
 				<dataScope>facebook</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="foursquare" formElement="textarea" sortOrder="40">
+		<field name="foursquare" formElement="input" sortOrder="40">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Contact</item>
@@ -93,14 +93,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">foursquare</label>
+				<label translate="true">Foursquare</label>
 				<dataScope>foursquare</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="instagram" formElement="textarea" sortOrder="50">
+		<field name="instagram" formElement="input" sortOrder="50">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Contact</item>
@@ -108,14 +108,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">instagram</label>
+				<label translate="true">Instagram</label>
 				<dataScope>instagram</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="linkedin" formElement="textarea" sortOrder="60">
+		<field name="linkedin" formElement="input" sortOrder="60">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Contact</item>
@@ -123,14 +123,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">linkedin</label>
+				<label translate="true">Linkedin</label>
 				<dataScope>linkedin</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="skype" formElement="textarea" sortOrder="70">
+		<field name="skype" formElement="input" sortOrder="70">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Contact</item>
@@ -138,14 +138,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">skype</label>
+				<label translate="true">Skype</label>
 				<dataScope>skype</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="twitter" formElement="textarea" sortOrder="80">
+		<field name="twitter" formElement="input" sortOrder="80">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Contact</item>
@@ -153,14 +153,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">twitter</label>
+				<label translate="true">Twitter</label>
 				<dataScope>twitter</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="haspurchased" formElement="textarea" sortOrder="90">
+		<field name="haspurchased" formElement="input" sortOrder="90">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Contact</item>
@@ -168,23 +168,8 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">haspurchased</label>
+				<label translate="true">Hash Purchased</label>
 				<dataScope>haspurchased</dataScope>
-				<validation>
-					<rule name="required-entry" xsi:type="boolean">false</rule>
-				</validation>
-			</settings>
-		</field>
-		<field name="prospect_or_customer" formElement="textarea" sortOrder="100">
-			<argument name="data" xsi:type="array">
-				<item name="config" xsi:type="array">
-					<item name="source" xsi:type="string">Contact</item>
-				</item>
-			</argument>
-			<settings>
-				<dataType>text</dataType>
-				<label translate="true">prospect_or_customer</label>
-				<dataScope>prospect_or_customer</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
@@ -198,7 +183,7 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">stage</label>
+				<label translate="true">Stage</label>
 				<dataScope>stage</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
@@ -213,14 +198,14 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">tags</label>
+				<label translate="true">Tags</label>
 				<dataScope>tags</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
 		</field>
-		<field name="website" formElement="textarea" sortOrder="130">
+		<field name="website" formElement="input" sortOrder="130">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Contact</item>
@@ -228,7 +213,7 @@
 			</argument>
 			<settings>
 				<dataType>text</dataType>
-				<label translate="true">website</label>
+				<label translate="true">Website</label>
 				<dataScope>website</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>

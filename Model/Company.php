@@ -13,6 +13,18 @@ class Company extends \Magento\Framework\Model\AbstractModel implements CompanyI
 {
 
     /**
+     * @var string
+     */
+    protected $_eventPrefix = 'lof_mautic_company';
+
+    /**
+     * Name of the event object
+     *
+     * @var string
+     */
+    protected $_eventObject = 'company';
+
+    /**
      * @inheritDoc
      */
     public function _construct()
