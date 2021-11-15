@@ -2,6 +2,8 @@
 
 [Mautic (opens new window)](https://www.mautic.org/) is an open-source marketing automation software that helps online businesses automate their repetitive marketing tasks such as lead generation, contact scoring, contact segmentation, and marketing campaigns.
 
+![Magento 2 Mautic Integration Module](./assets/5_preview.png)
+
 ## Main Features
 
 - Campaign Contact
@@ -80,7 +82,7 @@
 
 - Company Information:
 
-![Companies](./assets/1_companies_sync)
+![Companies](./assets/1_companies_sync.png)
 
 
 
