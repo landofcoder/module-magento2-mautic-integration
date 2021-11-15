@@ -4,6 +4,8 @@
 
 ![Magento 2 Mautic Integration Module](./assets/5_preview.png)
 
+* Compatible: Magento 2.3.7, 2.4.0, 2.4.1, 2.4.2, 2.4.3 - latest
+
 ## Main Features
 
 - Campaign Contact
