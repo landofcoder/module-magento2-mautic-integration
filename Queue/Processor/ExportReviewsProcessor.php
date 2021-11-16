@@ -41,16 +41,19 @@ class ExportReviewsProcessor extends AbstractQueueProcessor
     public function process()
     {
         $collection = $this->reviewFactory->create()->getCollection()
-                                ->addFieldToFilter("customer_id", ['null' => false]);
+                                ->addFieldToFilter("customer_id", ['notnull' => true])
+                                ->addFieldToFilter("customer_id", ['neq' => 'NULL']);
         $collection->getSelect()->group('customer_id');
 
         try {
             foreach ($collection as $item) {
-                $customer = $this->helperData->getCustomerById($item->getCustomerId());
-                $customData = [
-                    "firstname" => $item->getNickname()
-                ];
-                $this->mauticContact->exportCustomer($customer, $customData);
+                if ($item->getCustomerId()) {
+                    $customer = $this->helperData->getCustomerById($item->getCustomerId());
+                    $customData = [
+                        "firstname" => $item->getNickname()
+                    ];
+                    $this->mauticContact->exportCustomer($customer, $customData);
+                }
             }
         } catch (\Exception $e) {
             //log exception at here

@@ -135,7 +135,7 @@ class ExportAllCommand extends Command
     {
         $start = $this->getCurrentMs();
 
-        $output->writeln('<info>Initialization exporting of contacts of all.</info>');
+        $output->writeln('<info>Initialization exporting of contacts of Customers.</info>');
         $output->writeln(sprintf('<info>Started at %s</info>', (new \DateTime())->format('Y-m-d H:i:s')));
         $output->writeln('Exporting...');
 
@@ -147,6 +147,7 @@ class ExportAllCommand extends Command
 
         $output->writeln(sprintf('<info>Finished at %s</info>', (new \DateTime())->format('Y-m-d H:i:s')));
         $output->writeln(sprintf('<info>Total execution time %sms</info>', $end - $start));
+        $output->writeln('===========================================');
 
         return 0;
     }
@@ -174,6 +175,7 @@ class ExportAllCommand extends Command
 
         $output->writeln(sprintf('<info>Finished at %s</info>', (new \DateTime())->format('Y-m-d H:i:s')));
         $output->writeln(sprintf('<info>Total execution time %sms</info>', $end - $start));
+        $output->writeln('===========================================');
 
         return 0;
     }
@@ -201,6 +203,7 @@ class ExportAllCommand extends Command
 
         $output->writeln(sprintf('<info>Finished at %s</info>', (new \DateTime())->format('Y-m-d H:i:s')));
         $output->writeln(sprintf('<info>Total execution time %sms</info>', $end - $start));
+        $output->writeln('===========================================');
 
         return 0;
     }
@@ -228,6 +231,7 @@ class ExportAllCommand extends Command
 
         $output->writeln(sprintf('<info>Finished at %s</info>', (new \DateTime())->format('Y-m-d H:i:s')));
         $output->writeln(sprintf('<info>Total execution time %sms</info>', $end - $start));
+        $output->writeln('===========================================');
 
         return 0;
     }

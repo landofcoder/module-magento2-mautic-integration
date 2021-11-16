@@ -166,8 +166,10 @@ class Contact extends AbstractApi
             $mautic_contact_id = (int)$data['mautic_contact_id'];
             unset($data['mautic_contact_id']);
             $response = $this->getCurrentMauticApi()->edit($mautic_contact_id, $data);
-        } else {
+        } else if (isset($data['email']) && $data['email']) {
             $response = $this->getCurrentMauticApi()->create($data);
+        } else {
+            return false;
         }
 
         if (isset($response['errors']) && count($response['errors'])) {
