@@ -380,4 +380,14 @@ class Data extends AbstractHelper
         return $this->_backendHelper->getUrl('mautic/configurable/authorize');
     }
 
+    /**
+     * Get store base url
+     *
+     * @return string
+     */
+    public function getStoreUrl()
+    {
+        return $this->_storeManager->getStore()->getBaseUrl();
+    }
+
 }

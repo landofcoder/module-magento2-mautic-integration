@@ -4,7 +4,7 @@
 		<lofmautic>
 			<general>
 				<enabled>1</enabled>
-                <webhook_secret>ABfffjj22332022LofeNEw11</webhook_secret>
+                <webhook_secret>LandofcoderTeam</webhook_secret>
 			</general>
             <contact>
                 <enabled>0</enabled>

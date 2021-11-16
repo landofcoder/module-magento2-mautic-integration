@@ -62,7 +62,7 @@
 
                 <field id="webhook_secret" type="text" sortOrder="45" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
 					<label>Webhook URL Secret Key</label>
-					<comment><![CDATA[<span>Please enter some random characters in "Secret Key" field, save config, and use this URL in Mautic settings for Webhooks: <br><input name="webhook_url" class="webhook-link-input" style="width:100%" id="webhook_url"></span><br/>Webhook url: https://your_domain/mautic/webhook?secret=YOUR_KEY]]></comment>
+					<comment><![CDATA[<span>Please enter some random characters in "Secret Key" field, save config, and use this URL in Mautic settings for Webhooks: <br><input name="webhook_url" class="webhook-link-input" style="width:100%" id="webhook_url"></span><br/>Webhook url: <strong>https://your_domain/mautic/webhook?secret=YOUR_KEY</strong>]]></comment>
 				</field>
 
             </group>
