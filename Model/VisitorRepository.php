@@ -62,7 +62,17 @@ class VisitorRepository implements VisitorRepositoryInterface
      */
     protected $dataObjectHelper;
 
-
+    /**
+     * Construct VisitorRepository
+     *
+     * @param Data $helperData
+     * @param CustomerFactory $customerFactory
+     * @param CustomerSession $customerSession
+     * @param ContactFactory $contactFactory
+     * @param VisitorInterfaceFactory $dataVisitorFactory
+     * @param DataObjectHelper $dataObjectHelper
+     * @param DataObjectProcessor $dataObjectProcessor
+     */
     public function __construct(
         Data $helperData,
         CustomerFactory $customerFactory,
