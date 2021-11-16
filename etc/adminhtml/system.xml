@@ -75,6 +75,7 @@
                         <strong>lofmautic:export:orders</strong> Export contacts data from Orders<br/>
                         <strong>lofmautic:export:reviews</strong> Export contacts data from Reviews<br/>
                         <strong>lofmautic:export:subscribers</strong> Export contacts data from Subscribers<br/>
+                        <strong>lofmautic:export:all</strong> Export contacts data from All: customers, reviews, orders, subscribers<br/>
                     ]]></comment>
 				</field>
             </group>
