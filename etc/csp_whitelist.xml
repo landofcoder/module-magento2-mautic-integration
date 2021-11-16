@@ -1,22 +1,6 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp/etc/csp_whitelist.xsd">
     <policies>
-        <policy id="default-src">
-            <values>
-                <value id="storeofapp_main" type="host">*.storeofapp.com</value>
-                <value id="landofcoder_main" type="host">*.landofcoder.com</value>
-                <value id="demo4coder_main" type="host">*.demo4coder.com</value>
-                <value id="mautic-marketing" type="host">marketing.storeofapp.com</value>
-            </values>
-        </policy>
-        <policy id="form-action">
-            <values>
-                <value id="storeofapp_main" type="host">*.storeofapp.com</value>
-                <value id="landofcoder_main" type="host">*.landofcoder.com</value>
-                <value id="demo4coder_main" type="host">*.demo4coder.com</value>
-                <value id="mautic-marketing" type="host">marketing.storeofapp.com</value>
-            </values>
-        </policy>
         <policy id="connect-src">
             <values>
                 <value id="mautic-api" type="host">api.mautic.com</value>
