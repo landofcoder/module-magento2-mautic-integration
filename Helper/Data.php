@@ -380,7 +380,12 @@ class Data extends AbstractHelper
      */
     public function getCallbackUrl()
     {
-        return $this->_backendHelper->getUrl('mautic/configurable/authorize');
+        $authType = $this->getAuthType();
+        $typeString = "";
+        if ($authType == \Lof\Mautic\Model\Config\Source\OauthVersion::AUTH_OAUTH2) {
+            $typeString = "/version/2";
+        }
+        return $this->_backendHelper->getUrl('mautic/configurable/authorize'.$typeString);
     }
 
     /**
