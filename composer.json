@@ -2,7 +2,8 @@
     "name": "landofcoder/module-mautic-integration",
     "description": "Magento 2 Mautic integration Extension",
     "require": {
-        "mautic/api-library": "^3.0.0"
+        "mautic/api-library": "^3.0.0",
+        "landofcoder/module-all" : "1.*"
     },
     "type": "magento2-module",
     "version": "1.0.0",

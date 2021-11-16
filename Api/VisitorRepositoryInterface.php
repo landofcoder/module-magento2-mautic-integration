@@ -11,7 +11,7 @@ interface VisitorRepositoryInterface
 {
     /**
      * Retrieve Visitor - current logged in customer
-     * @return \Lof\Mautic\Api\Data\VisitorInterface
+     * @return \Lof\Mautic\Api\Data\VisitorInterface|boolean
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function getVisitor();

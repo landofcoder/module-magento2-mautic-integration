@@ -2,7 +2,7 @@
 
 namespace Lof\Mautic\Console\Command;
 
-use Lof\Mautic\Queue\Processor\ContactQueueProcessorFactory;
+use Lof\Mautic\Queue\Processor\ExportReviewsProcessorFactory;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\State;
 use Magento\Framework\Registry;
@@ -16,9 +16,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ExportAllReviewCommand extends Command
 {
     /**
-     * @var ContactQueueProcessorFactory
+     * @var ExportReviewsProcessorFactory
      */
-    private $contactProcessorFactory;
+    private $reviewProcessorFactory;
     /**
      * @var State
      */
@@ -32,20 +32,20 @@ class ExportAllReviewCommand extends Command
     /**
      * CategoryImport constructor.
      *
-     * @param ContactQueueProcessorFactory $contactProcessorFactory
+     * @param ExportReviewsProcessorFactory $reviewProcessorFactory
      * @param State $state
      * @param Registry $registry
      * @param null $name
      */
     public function __construct(
-        ContactQueueProcessorFactory $contactProcessorFactory,
+        ExportReviewsProcessorFactory $reviewProcessorFactory,
         State $state,
         Registry $registry,
         $name = null
     ) {
         parent::__construct($name);
 
-        $this->contactProcessorFactory = $contactProcessorFactory;
+        $this->reviewProcessorFactory = $reviewProcessorFactory;
         $this->state = $state;
         $this->registry = $registry;
     }
@@ -80,13 +80,13 @@ class ExportAllReviewCommand extends Command
 
         $start = $this->getCurrentMs();
 
-        $output->writeln('<info>Initialization processing of contacts queue.</info>');
+        $output->writeln('<info>Initialization exporting of contacts in Reviews.</info>');
         $output->writeln(sprintf('<info>Started at %s</info>', (new \DateTime())->format('Y-m-d H:i:s')));
-        $output->writeln('Processing...');
+        $output->writeln('Exporting...');
 
-        $contactQueueProcessor = $this->contactProcessorFactory->create();
+        $reviewProcessor = $this->reviewProcessorFactory->create();
 
-        $contactQueueProcessor->process();
+        $reviewProcessor->process();
 
         $end = $this->getCurrentMs();
 

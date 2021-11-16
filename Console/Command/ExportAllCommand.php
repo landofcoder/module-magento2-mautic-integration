@@ -2,7 +2,10 @@
 
 namespace Lof\Mautic\Console\Command;
 
-use Lof\Mautic\Queue\Processor\ContactQueueProcessorFactory;
+use Lof\Mautic\Queue\Processor\ExportCustomersProcessorFactory;
+use Lof\Mautic\Queue\Processor\ExportReviewsProcessorFactory;
+use Lof\Mautic\Queue\Processor\ExportOrdersProcessorFactory;
+use Lof\Mautic\Queue\Processor\ExportSubscribersProcessorFactory;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\State;
 use Magento\Framework\Registry;
@@ -16,9 +19,20 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ExportAllCommand extends Command
 {
     /**
-     * @var ContactQueueProcessorFactory
+     * @var ExportReviewsProcessorFactory
      */
-    private $contactProcessorFactory;
+    private $reviewProcessorFactory;
+
+    /**
+     * @var ExportCustomersProcessorFactory
+     */
+    private $exportCustomerProcessorFactory;
+
+    /**
+     * @var ExportSubscribersProcessorFactory
+     */
+    private $subscriberProcessorFactory;
+
     /**
      * @var State
      */
@@ -32,20 +46,29 @@ class ExportAllCommand extends Command
     /**
      * CategoryImport constructor.
      *
-     * @param ContactQueueProcessorFactory $contactProcessorFactory
+     * @param ExportCustomersProcessorFactory $exportCustomerProcessorFactory
+     * @param ExportReviewsProcessorFactory $reviewProcessorFactory
+     * @param ExportOrdersProcessorFactory $exportOrdersProcessorFactory
+     * @param ExportSubscribersProcessorFactory $subscriberProcessorFactory
      * @param State $state
      * @param Registry $registry
      * @param null $name
      */
     public function __construct(
-        ContactQueueProcessorFactory $contactProcessorFactory,
+        ExportCustomersProcessorFactory $exportCustomerProcessorFactory,
+        ExportReviewsProcessorFactory $reviewProcessorFactory,
+        ExportOrdersProcessorFactory $exportOrdersProcessorFactory,
+        ExportSubscribersProcessorFactory $subscriberProcessorFactory,
         State $state,
         Registry $registry,
         $name = null
     ) {
         parent::__construct($name);
 
-        $this->contactProcessorFactory = $contactProcessorFactory;
+        $this->exportCustomerProcessorFactory = $exportCustomerProcessorFactory;
+        $this->reviewProcessorFactory = $reviewProcessorFactory;
+        $this->exportOrdersProcessorFactory = $exportOrdersProcessorFactory;
+        $this->subscriberProcessorFactory = $subscriberProcessorFactory;
         $this->state = $state;
         $this->registry = $registry;
     }
@@ -58,7 +81,7 @@ class ExportAllCommand extends Command
     public function configure()
     {
         $this->setName('lofmautic:export:all');
-        $this->setDescription('Process export all contacts Data to Mautic');
+        $this->setDescription('Process export all contacts Data from all to Mautic');
     }
 
     /**
@@ -78,20 +101,137 @@ class ExportAllCommand extends Command
 
         $this->registry->register('isSecureArea', true);
 
+        // Start export customers
+        $this->executeCustomers($input, $output);
+
+        // End Start export customers
+
+        // Start export reviews
+        $this->executeReviews($input, $output);
+
+        // End Start export reviews
+
+        // Start export subscribers
+        $this->executeSubscribers($input, $output);
+
+        // End Start export subscribers
+
+        // Start export orders
+        $this->executeOrders($input, $output);
+
+        // End Start export orders
+
+        return 0;
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @return int|null
+     *
+     */
+    protected function executeCustomers(InputInterface $input, OutputInterface $output)
+    {
         $start = $this->getCurrentMs();
 
-        $output->writeln('<info>Initialization processing of contacts queue.</info>');
+        $output->writeln('<info>Initialization exporting of contacts of Customers.</info>');
         $output->writeln(sprintf('<info>Started at %s</info>', (new \DateTime())->format('Y-m-d H:i:s')));
-        $output->writeln('Processing...');
+        $output->writeln('Exporting...');
 
-        $contactQueueProcessor = $this->contactProcessorFactory->create();
+        $exportCustomerProcessor = $this->exportCustomerProcessorFactory->create();
 
-        $contactQueueProcessor->process();
+        $exportCustomerProcessor->process();
 
         $end = $this->getCurrentMs();
 
         $output->writeln(sprintf('<info>Finished at %s</info>', (new \DateTime())->format('Y-m-d H:i:s')));
         $output->writeln(sprintf('<info>Total execution time %sms</info>', $end - $start));
+        $output->writeln('===========================================');
+
+        return 0;
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @return int|null
+     *
+     */
+    protected function executeReviews(InputInterface $input, OutputInterface $output)
+    {
+        $start = $this->getCurrentMs();
+
+        $output->writeln('<info>Initialization exporting of contacts in Reviews.</info>');
+        $output->writeln(sprintf('<info>Started at %s</info>', (new \DateTime())->format('Y-m-d H:i:s')));
+        $output->writeln('Exporting...');
+
+        $reviewProcessor = $this->reviewProcessorFactory->create();
+
+        $reviewProcessor->process();
+
+        $end = $this->getCurrentMs();
+
+        $output->writeln(sprintf('<info>Finished at %s</info>', (new \DateTime())->format('Y-m-d H:i:s')));
+        $output->writeln(sprintf('<info>Total execution time %sms</info>', $end - $start));
+        $output->writeln('===========================================');
+
+        return 0;
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @return int|null
+     *
+     */
+    protected function executeSubscribers(InputInterface $input, OutputInterface $output)
+    {
+        $start = $this->getCurrentMs();
+
+        $output->writeln('<info>Initialization exporting of contacts in Subscribers.</info>');
+        $output->writeln(sprintf('<info>Started at %s</info>', (new \DateTime())->format('Y-m-d H:i:s')));
+        $output->writeln('Exporting...');
+
+        $subscriberProcessor = $this->subscriberProcessorFactory->create();
+
+        $subscriberProcessor->process();
+
+        $end = $this->getCurrentMs();
+
+        $output->writeln(sprintf('<info>Finished at %s</info>', (new \DateTime())->format('Y-m-d H:i:s')));
+        $output->writeln(sprintf('<info>Total execution time %sms</info>', $end - $start));
+        $output->writeln('===========================================');
+
+        return 0;
+    }
+
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @return int|null
+     *
+     */
+    protected function executeOrders(InputInterface $input, OutputInterface $output)
+    {
+        $start = $this->getCurrentMs();
+
+        $output->writeln('<info>Initialization exporting of contacts in Orders.</info>');
+        $output->writeln(sprintf('<info>Started at %s</info>', (new \DateTime())->format('Y-m-d H:i:s')));
+        $output->writeln('Exporting...');
+
+        $exportOrdersProcessor = $this->exportOrdersProcessorFactory->create();
+
+        $exportOrdersProcessor->process();
+
+        $end = $this->getCurrentMs();
+
+        $output->writeln(sprintf('<info>Finished at %s</info>', (new \DateTime())->format('Y-m-d H:i:s')));
+        $output->writeln(sprintf('<info>Total execution time %sms</info>', $end - $start));
+        $output->writeln('===========================================');
 
         return 0;
     }
