@@ -4,7 +4,7 @@ namespace Lof\Mautic\Console\Command;
 
 use Lof\Mautic\Queue\Processor\ExportCustomersProcessorFactory;
 use Lof\Mautic\Queue\Processor\ExportReviewsProcessorFactory;
-use Lof\Mautic\Queue\Processor\ContactQueueProcessorFactory;
+use Lof\Mautic\Queue\Processor\ExportOrdersProcessorFactory;
 use Lof\Mautic\Queue\Processor\ExportSubscribersProcessorFactory;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\State;
@@ -27,11 +27,6 @@ class ExportAllCommand extends Command
      * @var ExportCustomersProcessorFactory
      */
     private $exportCustomerProcessorFactory;
-
-    /**
-     * @var ContactQueueProcessorFactory
-     */
-    private $contactProcessorFactory;
 
     /**
      * @var ExportSubscribersProcessorFactory
