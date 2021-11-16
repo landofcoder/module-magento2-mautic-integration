@@ -13,10 +13,10 @@ require([
 'domReady!'
 ], function($, url){
     url.setBaseUrl('<?= $block->getBaseUrl(); ?>');
-    const url = url.build('rest/V1/lof-mautic/visitor/get');
+    const requestUrl = url.build('rest/V1/lof-mautic/visitor/get');
     const mauticBaseUrl = '<?= $block->escapeUrl($baseMauticUrl); ?>';
     $.ajax({
-        url: url,
+        url: requestUrl,
         type: 'GET',
         success: function(data){
             if (!data || !data.email) {
