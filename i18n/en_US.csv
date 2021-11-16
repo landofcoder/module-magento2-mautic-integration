@@ -1,0 +1,146 @@
+Back,Back
+"Delete Company","Delete Company"
+"Are you sure you want to do this?","Are you sure you want to do this?"
+"Save and Continue Edit","Save and Continue Edit"
+"Save Company","Save Company"
+"Delete Contact","Delete Contact"
+"Save Contact","Save Contact"
+Mautic,Mautic
+Company,Company
+"You deleted the Company.","You deleted the Company."
+"We can't find a Company to delete.","We can't find a Company to delete."
+"This Company no longer exists.","This Company no longer exists."
+"Edit Company","Edit Company"
+"New Company","New Company"
+Companys,Companys
+"Edit Company %1","Edit Company %1"
+"Please correct the data sent.","Please correct the data sent."
+"A total of %1 record(s) have been deleted.","A total of %1 record(s) have been deleted."
+"You saved the Company.","You saved the Company."
+"Something went wrong while saving the Company.","Something went wrong while saving the Company."
+"Synced Companies.","Synced Companies."
+Configurable,Configurable
+"Something went wrong while authorize API.","Something went wrong while authorize API."
+Contact,Contact
+"You deleted the Contact.","You deleted the Contact."
+"We can't find a Contact to delete.","We can't find a Contact to delete."
+"This Contact no longer exists.","This Contact no longer exists."
+"Edit Contact","Edit Contact"
+"New Contact","New Contact"
+Contacts,Contacts
+"Edit Contact %1","Edit Contact %1"
+"You saved the Contact.","You saved the Contact."
+"Something went wrong while saving the Contact.","Something went wrong while saving the Contact."
+"Synced Contacts.","Synced Contacts."
+"Re Authorize API","Re Authorize API"
+"Authorize API","Authorize API"
+"Export All","Export All"
+"Could not save the company: %1","Could not save the company: %1"
+"Company with id ""%1"" does not exist.","Company with id ""%1"" does not exist."
+"Could not delete the Company: %1","Could not delete the Company: %1"
+"OAuth 1","OAuth 1"
+"OAuth 2","OAuth 2"
+"Basic Auth","Basic Auth"
+"Could not save the contact: %1","Could not save the contact: %1"
+"Contact with id ""%1"" does not exist.","Contact with id ""%1"" does not exist."
+"Could not delete the Contact: %1","Could not delete the Contact: %1"
+Edit,Edit
+Delete,Delete
+"Delete ""${ $.$data.title }""","Delete ""${ $.$data.title }"""
+"Are you sure you wan't to delete a ""${ $.$data.title }"" record?","Are you sure you wan't to delete a ""${ $.$data.title }"" record?"
+"View Customer","View Customer"
+"Process completed successfully!","Process completed successfully!"
+"Access token data have been stored in database!","Access token data have been stored in database!"
+"You may","You may"
+close,close
+"this window now.","this window now."
+"Something went wrong!","Something went wrong!"
+"Please check Mautic authorization credentials!","Please check Mautic authorization credentials!"
+Close,Close
+"A webhook will automatically be configured in your Mautic account which will point to: <br/>OAuth 1 <a href=""%1"" target=""_blank"" rel=""noopener noreferrer"">%1</a> and <br/>OAuth 2: <a href=""%2"" target=""_blank"" rel=""noopener noreferrer"">%2</a>. Please ensure that this link is externally accessible. Existing webhook configurations will be upgraded. A reconfigure is necessary when you change your Mautic API keys or your website Base URL.","A webhook will automatically be configured in your Mautic account which will point to: <br/>OAuth 1 <a href=""%1"" target=""_blank"" rel=""noopener noreferrer"">%1</a> and <br/>OAuth 2: <a href=""%2"" target=""_blank"" rel=""noopener noreferrer"">%2</a>. Please ensure that this link is externally accessible. Existing webhook configurations will be upgraded. A reconfigure is necessary when you change your Mautic API keys or your website Base URL."
+"You must first configure your Mautic API keys before you can configure webhooks","You must first configure your Mautic API keys before you can configure webhooks"
+"The API was authorized.","The API was authorized."
+"Mautic Integration Settings","Mautic Integration Settings"
+General,General
+Enabled,Enabled
+"OAuth Version","OAuth Version"
+"Client ID","Client ID"
+"Client Secret","Client Secret"
+Login,Login
+Password,Password
+"Mautic Url","Mautic Url"
+Authorize,Authorize
+"Authorize Mautic API. Please save config before click this button.","Authorize Mautic API. Please save config before click this button."
+"Webhook URL Secret Key","Webhook URL Secret Key"
+"<span>Please enter some random characters in ""Secret Key"" field, save config, and use this URL in Mautic settings for Webhooks: <br><input name=""webhook_url"" class=""webhook-link-input"" style=""width:100%"" id=""webhook_url""></span><br/>Webhook url: https://your_domain/mautic/webhook?secret=YOUR_KEY","<span>Please enter some random characters in ""Secret Key"" field, save config, and use this URL in Mautic settings for Webhooks: <br><input name=""webhook_url"" class=""webhook-link-input"" style=""width:100%"" id=""webhook_url""></span><br/>Webhook url: https://your_domain/mautic/webhook?secret=YOUR_KEY"
+"Contacts Integration","Contacts Integration"
+Export,Export
+"Export contacts from Magento to your Mautic. If the site have lot of contacts, the export process can take some tiem. In this better use console commands:<br/>
+                        <strong>lofmautic:export:customers</strong> Export contacts data from Customers<br/>
+                        <strong>lofmautic:export:orders</strong> Export contacts data from Orders<br/>
+                        <strong>lofmautic:export:reviews</strong> Export contacts data from Reviews<br/>
+                        <strong>lofmautic:export:subscribers</strong> Export contacts data from Subscribers<br/>
+                        <strong>lofmautic:export:all</strong> Export contacts data from All: customers, reviews, orders, subscribers<br/>","Export contacts from Magento to your Mautic. If the site have lot of contacts, the export process can take some tiem. In this better use console commands:<br/>
+                        <strong>lofmautic:export:customers</strong> Export contacts data from Customers<br/>
+                        <strong>lofmautic:export:orders</strong> Export contacts data from Orders<br/>
+                        <strong>lofmautic:export:reviews</strong> Export contacts data from Reviews<br/>
+                        <strong>lofmautic:export:subscribers</strong> Export contacts data from Subscribers<br/>
+                        <strong>lofmautic:export:all</strong> Export contacts data from All: customers, reviews, orders, subscribers<br/>"
+"Fields Mapping","Fields Mapping"
+"Companies Integration","Companies Integration"
+"Mautic Tracking Settings","Mautic Tracking Settings"
+"Enable JavaScript (JS) Tracking","Enable JavaScript (JS) Tracking"
+"Please learn more about Mautic JS Tracking at here <a href=""https://docs.mautic.org/en/contacts/manage-contacts/contact-monitoring"" target=""_BLANK"" rel=""nofollow"">Contact Monitoring</a>","Please learn more about Mautic JS Tracking at here <a href=""https://docs.mautic.org/en/contacts/manage-contacts/contact-monitoring"" target=""_BLANK"" rel=""nofollow"">Contact Monitoring</a>"
+Newsletter,Newsletter
+"Disable Magento Subscription Confirmation Email","Disable Magento Subscription Confirmation Email"
+"Enable this option when you want to send email via Mautic campaign. You should create campaign send email on Mautic before.<a href=""https://docs.mautic.org/en/campaigns/creating-campaigns"" target=""_BLANK"" rel=""nofollow"">Create Campaign</a>","Enable this option when you want to send email via Mautic campaign. You should create campaign send email on Mautic before.<a href=""https://docs.mautic.org/en/campaigns/creating-campaigns"" target=""_BLANK"" rel=""nofollow"">Create Campaign</a>"
+"General Information","General Information"
+"Company Name","Company Name"
+"Mautic Company Id","Mautic Company Id"
+"Address 1","Address 1"
+"Address 2","Address 2"
+City,City
+State,State
+Country,Country
+"Zipcode / Postcode","Zipcode / Postcode"
+"Company Email","Company Email"
+Industry,Industry
+"Number of Employees","Number of Employees"
+"Phone Number","Phone Number"
+"Website Url","Website Url"
+"Anyannual Revenue","Anyannual Revenue"
+"Company Description","Company Description"
+"Add new Company","Add new Company"
+"Sync Companies","Sync Companies"
+ID,ID
+"Company Address1","Company Address1"
+"Company Address2","Company Address2"
+"Company City","Company City"
+"Company State","Company State"
+"Company Country","Company Country"
+"Company Zipcode","Company Zipcode"
+"Company Industry","Company Industry"
+"Company Number Of Employees","Company Number Of Employees"
+"Company Phone","Company Phone"
+"Company Website","Company Website"
+"Company Annual Revenue","Company Annual Revenue"
+"Customer Id","Customer Id"
+"Mautic Contact Id","Mautic Contact Id"
+Facebook,Facebook
+Foursquare,Foursquare
+Instagram,Instagram
+Linkedin,Linkedin
+Skype,Skype
+Twitter,Twitter
+"Hash Purchased","Hash Purchased"
+Stage,Stage
+Tags,Tags
+Website,Website
+"Add new Contact","Add new Contact"
+"Sync Contacts","Sync Contacts"
+"Delete items","Delete items"
+"Are you sure you wan't to delete selected items?","Are you sure you wan't to delete selected items?"
+"Mautic Contact ID","Mautic Contact ID"
+Customer,Customer
+"Has Purchased","Has Purchased"
+"Prospect Or Customer","Prospect Or Customer"

@@ -1,0 +1,40 @@
+<?php
+$data           = $this->helper("Lof\Mautic\Helper\Data");
+?>
+<script>
+    require([
+        'jquery',
+        'prototype'
+    ],
+    function(jQuery)
+    {
+        var baseWebhookUrl = "<?= $data->getStoreUrl(); ?>mautic/webhook";
+        var webhook_url = jQuery('#webhook_url');
+        var webhook_key = jQuery('#lofmautic_general_webhook_secret');
+
+        function generateSecret(length) {
+            var result           = '';
+            var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            var charactersLength = characters.length;
+            for ( var i = 0; i < length; i++ ) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+        }
+
+        if (webhook_url && webhook_url.length && webhook_key) {
+            if (jQuery('#lofmautic_general_webhook_secret').val() == '' || jQuery('#lofmautic_general_webhook_secret').val() == null) {
+                jQuery('#lofmautic_general_webhook_secret').val(generateSecret(32));
+            }
+
+            jQuery('#webhook_url').val(baseWebhookUrl+"?secret="+jQuery(webhook_key).val());
+
+            jQuery('#lofmautic_general_webhook_secret').on("keyup", function () {
+                if (jQuery(this).val() == "") {
+                    jQuery(this).val(generateSecret(32));
+                }
+                jQuery('#webhook_url').val(baseWebhookUrl+"?secret="+jQuery(this).val());
+            })
+        }
+    })
+</script>

@@ -4,6 +4,7 @@
 		<lofmautic>
 			<general>
 				<enabled>1</enabled>
+                <webhook_secret>LandofcoderTeam</webhook_secret>
 			</general>
             <contact>
                 <enabled>0</enabled>
@@ -17,6 +18,9 @@
             <fields_mapping>
                 <fields></fields>
             </fields_mapping>
+            <newsletter>
+                <disable_magento_subscription>1</disable_magento_subscription>
+            </newsletter>
             <sync_mautic>
                 <contact_filter>*</contact_filter>
                 <contact_limit>20</contact_limit>

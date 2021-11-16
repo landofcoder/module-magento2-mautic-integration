@@ -3,4 +3,9 @@
     <head>
         <css src="Lof_Mautic::css/styles.css"/>
     </head>
+    <body>
+        <referenceContainer name="js">
+			<block class="Magento\Framework\View\Element\Template" template="Lof_Mautic::config/js.phtml" name="mautic.config.js"/>
+		</referenceContainer>
+    </body>
 </page>

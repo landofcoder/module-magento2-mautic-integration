@@ -22,7 +22,7 @@
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Backend/etc/menu.xsd">
 	<menu>
-		<add id="Lof_Mautic::all" title="Lof Mautic" module="Lof_Mautic" sortOrder="1000" resource="Magento_Backend::mautic_elements" parent="Magento_Backend::marketing"/>
+		<add id="Lof_Mautic::all" title="Mautic Integration" module="Lof_Mautic" sortOrder="1000" resource="Magento_Backend::mautic_elements" parent="Magento_Backend::marketing"/>
 
 		<!-- contact -->
 		<add id="Lof_Mautic::contacts" title="Manage Contacts" module="Lof_Mautic" sortOrder="10" parent="Lof_Mautic::all" action="mautic/contact/" resource="Lof_Mautic::contacts"/>

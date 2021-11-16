@@ -344,10 +344,13 @@ class Data extends AbstractHelper
      */
     public function decrypt($key)
     {
-        if (!preg_match('/^[A-Za-z0-9_]+$/', $key))
-            $key = $this->encryptor->decrypt($key);
+        if ($key) {
+            if (!preg_match('/^[A-Za-z0-9_]+$/', $key))
+                $key = $this->encryptor->decrypt($key);
+            $key = trim($key);
+        }
 
-        return trim($key);
+        return $key;
     }
 
     /**
@@ -378,6 +381,16 @@ class Data extends AbstractHelper
     public function getCallbackUrl()
     {
         return $this->_backendHelper->getUrl('mautic/configurable/authorize');
+    }
+
+    /**
+     * Get store base url
+     *
+     * @return string
+     */
+    public function getStoreUrl()
+    {
+        return $this->_storeManager->getStore()->getBaseUrl();
     }
 
 }
