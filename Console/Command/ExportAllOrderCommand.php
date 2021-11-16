@@ -80,9 +80,9 @@ class ExportAllOrderCommand extends Command
 
         $start = $this->getCurrentMs();
 
-        $output->writeln('<info>Initialization processing of contacts queue.</info>');
+        $output->writeln('<info>Initialization exporting of contacts in Orders.</info>');
         $output->writeln(sprintf('<info>Started at %s</info>', (new \DateTime())->format('Y-m-d H:i:s')));
-        $output->writeln('Processing...');
+        $output->writeln('Exporting...');
 
         $contactQueueProcessor = $this->contactProcessorFactory->create();
 

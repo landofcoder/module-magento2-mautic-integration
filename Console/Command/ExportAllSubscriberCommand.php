@@ -2,7 +2,7 @@
 
 namespace Lof\Mautic\Console\Command;
 
-use Lof\Mautic\Queue\Processor\ContactQueueProcessorFactory;
+use Lof\Mautic\Queue\Processor\ExportSubscribersProcessorFactory;
 use Magento\Framework\App\Area;
 use Magento\Framework\App\State;
 use Magento\Framework\Registry;
@@ -16,9 +16,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ExportAllSubscriberCommand extends Command
 {
     /**
-     * @var ContactQueueProcessorFactory
+     * @var ExportSubscribersProcessorFactory
      */
-    private $contactProcessorFactory;
+    private $subscriberProcessorFactory;
     /**
      * @var State
      */
@@ -32,20 +32,20 @@ class ExportAllSubscriberCommand extends Command
     /**
      * CategoryImport constructor.
      *
-     * @param ContactQueueProcessorFactory $contactProcessorFactory
+     * @param ExportSubscribersProcessorFactory $subscriberProcessorFactory
      * @param State $state
      * @param Registry $registry
      * @param null $name
      */
     public function __construct(
-        ContactQueueProcessorFactory $contactProcessorFactory,
+        ExportSubscribersProcessorFactory $subscriberProcessorFactory,
         State $state,
         Registry $registry,
         $name = null
     ) {
         parent::__construct($name);
 
-        $this->contactProcessorFactory = $contactProcessorFactory;
+        $this->subscriberProcessorFactory = $subscriberProcessorFactory;
         $this->state = $state;
         $this->registry = $registry;
     }
@@ -80,13 +80,13 @@ class ExportAllSubscriberCommand extends Command
 
         $start = $this->getCurrentMs();
 
-        $output->writeln('<info>Initialization processing of contacts queue.</info>');
+        $output->writeln('<info>Initialization exporting of contacts in Subscribers.</info>');
         $output->writeln(sprintf('<info>Started at %s</info>', (new \DateTime())->format('Y-m-d H:i:s')));
-        $output->writeln('Processing...');
+        $output->writeln('Exporting...');
 
-        $contactQueueProcessor = $this->contactProcessorFactory->create();
+        $subscriberProcessor = $this->subscriberProcessorFactory->create();
 
-        $contactQueueProcessor->process();
+        $subscriberProcessor->process();
 
         $end = $this->getCurrentMs();
 

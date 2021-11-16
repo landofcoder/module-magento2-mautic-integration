@@ -2,7 +2,9 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
     <module name="Lof_Mautic" setup_version="1.0.0">
         <sequence>
+            <module name="Magento_Customer"/>
             <module name="Lof_Company"/>
+            <module name="Lof_All"/>
         </sequence>
     </module>
 </config>

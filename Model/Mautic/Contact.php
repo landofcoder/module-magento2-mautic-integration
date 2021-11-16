@@ -155,6 +155,35 @@ class Contact extends AbstractApi
     }
 
     /**
+     * Export contacts
+     *
+     * @param array|null $data
+     * @return bool
+     */
+    public function exportContact($data = [])
+    {
+        if (isset($data['mautic_contact_id']) && (int)$data['mautic_contact_id']) {
+            $mautic_contact_id = (int)$data['mautic_contact_id'];
+            unset($data['mautic_contact_id']);
+            $response = $this->getCurrentMauticApi()->edit($mautic_contact_id, $data);
+        } else {
+            $response = $this->getCurrentMauticApi()->create($data);
+        }
+
+        if (isset($response['errors']) && count($response['errors'])) {
+            $this->mauticModel
+                ->executeErrorResponse($response);
+
+            return false;
+        }
+        if (isset($response['contact']) && $response['contact']) {
+            $this->createContact($response['contact']);
+        }
+
+        return true;
+    }
+
+    /**
      * @return void
      */
     public function processSyncFromMautic()
@@ -176,7 +205,6 @@ class Contact extends AbstractApi
      */
     public function createContact($contact = [])
     {
-        $flag = false;
         if (isset($contact['fields']) && isset($contact['fields']['all']) && $contact['id']) {
             $contactFields = $contact['fields']['all'];
             $contactItem = $this->contactFactory->create()->getCollection()
@@ -216,17 +244,14 @@ class Contact extends AbstractApi
             $data['stage'] = $this->mauticModel->serializeData($convertStages);
             $data['contact_id'] = $contactId;
             $customerModel = $this->getCustomer($email);
-
-            if ($customerModel->getId()) {
-                $data['customer_id'] = $customerModel->getId();
-                $model->setData($data);
-                try {
-                    $model->save();
-                } catch (\Exception $e) {
-                    //log exception at here
-                }
-                return $model;
+            $data['customer_id'] = $customerModel ? $customerModel->getId() : 0;
+            $model->setData($data);
+            try {
+                $model->save();
+            } catch (\Exception $e) {
+                //log exception at here
             }
+            return $model;
         }
         return false;
     }

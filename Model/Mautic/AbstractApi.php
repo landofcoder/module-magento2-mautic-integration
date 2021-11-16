@@ -158,6 +158,16 @@ abstract class AbstractApi extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
+     * Get country model
+     *
+     * @return \Magento\Directory\Model\Country
+     */
+    public function getCountryModel()
+    {
+        return $this->countryFactory->create();
+    }
+
+    /**
      * @return void
      */
     public function processSyncFromMautic()
@@ -414,12 +424,50 @@ abstract class AbstractApi extends \Magento\Framework\Model\AbstractModel
     /**
      * Retrieve mautic api for type: contacts, companies, campaigns, segments,..
      *
-     * @param string $api_type
      * @return \Mautic\Api\Api
      */
     public function getCurrentMauticApi()
     {
         return $this->_getMauticApi($this->_api_type);
+    }
+
+    /**
+     * Create Batch Data
+     *
+     * @param string $api_type
+     * @param array $data
+     * @return \Mautic\Api\Api
+     */
+    public function createBatchData($api_type, array $data)
+    {
+        $mauticApi = $this->_getMauticApi($api_type);
+        return $mauticApi->createBatch($data);
+    }
+
+    /**
+     * Edit Batch Data
+     *
+     * @param string $api_type
+     * @param array $data
+     * @return \Mautic\Api\Api
+     */
+    public function editBatchData($api_type, array $data)
+    {
+        $mauticApi = $this->_getMauticApi($api_type);
+        return $mauticApi->editBatch($data);
+    }
+
+    /**
+     * Create Batch Data
+     *
+     * @param string $api_type
+     * @param array $data
+     * @return \Mautic\Api\Api
+     */
+    public function deleteBatch($api_type, array $ids)
+    {
+        $mauticApi = $this->_getMauticApi($api_type);
+        return $mauticApi->deleteBatch($ids);
     }
 
     /**

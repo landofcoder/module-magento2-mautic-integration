@@ -2,29 +2,17 @@
 
 namespace Lof\Mautic\Queue\Processor;
 
-use Lof\Mautic\Queue\QueueProcessorInterface;
-use Lof\Mautic\Model\Mautic\Contact;
-use Lof\Mautic\Helper\Data;
-use Magento\Framework\Api\Search\SearchResultInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SortOrderBuilder;
 use Magento\Framework\Event\ManagerInterface;
+use Lof\Mautic\Model\Mautic\Contact;
+use Lof\Mautic\Helper\Data;
 
 /**
- * Class AbstractProcessor
+ * Class ExportCustomersProcessor
  */
-abstract class AbstractQueueProcessor implements QueueProcessorInterface
+class ExportCustomersProcessor extends AbstractQueueProcessor
 {
-    /**
-     * @var Contact
-     */
-    protected $mauticContact;
-
-    /**
-     * @var Data
-     */
-    protected $helperData;
-
     /**
      * CategoryImport constructor.
      *
@@ -35,8 +23,7 @@ abstract class AbstractQueueProcessor implements QueueProcessorInterface
         Contact $mauticContact,
         Data $helperData
     ) {
-        $this->helperData = $helperData;
-        $this->mauticContact = $mauticContact;
+        parent::__construct($mauticContact, $helperData);
     }
 
     /**
@@ -44,6 +31,7 @@ abstract class AbstractQueueProcessor implements QueueProcessorInterface
      */
     public function process()
     {
+        $this->mauticContact->export();
         return;
 
     }
