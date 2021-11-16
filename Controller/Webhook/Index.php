@@ -48,18 +48,17 @@ class Index extends \Lof\Mautic\Controller\MauticAbstract {
     /**
      * Execute webhook in case of network failure
      *
-     * @return void
+     * @return void|string|bool
      */
     public function execute() {
         sleep(20);
         $params = $this->getRequest()->getParams();
         $secretKey = $this->getRequest()->getParam("secret");
-        $configCecretKey = $this->getHelperData()->getConfig("general/webhook_secret");
-
-        if ($secretKey && $secretKey == $configCecretKey) {
+        $configSecretKey = $this->getHelperData()->getConfig("general/webhook_secret");
+        if ($secretKey && $secretKey == $configSecretKey) {
 
             //TODO: write logic code at here
-
+            $this->logger->info(json_encode($params));
             $this->logger->info("Mautic Webhook Processed successfully.");
             return;
         }

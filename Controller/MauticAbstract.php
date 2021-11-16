@@ -50,7 +50,7 @@ abstract class MauticAbstract extends Action implements CsrfAwareActionInterface
      */
     protected function getHelperData()
     {
-        return $this->_customerSession;
+        return $this->_helperData;
     }
 
     /**
