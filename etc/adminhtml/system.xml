@@ -59,6 +59,12 @@
                         <field id="oauth_version" separator=",">OAuth1a,OAuth2</field>
                     </depends>
 				</field>
+
+                <field id="webhook_secret" type="text" sortOrder="45" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
+					<label>Webhook URL Secret Key</label>
+					<comment><![CDATA[<span>Please enter some random characters in "Secret Key" field, save config, and use this URL in Mautic settings for Webhooks: <br><input name="webhook_url" class="webhook-link-input" style="width:100%" id="webhook_url"></span><br/>Webhook url: https://your_domain/mautic/webhook?secret=YOUR_KEY]]></comment>
+				</field>
+
             </group>
             <group id="contact" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 				<label>Contacts Integration</label>
@@ -109,7 +115,7 @@
 
             <group id="newsletter" sortOrder="35" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 				<label>Newsletter</label>
-				<field id="fields" type="select" sortOrder="0" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
+				<field id="disable_magento_subscription" type="select" sortOrder="0" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
 					<label>Disable Magento Subscription Confirmation Email</label>
 					<comment><![CDATA[Enable this option when you want to send email via Mautic campaign. You should create campaign send email on Mautic before.<a href="https://docs.mautic.org/en/campaigns/creating-campaigns" target="_BLANK" rel="nofollow">Create Campaign</a>]]></comment>
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
