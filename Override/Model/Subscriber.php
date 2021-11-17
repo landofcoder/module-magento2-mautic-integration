@@ -59,7 +59,7 @@ class Subscriber extends \Magento\Newsletter\Model\Subscriber
      */
     public function sendConfirmationSuccessEmail()
     {
-        $mauticModel = $this->mauticContact;
+        $mauticModel = $this->getMauticModel();
         if ($this->getDataHelper()->isEnabled()) {
             $subscriberData = [
                 "email" => $this->getEmail(),
@@ -77,7 +77,7 @@ class Subscriber extends \Magento\Newsletter\Model\Subscriber
             $params = [];
             $contactId = $mauticModel->getResponseContactId();
             if ($contactId) {
-                $this->mauticContact->sendEmailToContact($emailId, $contactId, $params);
+                $mauticModel->sendEmailToContact($emailId, $contactId, $params);
             }
             return $this;
         } else {

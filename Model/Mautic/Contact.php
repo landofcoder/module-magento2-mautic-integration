@@ -147,7 +147,6 @@ class Contact extends AbstractApi
             $tags = array_merge($tags, $helper->getDefaultTags());
         }
         $data["tags"] = implode(",", $tags);
-
         if (isset($data['mautic_contact_id']) && (int)$data['mautic_contact_id']) {
             $mautic_contact_id = (int)$data['mautic_contact_id'];
             unset($data['mautic_contact_id']);

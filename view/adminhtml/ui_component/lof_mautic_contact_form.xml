@@ -64,7 +64,7 @@
 			<settings>
 				<dataType>text</dataType>
 				<label translate="true">Mautic Contact Id</label>
-				<dataScope>contact_id</dataScope>
+				<dataScope>mautic_contact_id</dataScope>
 				<validation>
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
