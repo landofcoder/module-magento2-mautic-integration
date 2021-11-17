@@ -47,6 +47,17 @@ class Mautic {
     }
 
     /**
+     * unserialize data
+     *
+     * @param string $data
+     * @return mixed|array|string
+     */
+    public function unSerializeData($data)
+    {
+        return $this->_helper->decodeData($data);
+    }
+
+    /**
      * helper data
      *
      * @return string

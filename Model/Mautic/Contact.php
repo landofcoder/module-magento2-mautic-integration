@@ -48,39 +48,6 @@ class Contact extends AbstractApi
         $this->contactFactory = $contactFactory;
     }
 
-
-    /**
-     * @param string|int $id
-     * @return array|mixed|bool
-     */
-    public function getItemById($id = "")
-    {
-        return [];
-
-    }
-
-    /**
-     * @param string|int $id
-     * @param array|mixed
-     * @return array|mixed|bool
-     */
-    public function updateRecord($id, $data = [])
-    {
-        return [];
-
-    }
-
-    /**
-     * @param string|int $id
-     *
-     * @return bool
-     */
-    public function deleteRecord($id)
-    {
-        return true;
-
-    }
-
     /**
      * Export contacts from customer
      *
@@ -147,6 +114,16 @@ class Contact extends AbstractApi
             $tags = array_merge($tags, $helper->getDefaultTags());
         }
         $data["tags"] = implode(",", $tags);
+
+        $stage = isset($contact['stage']) && $contact['stage'] ? $contact['stage']: "";
+        $convertStages = null;
+        if ($stage) {
+            $convertStages = $this->mauticModel->unSerializeData($stage);
+            $data["stage"] = $convertStages;
+        } else {
+            unset($data["stage"]);
+        }
+
         if (isset($data['mautic_contact_id']) && (int)$data['mautic_contact_id']) {
             $mautic_contact_id = (int)$data['mautic_contact_id'];
             unset($data['mautic_contact_id']);
@@ -185,6 +162,14 @@ class Contact extends AbstractApi
             $tags = array_merge($tags, $helper->getDefaultTags());
         }
         $data["tags"] = implode(",", $tags);
+        $stage = isset($contact['stage']) && $contact['stage'] ? $contact['stage']: "";
+        $convertStages = null;
+        if ($stage) {
+            $convertStages = $this->mauticModel->unSerializeData($stage);
+            $data["stage"] = $convertStages;
+        } else {
+            unset($data["stage"]);
+        }
 
         if (isset($data['mautic_contact_id']) && (int)$data['mautic_contact_id']) {
             $mautic_contact_id = (int)$data['mautic_contact_id'];

@@ -381,6 +381,17 @@ class Data extends AbstractHelper
     }
 
     /**
+     * decode string
+     *
+     * @param string
+     * @return mixed|array|Object
+     */
+    public function decodeData($string)
+    {
+        return $this->serializer->unserialize($string);
+    }
+
+    /**
      * Get customer id
      * @return Object|array|mixed
      */

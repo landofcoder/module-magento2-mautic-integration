@@ -485,6 +485,26 @@ abstract class AbstractApi extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
+     * Mapping mautic data to contacts data
+     * @param array
+     * @return array
+     */
+    public function mappingMauticData(array $data = [])
+    {
+        return $data;
+    }
+
+    /**
+     * Mapping contact data to mautic data
+     * @param array
+     * @return array
+     */
+    public function mappingContactData(array $data = [])
+    {
+        return $data;
+    }
+
+    /**
      * Retrieve mautic api for type: contacts, companies, campaigns, segments,..
      *
      * @param string $api_type
