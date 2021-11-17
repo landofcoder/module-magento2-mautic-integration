@@ -59,15 +59,17 @@ class Subscriber extends \Magento\Newsletter\Model\Subscriber
      */
     public function sendConfirmationSuccessEmail()
     {
-        if ($this->getDataHelper()->isEnabled() && $this->getDataHelper()->isDisabledNewsletter()) {
+        $mauticModel = $this->mauticContact;
+        if ($this->getDataHelper()->isEnabled()) {
             $subscriberData = [
                 "email" => $this->getEmail(),
                 "firstname" => $this->getName(),
                 "tags" => "newsletter,subscribed"
             ];
-            $mauticModel = $this->mauticContact;
-
             $mauticModel->exportContact($subscriberData);
+        }
+        if ($this->getDataHelper()->isEnabled() && $this->getDataHelper()->isDisabledNewsletter()) {
+
             //send email to contact
             // email Id
             // contact ID
