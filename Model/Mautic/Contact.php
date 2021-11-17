@@ -280,14 +280,19 @@ class Contact extends AbstractApi
             $data['stage'] = $this->mauticModel->serializeData($convertStages);
             $data['contact_id'] = $contactId;
             $customerModel = $this->getCustomer($email);
-            $data['customer_id'] = $customerModel ? $customerModel->getId() : 0;
-            $model->setData($data);
-            try {
-                $model->save();
-            } catch (\Exception $e) {
-                //log exception at here
+            if ($customerModel && $customerModel->getId()) {
+                $data['customer_id'] = $customerModel->getId();
+
+                $model->setData($data);
+                try {
+                    $model->save();
+                } catch (\Exception $e) {
+                    //log exception at here
+                    //echo $e->getMessage();
+                }
+                return $model;
+
             }
-            return $model;
         }
         return false;
     }
