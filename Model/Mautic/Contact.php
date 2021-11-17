@@ -20,6 +20,11 @@ class Contact extends AbstractApi
      */
     protected $contactFactory;
 
+    /**
+     * @var string|int
+     */
+    protected $_responseContactId = 0;
+
 
     /**
      * Initialize resource model
@@ -133,6 +138,16 @@ class Contact extends AbstractApi
             $data = array_merge($data, $customData);
         }
 
+        $helper = $this->mauticModel->getHelperData();
+        $tags = [];
+        if (!isset($data["tags"]) || !$data["tags"]) {
+            $tags = $helper->getDefaultTags();
+        } else {
+            $tags = explode(",", $data["tags"]);
+            $tags = array_merge($tags, $helper->getDefaultTags());
+        }
+        $data["tags"] = implode(",", $tags);
+
         if (isset($data['mautic_contact_id']) && (int)$data['mautic_contact_id']) {
             $mautic_contact_id = (int)$data['mautic_contact_id'];
             unset($data['mautic_contact_id']);
@@ -162,6 +177,16 @@ class Contact extends AbstractApi
      */
     public function exportContact($data = [])
     {
+        $helper = $this->mauticModel->getHelperData();
+        $tags = [];
+        if (!isset($data["tags"]) || !$data["tags"]) {
+            $tags = $helper->getDefaultTags();
+        } else {
+            $tags = explode(",", $data["tags"]);
+            $tags = array_merge($tags, $helper->getDefaultTags());
+        }
+        $data["tags"] = implode(",", $tags);
+
         if (isset($data['mautic_contact_id']) && (int)$data['mautic_contact_id']) {
             $mautic_contact_id = (int)$data['mautic_contact_id'];
             unset($data['mautic_contact_id']);
@@ -201,6 +226,16 @@ class Contact extends AbstractApi
     }
 
     /**
+     * Get response contact id
+     *
+     * @return string|int
+     */
+    public function getResponseContactId()
+    {
+        return $this->_responseContactId;
+    }
+
+    /**
      * create contact on magento table
      * @param array|mixed $contact
      * @return Object|mixed|boolean
@@ -216,7 +251,7 @@ class Contact extends AbstractApi
             if($contactItem) {
                 $model = $this->contactFactory->create()->load($contactItem->getContactId());
                 $contactId = $model->getId();
-                $flag = true;
+                $this->_responseContactId = $contactId;
             } else {
                 $model = $this->contactFactory->create();
             }

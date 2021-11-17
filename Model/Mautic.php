@@ -37,13 +37,23 @@ class Mautic {
 
     /**
      * serialize data
-     * 
+     *
      * @param mixed|array|string
      * @return string
      */
-    public function serializeData($data) 
+    public function serializeData($data)
     {
         return $this->_helper->encodeData($data);
+    }
+
+    /**
+     * helper data
+     *
+     * @return string
+     */
+    public function getHelperData()
+    {
+        return $this->_helper;
     }
 
     /**

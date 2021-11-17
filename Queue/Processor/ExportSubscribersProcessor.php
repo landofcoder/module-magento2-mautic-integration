@@ -40,12 +40,18 @@ class ExportSubscribersProcessor extends AbstractQueueProcessor
      */
     public function process()
     {
-        $subscribers = $this->subscriberFactory->create()->getCollection()
-                                ->addFieldToFilter("subscriber_status", 1);
+        $subscribers = $this->subscriberFactory->create()->getCollection();
         try {
             foreach ($subscribers as $subscriber) {
+                $tags = ["newsletter"];
+                if ($subscriber->getSubscriberStatus() == 1) {
+                    $tags[] = ["subscribed"];
+                } else {
+                    $tags[] = ["unsubscribed"];
+                }
                 $subscriberData = [
-                    "email" => $subscriber->getSubscriberEmail()
+                    "email" => $subscriber->getSubscriberEmail(),
+                    "tags" => impode(",", $tags)
                 ];
 
                 $this->mauticContact->exportContact($subscriberData);

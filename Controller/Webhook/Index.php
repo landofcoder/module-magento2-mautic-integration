@@ -58,6 +58,7 @@ class Index extends \Lof\Mautic\Controller\MauticAbstract {
         if ($secretKey && $secretKey == $configSecretKey) {
 
             //TODO: write logic code at here
+            //Action confirm subscription, unsubscription
             $this->logger->info(json_encode($params));
             $this->logger->info("Mautic Webhook Processed successfully.");
             return;

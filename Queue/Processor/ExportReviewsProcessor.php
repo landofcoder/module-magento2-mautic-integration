@@ -50,7 +50,8 @@ class ExportReviewsProcessor extends AbstractQueueProcessor
                 if ($item->getCustomerId()) {
                     $customer = $this->helperData->getCustomerById($item->getCustomerId());
                     $customData = [
-                        "firstname" => $item->getNickname()
+                        "firstname" => $item->getNickname(),
+                        "tags" => "reviews"
                     ];
                     $this->mauticContact->exportCustomer($customer, $customData);
                 }
