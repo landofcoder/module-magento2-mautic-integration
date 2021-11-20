@@ -80,23 +80,8 @@ class Subscriber extends \Magento\Newsletter\Model\Subscriber
                 $mauticModel->sendEmailToContact($emailId, $contactId, $params);
             }
             return $this;
-        } else {
-            return parent::sendConfirmationSuccessEmail();
         }
-    }
-
-    /**
-     * Sends out unsubscription email
-     *
-     * @return $this
-     */
-    public function sendUnsubscriptionEmail()
-    {
-        if ($this->getDataHelper()->isEnabled() && $this->getDataHelper()->isDisabledNewsletter()) {
-            return $this;
-        } else {
-            return parent::sendUnsubscriptionEmail();
-        }
+        return parent::sendConfirmationSuccessEmail();
     }
 
 }

@@ -5,6 +5,7 @@
 			<general>
 				<enabled>1</enabled>
                 <webhook_secret>LandofcoderTeam</webhook_secret>
+                <webhook_mautic_secret></webhook_mautic_secret>
 			</general>
             <contact>
                 <enabled>0</enabled>

@@ -52,20 +52,52 @@ class Index extends \Lof\Mautic\Controller\MauticAbstract {
      */
     public function execute() {
         sleep(20);
-        $params = $this->getRequest()->getParams();
         $secretKey = $this->getRequest()->getParam("secret");
         $configSecretKey = $this->getHelperData()->getConfig("general/webhook_secret");
         if ($secretKey && $secretKey == $configSecretKey) {
-
+            $rawData = $this->getMauticRequest();
             //TODO: write logic code at here
             //Action confirm subscription, unsubscription
-            $this->logger->info(json_encode($params));
-            $this->logger->info("Mautic Webhook Processed successfully.");
+            $secret = $this->getHelperData()->getConfig("general/webhook_mautic_secret");
+            $secret = $secret ? $secret : "8b70a6c58459758787ad17af02ea9548a61814cf77ff9fbaf6e759e5292ec9b1";//mautic secret key
+            // optional signature verification
+            $headers = getallheaders();
+            $receivedSignature = $headers['Webhook-Signature'];
+            $rawData = !is_string($rawData) ? json_encode($rawData): $rawData;
+            $computedSignature = base64_encode(hash_hmac('sha256', $rawData, $secret, true));
+            $flag = false;
+            if ($receivedSignature === $computedSignature) {
+                $this->logger->info('Webhook authenticity verification OK');
+                $flag = true;
+            } else {
+                $this->logger->info('Webhook not authentic!');
+            }
+            $this->logger->info($rawData);
+            if ($flag) {
+                // @todo Process the $requestData as needed
+                $requestData = json_decode($rawData);
+                // Process update subscriber status
+                $this->logger->info("Mautic Webhook Processed successfully.");
+                echo __("OK");
+            } else {
+                echo __("Webhook not authentic!");
+            }
             return;
         }
         else {
             $this->logger->info("Mautic Webhook: Check secret key of webhook url is not match with value in config.");
             return;
         }
+    }
+
+     /**
+     * Get the request JSON object and log the request
+     *
+     * @return object|string
+     */
+    protected function getMauticRequest()
+    {
+        $rawData = @file_get_contents("php://input");
+        return $rawData;
     }
 }
