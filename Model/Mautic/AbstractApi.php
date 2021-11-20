@@ -458,6 +458,20 @@ abstract class AbstractApi extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
+     * Send email to contact id
+     *
+     * @param string|int $emailId
+     * @param string|int $contactId
+     * @param array $parameters
+     * @return \Mautic\Api\Api
+     */
+    public function sendEmailToContact($emailId, $contactId, array $parameters = [])
+    {
+        $mauticApi = $this->_getMauticApi("emails");
+        return $mauticApi->sendToContact($emailId, $contactId, $parameters);
+    }
+
+    /**
      * Create Batch Data
      *
      * @param string $api_type
@@ -468,6 +482,26 @@ abstract class AbstractApi extends \Magento\Framework\Model\AbstractModel
     {
         $mauticApi = $this->_getMauticApi($api_type);
         return $mauticApi->deleteBatch($ids);
+    }
+
+    /**
+     * Mapping mautic data to contacts data
+     * @param array
+     * @return array
+     */
+    public function mappingMauticData(array $data = [])
+    {
+        return $data;
+    }
+
+    /**
+     * Mapping contact data to mautic data
+     * @param array
+     * @return array
+     */
+    public function mappingContactData(array $data = [])
+    {
+        return $data;
     }
 
     /**

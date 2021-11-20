@@ -62,9 +62,12 @@
 
                 <field id="webhook_secret" type="text" sortOrder="45" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
 					<label>Webhook URL Secret Key</label>
-					<comment><![CDATA[<span>Please enter some random characters in "Secret Key" field, save config, and use this URL in Mautic settings for Webhooks: <br><input name="webhook_url" class="webhook-link-input" style="width:100%" id="webhook_url"></span><br/>Webhook url: <strong>https://your_domain/mautic/webhook?secret=YOUR_KEY</strong>]]></comment>
+					<comment><![CDATA[<span>Please enter some random characters in "Secret Key" field, save config, and use this URL in Mautic settings for Webhooks: <br><input name="webhook_url" class="webhook-link-input" style="width:100%" id="webhook_url"></span><br/>Webhook url: <strong>https://your_domain/mautic/webhook?secret=YOUR_KEY</strong><br/>The Secret Key will been check on webhook controller before process other functions.]]></comment>
 				</field>
-
+                <field id="webhook_mautic_secret" type="text" sortOrder="50" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
+					<label>Mautic Webhook Secret Key</label>
+					<comment><![CDATA[This field will autogenerate on Mautic Webhook. Use this secret hash to verify authenticity of the webhook payload on the target server.]]></comment>
+				</field>
             </group>
             <group id="contact" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 				<label>Contacts Integration</label>

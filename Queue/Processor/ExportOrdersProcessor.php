@@ -51,7 +51,8 @@ class ExportOrdersProcessor extends AbstractQueueProcessor
                     "email" => $order->getCustomerEmail(),
                     "firstname" => $order->getCustomerFirstname(),
                     "lastname" => $order->getCustomerLastname(),
-                    "haspurchased" => true
+                    "haspurchased" => true,
+                    "tags" => "ordered"
                 ];
                 $address = $this->_getBillingAddress($order);
                 if ($address) {

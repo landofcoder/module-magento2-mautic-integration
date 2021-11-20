@@ -43,4 +43,6 @@
             </argument>
         </arguments>
     </type>
+
+    <preference for="Magento\Newsletter\Model\Subscriber" type="Lof\Mautic\Override\Model\Subscriber"/>
 </config>

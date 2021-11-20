@@ -20,6 +20,11 @@ class Contact extends AbstractApi
      */
     protected $contactFactory;
 
+    /**
+     * @var string|int
+     */
+    protected $_responseContactId = 0;
+
 
     /**
      * Initialize resource model
@@ -41,39 +46,6 @@ class Contact extends AbstractApi
     ) {
         parent::__construct($context, $registry, $customerFactory, $countryFactory, $mauticModel );
         $this->contactFactory = $contactFactory;
-    }
-
-
-    /**
-     * @param string|int $id
-     * @return array|mixed|bool
-     */
-    public function getItemById($id = "")
-    {
-        return [];
-
-    }
-
-    /**
-     * @param string|int $id
-     * @param array|mixed
-     * @return array|mixed|bool
-     */
-    public function updateRecord($id, $data = [])
-    {
-        return [];
-
-    }
-
-    /**
-     * @param string|int $id
-     *
-     * @return bool
-     */
-    public function deleteRecord($id)
-    {
-        return true;
-
     }
 
     /**
@@ -133,6 +105,25 @@ class Contact extends AbstractApi
             $data = array_merge($data, $customData);
         }
 
+        $helper = $this->mauticModel->getHelperData();
+        $tags = [];
+        if (!isset($data["tags"]) || !$data["tags"]) {
+            $tags = $helper->getDefaultTags();
+        } else {
+            $tags = explode(",", $data["tags"]);
+            $tags = array_merge($tags, $helper->getDefaultTags());
+        }
+        $data["tags"] = implode(",", $tags);
+
+        $stage = isset($contact['stage']) && $contact['stage'] ? $contact['stage']: "";
+        $convertStages = null;
+        if ($stage) {
+            $convertStages = $this->mauticModel->unSerializeData($stage);
+            $data["stage"] = $convertStages;
+        } else {
+            unset($data["stage"]);
+        }
+
         if (isset($data['mautic_contact_id']) && (int)$data['mautic_contact_id']) {
             $mautic_contact_id = (int)$data['mautic_contact_id'];
             unset($data['mautic_contact_id']);
@@ -162,6 +153,24 @@ class Contact extends AbstractApi
      */
     public function exportContact($data = [])
     {
+        $helper = $this->mauticModel->getHelperData();
+        $tags = [];
+        if (!isset($data["tags"]) || !$data["tags"]) {
+            $tags = $helper->getDefaultTags();
+        } else {
+            $tags = explode(",", $data["tags"]);
+            $tags = array_merge($tags, $helper->getDefaultTags());
+        }
+        $data["tags"] = implode(",", $tags);
+        $stage = isset($contact['stage']) && $contact['stage'] ? $contact['stage']: "";
+        $convertStages = null;
+        if ($stage) {
+            $convertStages = $this->mauticModel->unSerializeData($stage);
+            $data["stage"] = $convertStages;
+        } else {
+            unset($data["stage"]);
+        }
+
         if (isset($data['mautic_contact_id']) && (int)$data['mautic_contact_id']) {
             $mautic_contact_id = (int)$data['mautic_contact_id'];
             unset($data['mautic_contact_id']);
@@ -201,6 +210,16 @@ class Contact extends AbstractApi
     }
 
     /**
+     * Get response contact id
+     *
+     * @return string|int
+     */
+    public function getResponseContactId()
+    {
+        return $this->_responseContactId;
+    }
+
+    /**
      * create contact on magento table
      * @param array|mixed $contact
      * @return Object|mixed|boolean
@@ -216,7 +235,7 @@ class Contact extends AbstractApi
             if($contactItem) {
                 $model = $this->contactFactory->create()->load($contactItem->getContactId());
                 $contactId = $model->getId();
-                $flag = true;
+                $this->_responseContactId = $contactId;
             } else {
                 $model = $this->contactFactory->create();
             }
@@ -246,14 +265,19 @@ class Contact extends AbstractApi
             $data['stage'] = $this->mauticModel->serializeData($convertStages);
             $data['contact_id'] = $contactId;
             $customerModel = $this->getCustomer($email);
-            $data['customer_id'] = $customerModel ? $customerModel->getId() : 0;
-            $model->setData($data);
-            try {
-                $model->save();
-            } catch (\Exception $e) {
-                //log exception at here
+            if ($customerModel && $customerModel->getId()) {
+                $data['customer_id'] = $customerModel->getId();
+
+                $model->setData($data);
+                try {
+                    $model->save();
+                } catch (\Exception $e) {
+                    //log exception at here
+                    //echo $e->getMessage();
+                }
+                return $model;
+
             }
-            return $model;
         }
         return false;
     }

@@ -80,6 +80,11 @@ class Data extends AbstractHelper
     const CONTACT_INTEGRATION_STATUS = 'contact/enabled';
 
     /**
+     * Newsletter is disabled
+     */
+    const NEWSLETTER_STATUS = 'newsletter/disable_magento_subscription';
+
+    /**
      * Company integration status path
      */
     const COMPANY_INTEGRATION_STATUS = 'company/enabled';
@@ -172,6 +177,17 @@ class Data extends AbstractHelper
     public function isEnabled($store = null)
     {
         return (bool)$this->getConfig("general/enabled", $store);
+    }
+
+    /**
+     * Is module disabled newsletter send email
+     *
+     * @param mixed|Object|int|null $store
+     * @return bool
+     */
+    public function isDisabledNewsletter($store = null)
+    {
+        return (bool)$this->getConfig(self::NEWSLETTER_STATUS, $store);
     }
 
     /**
@@ -365,6 +381,17 @@ class Data extends AbstractHelper
     }
 
     /**
+     * decode string
+     *
+     * @param string
+     * @return mixed|array|Object
+     */
+    public function decodeData($string)
+    {
+        return $this->serializer->unserialize($string);
+    }
+
+    /**
      * Get customer id
      * @return Object|array|mixed
      */
@@ -396,6 +423,39 @@ class Data extends AbstractHelper
     public function getStoreUrl()
     {
         return $this->_storeManager->getStore()->getBaseUrl();
+    }
+
+    /**
+     * Get current store name
+     *
+     * @return string
+     */
+    public function getCurrentStoreNmae()
+    {
+        return $this->_storeManager->getStore()->getName();
+    }
+
+    /**
+     * Get default store tags
+     *
+     * @return array
+     */
+    public function getDefaultTags()
+    {
+        $tags = [];
+        $tags[] = "magento2";
+        $tags[] = $this->getCurrentStoreNmae();
+        return $tags;
+    }
+
+    /**
+     * Get newsletter email id
+     *
+     * @return int|string
+     */
+    public function getNewsletterEmailId()
+    {
+        return 0;
     }
 
 }
