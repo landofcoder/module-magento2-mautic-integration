@@ -6,4 +6,8 @@
     <event name="review_save_after">
         <observer name="lof_mautic_review_save_after" instance="Lof\Mautic\Observer\ReviewSaveAfter" />
     </event>
+    <event name="checkout_onepage_controller_success_action">
+        <observer name="lof_mautic_order_checkout_success" instance="Lof\Mautic\Observer\FrontendCheckoutSuccess"/>
+    </event>
+
 </config>
