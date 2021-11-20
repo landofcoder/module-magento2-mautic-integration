@@ -16,8 +16,14 @@ use Lof\Mautic\Model\Mautic\Contact;
 class Subscriber extends \Magento\Newsletter\Model\Subscriber
 {
 
+    /**
+     * @var Lof\Mautic\Helper\Data|null
+     */
     protected $_dataHelper = null;
 
+    /**
+     * @var Lof\Mautic\Model\Mautic\Contact|null
+     */
     protected $_mauticModel = null;
 
     protected function getDataHelper()
@@ -46,7 +52,8 @@ class Subscriber extends \Magento\Newsletter\Model\Subscriber
     public function sendConfirmationRequestEmail()
     {
         if ($this->getDataHelper()->isEnabled() && $this->getDataHelper()->isDisabledNewsletter()) {
-
+            $tags = ["confirm request"];
+            $this->createMauticContact($tags);
             return $this;
         } else {
             return parent::sendConfirmationRequestEmail();
@@ -60,30 +67,29 @@ class Subscriber extends \Magento\Newsletter\Model\Subscriber
      */
     public function sendConfirmationSuccessEmail()
     {
+        $tags = ["subscribed"];
+        $this->createMauticContact($tags);
+        return parent::sendConfirmationSuccessEmail();
+    }
+
+    /**
+     * Create Mautic contact for subscriber
+     * @param array
+     * @return mixed|object|null
+     */
+    public function createMauticContact($tags = [])
+    {
         $mauticModel = $this->getMauticModel();
         if ($this->getDataHelper()->isEnabled()) {
+            $tags[] = "newsletter";//subscribed
             $subscriberData = [
                 "email" => $this->getEmail(),
                 "firstname" => $this->getName(),
-                "tags" => "newsletter,subscribed"
+                "tags" => implode(",", $tags)
             ];
             $mauticModel->exportContact($subscriberData);
         }
-        if ($this->getDataHelper()->isEnabled() && $this->getDataHelper()->isDisabledNewsletter()) {
-
-            //send email to contact
-            // email Id
-            // contact ID
-            $emailId = $this->getDataHelper()->getNewsletterEmailId();
-            $params = [];
-            $contactId = $mauticModel->getResponseContactId();
-            if ($contactId) {
-                $mauticModel->sendEmailToContact($emailId, $contactId, $params);
-            }
-            return $this;
-        } else {
-            return parent::sendConfirmationSuccessEmail();
-        }
+        return $mauticModel;
     }
 
 }
