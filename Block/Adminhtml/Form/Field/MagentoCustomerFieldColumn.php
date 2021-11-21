@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Lof\Mautic\Block\Adminhtml\Form\Field;
 
 use Magento\Framework\View\Element\Html\Select;
-use Magento\Cms\Model\ResourceModel\Block\CollectionFactory;
 use Magento\Framework\View\Element\Context;
+use Lof\Mautic\Helper\MappingField;
 
 class MagentoCustomerFieldColumn extends Select
 {
     /**
-     * @var CollectionFactory
+     * @var MappingField
      */
-    private $blockCollectionFactory;
+    private $mappingFieldHelper;
 
     /**
      * @var Context
@@ -22,11 +22,11 @@ class MagentoCustomerFieldColumn extends Select
 
     public function __construct(
         Context $context,
-        CollectionFactory $blockCollectionFactory,
+        MappingField $mappingFieldHelper,
         array $data = []
     ) {
         parent::__construct($context, $data);
-        $this->blockCollectionFactory = $blockCollectionFactory;
+        $this->mappingFieldHelper = $mappingFieldHelper;
         $this->context = $context;
     }
 
@@ -65,9 +65,9 @@ class MagentoCustomerFieldColumn extends Select
     private function getSourceOptions()
     {
         if (!$this->_options) {
-            $this->_options = $this->blockCollectionFactory->create()->load()->toOptionArray();
-            array_unshift($this->_options, ['value' => '', 'label' => __('Please select a static block.')]);
+            $this->_options = $this->mappingFieldHelper->getCustomerCustomFieldsArray();
         }
         return $this->_options;
     }
+
 }

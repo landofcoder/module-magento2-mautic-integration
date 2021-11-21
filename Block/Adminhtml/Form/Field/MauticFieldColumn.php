@@ -7,13 +7,15 @@ namespace Lof\Mautic\Block\Adminhtml\Form\Field;
 use Magento\Framework\View\Element\Html\Select;
 use Magento\Cms\Model\ResourceModel\Block\CollectionFactory;
 use Magento\Framework\View\Element\Context;
+use Lof\Mautic\Model\Mautic\Contact;
 
 class MauticFieldColumn extends Select
 {
+
     /**
-     * @var CollectionFactory
+     * @var Contact
      */
-    private $blockCollectionFactory;
+    private $mauticContact;
 
     /**
      * @var Context
@@ -22,12 +24,12 @@ class MauticFieldColumn extends Select
 
     public function __construct(
         Context $context,
-        CollectionFactory $blockCollectionFactory,
+        Contact $mauticContact,
         array $data = []
     ) {
         parent::__construct($context, $data);
-        $this->blockCollectionFactory = $blockCollectionFactory;
         $this->context = $context;
+        $this->mauticContact = $mauticContact;
     }
 
     /**
@@ -65,8 +67,10 @@ class MauticFieldColumn extends Select
     private function getSourceOptions()
     {
         if (!$this->_options) {
-            $this->_options = $this->blockCollectionFactory->create()->load()->toOptionArray();
-            array_unshift($this->_options, ['value' => '', 'label' => __('Please select a static block.')]);
+
+            $this->_options = $this->mauticContact->getContactCustomFieldsArray();
+
+            array_unshift($this->_options, ['value' => '', 'label' => __('Please select a field.')]);
         }
         return $this->_options;
     }

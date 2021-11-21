@@ -485,6 +485,17 @@ abstract class AbstractApi extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
+     * Get mautic contact custom fields array
+     *
+     * @return array
+     */
+    public function getContactCustomFieldsArray()
+    {
+        $fields = [];
+        return $fields;
+    }
+
+    /**
      * Mapping mautic data to contacts data
      * @param array
      * @return array
