@@ -51,7 +51,7 @@ class ExportSubscribersProcessor extends AbstractQueueProcessor
                 }
                 $subscriberData = [
                     "email" => $subscriber->getSubscriberEmail(),
-                    "tags" => impode(",", $tags)
+                    "tags" => implode(",", $tags)
                 ];
 
                 $this->mauticContact->exportContact($subscriberData);
