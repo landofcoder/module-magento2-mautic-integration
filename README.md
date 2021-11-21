@@ -4,7 +4,8 @@
 
 ![Magento 2 Mautic Integration Module](./assets/5_preview.png)
 
-* Compatible: Magento 2.3.7, 2.4.0, 2.4.1, 2.4.2, 2.4.3 - latest
+* Compatible Magento Version: 2.3.7, 2.4.0, 2.4.1, 2.4.2, 2.4.3 - latest
+* Compatible Mautic Version: 2.16, 3.0, 3.1, 3.2, 3.4, 4.0, 4.0.2 - latest
 
 ## Main Features
 
@@ -81,6 +82,18 @@
 - Customer Contacts:
 
 ![Contacts](./assets/2_sync_customer_contacts.png)
+
+- Mapping Fields:
+
+![Mapping Contact Fields](./assets/8_field_mapping.png)
+
+- Mautic Tracking Settings:
+
+![Mautic JS Tracking Settings](./assets/9_tracking_settings.png)
+
+- Newsletter Settings:
+
+![Newsletter Settings](./assets/10_newsletter_settings.png)
 
 - Company Information:
 

@@ -2,9 +2,6 @@
 
 namespace Lof\Mautic\Model\Mautic;
 
-use Mautic\Auth\ApiAuth;
-use Mautic\MauticApi;
-use Lof\Mautic\Model\Config\Source\OauthVersion;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;
 
@@ -95,11 +92,6 @@ class Contact extends AbstractApi
         if ($address) {
             $data = array_merge($data, $address);
         }
-        /**
-         * Mapping mautic custom fields for customer custom attributes
-         */
-        $customFieldsMapping = $this->mappingCustomerCustomAttributes($customer);
-        $data = array_merge($data, $customFieldsMapping);
 
         if ($customData) {
             $data = array_merge($data, $customData);
@@ -123,6 +115,8 @@ class Contact extends AbstractApi
         } else {
             unset($data["stage"]);
         }
+
+        $data = $this->mappingContactData($data);//Mapping magento customer attributes (include address fields) to Mautic fields
 
         if (isset($data['mautic_contact_id']) && (int)$data['mautic_contact_id']) {
             $mautic_contact_id = (int)$data['mautic_contact_id'];
@@ -170,6 +164,8 @@ class Contact extends AbstractApi
         } else {
             unset($data["stage"]);
         }
+
+        $data = $this->mappingContactData($data);//Mapping magento customer attributes (include address fields) to Mautic fields
 
         if (isset($data['mautic_contact_id']) && (int)$data['mautic_contact_id']) {
             $mautic_contact_id = (int)$data['mautic_contact_id'];
@@ -303,7 +299,8 @@ class Contact extends AbstractApi
         if ($address) {
 
             $country = $this->countryFactory->create()->loadByCode($address->getCountry());
-
+            $returnData = $address->getData();
+            $returnData["country_id"] = $country;
             return array(
                 self::MAUTIC_CUSTOMER_ADRESS1 => $address->getStreet1(),
                 self::MAUTIC_CUSTOMER_ADRESS2 => $address->getStreet2(),
@@ -319,15 +316,31 @@ class Contact extends AbstractApi
     }
 
     /**
-     * mapping customer custom attributes with mautic contact custom fields
-     *
-     * @param mixed|Object|array $customer
+     * Mapping contact data to mautic data
+     * @param array
      * @return array
      */
-    protected function mappingCustomerCustomAttributes($customer)
+    public function mappingContactData(array $data = [])
     {
-        $dataMapping = [];
-        //Get custom mapping fields from module config data
-        return $dataMapping;
+        $helper = $this->mauticModel->getHelperData();
+        $mappingFields = $helper->getMappingFields();
+        if ($mappingFields) {
+            foreach ($mappingFields as $row) {
+                $mautic_field_id = isset($row["mautic_field_id"]) ? $row["mautic_field_id"] : "";
+                $magento_customer_fields = isset($row["magento_customer_fields"]) ? $row["magento_customer_fields"] : "";
+                if ($mautic_field_id && isset($data[$magento_customer_fields])) {
+                    switch ($magento_customer_fields) {
+                        case "website_id":
+                            $data[$mautic_field_id] = $helper->getWebsiteBaseUrl((int)$data[$magento_customer_fields]);
+                            break;
+                        default:
+                            $data[$mautic_field_id] = $data[$magento_customer_fields];
+                            break;
+                    }
+
+                }
+            }
+        }
+        return $data;
     }
 }

@@ -17,7 +17,7 @@
                 <enabled>1</enabled>
             </tracking>
             <fields_mapping>
-                <fields></fields>
+                <fields><![CDATA[{"_1637485408750_750":{"mautic_field_id":"firstname","magento_customer_fields":"firstname"},"_1637485448630_630":{"mautic_field_id":"lastname","magento_customer_fields":"lastname"},"_1637485458510_510":{"mautic_field_id":"email","magento_customer_fields":"email"},"_1637485468430_430":{"mautic_field_id":"city","magento_customer_fields":"city"},"_1637485476462_462":{"mautic_field_id":"state","magento_customer_fields":"region"},"_1637485490700_700":{"mautic_field_id":"country","magento_customer_fields":"country_id"},"_1637485496716_716":{"mautic_field_id":"zipcode","magento_customer_fields":"postcode"},"_1637485502828_828":{"mautic_field_id":"phone","magento_customer_fields":"telephone"},"_1637485542762_762":{"mautic_field_id":"website","magento_customer_fields":"website_id"},"_1637485597196_196":{"mautic_field_id":"address1","magento_customer_fields":"street"}}]]></fields>
             </fields_mapping>
             <newsletter>
                 <disable_magento_subscription>1</disable_magento_subscription>
