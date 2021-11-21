@@ -310,12 +310,12 @@ abstract class AbstractApi extends \Magento\Framework\Model\AbstractModel
     public function getCompanyFields()
     {
         if (!$this->_company_fields) {
-            $response = $this->_getMauticApi("fields/company")->getList();
+            $response = $this->_getMauticApi("companyFields")->getList();
             if ($response && isset($response["fields"])) {
                 $this->_company_fields = [];
                 foreach ($response["fields"] as $field) {
                     $this->_company_fields[] = [
-                        "name" => $field["label"],
+                        "label" => $field["label"],
                         "value" => $field["alias"]
                     ];
                 }
@@ -333,7 +333,7 @@ abstract class AbstractApi extends \Magento\Framework\Model\AbstractModel
     public function getIndustries()
     {
         if (!$this->_industries) {
-            $response = $this->_getMauticApi("fields/company")->getList();
+            $response = $this->_getMauticApi("companyFields")->getList();
             if ($response && isset($response["fields"])) {
                 $this->_industries = [];
                 foreach ($response["fields"] as $field) {
@@ -406,12 +406,12 @@ abstract class AbstractApi extends \Magento\Framework\Model\AbstractModel
     public function getContactFields()
     {
         if (!$this->_contact_fields) {
-            $response = $this->_getMauticApi("fields/contact")->getList();
+            $response = $this->_getMauticApi("contactFields")->getList();
             if ($response && isset($response["fields"])) {
                 $this->_contact_fields = [];
                 foreach ($response["fields"] as $field) {
                     $this->_contact_fields[] = [
-                        "name" => $field["label"],
+                        "label" => $field["label"],
                         "value" => $field["alias"]
                     ];
                 }
@@ -482,17 +482,6 @@ abstract class AbstractApi extends \Magento\Framework\Model\AbstractModel
     {
         $mauticApi = $this->_getMauticApi($api_type);
         return $mauticApi->deleteBatch($ids);
-    }
-
-    /**
-     * Get mautic contact custom fields array
-     *
-     * @return array
-     */
-    public function getContactCustomFieldsArray()
-    {
-        $fields = [];
-        return $fields;
     }
 
     /**
