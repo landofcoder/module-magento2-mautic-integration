@@ -10,5 +10,5 @@
 
     <consumer name="mautic_review_save" queue="mautic_review_save" connection="amqp" handler="Lof\Mautic\Queue\MessageQueues\Consumer::processMessage"/>
 
-    <consumer name="mautic_subscriber_save" queue="mautic_subscriber_save" connection="amqp" handler="Lof\Model\Queue\MessageQueues\Consumer::processMessage"/>
+    <consumer name="mautic_subscriber_save" queue="mautic_subscriber_save" connection="amqp" handler="Lof\Mautic\Queue\MessageQueues\Consumer::processMessage"/>
 </config>
