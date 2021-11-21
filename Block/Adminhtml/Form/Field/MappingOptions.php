@@ -50,6 +50,7 @@ class MappingOptions extends AbstractFieldArray
         $options = [];
 
         $mauticFieldId = $row->getMauticFieldId();
+
         if ($mauticFieldId !== null) {
             $options['option_' . $this->getMauticFieldBlockRenderer()->calcOptionHash($mauticFieldId)] = 'selected="selected"';
         }

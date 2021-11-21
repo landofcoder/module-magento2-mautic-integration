@@ -44,5 +44,14 @@
         </arguments>
     </type>
 
+    <type name="Magento\Config\Model\Config\TypePool">
+        <arguments>
+            <argument name="sensitive" xsi:type="array">
+                <item name="lofmautic/general/client_secret" xsi:type="string">1</item>
+                <item name="lofmautic/general/client_secret" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+
     <preference for="Magento\Newsletter\Model\Subscriber" type="Lof\Mautic\Override\Model\Subscriber"/>
 </config>
