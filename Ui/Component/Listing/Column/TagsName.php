@@ -28,9 +28,9 @@ use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
 
 /**
- * Class CustomerName.
+ * Class TagsName.
  */
-class CustomerName extends Column
+class TagsName extends Column
 {
     /**
      * @var UrlInterface
@@ -77,9 +77,13 @@ class CustomerName extends Column
         if (isset($dataSource['data']['items'])) {
             $fieldName = $this->getData('name');
             foreach ($dataSource['data']['items'] as &$item) {
-                if (isset($item['customer_id'])) {
-                    $customer = $this->helper->getCustomerById($item['customer_id']);
-                    $item[$fieldName."_html"] = "<a href='".$this->urlBuilder->getUrl('customer/index/edit', ['id' => $item['customer_id']])."' target='blank' title='".__('View Customer')."'>".$customer->getName().'</a></br><span class="small-text">( '.$customer->getEmail().' )</span>';
+                if (isset($item['tags'])) {
+                    $tags = $item['tags'] ? json_decode($item['tags']): [];
+                    $newTags = [];
+                    foreach ($tags as $_tag) {
+                        $newTags[] = $_tag->tag;
+                    }
+                    $item[$fieldName."_html"] = "<span>".implode(", ", $newTags).'</span>';
                 }
             }
         }

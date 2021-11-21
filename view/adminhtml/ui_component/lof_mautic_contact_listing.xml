@@ -116,12 +116,13 @@
 			</settings>
 		</column>
 
-        <column name="customer_id" class="Lof\Mautic\Ui\Component\Listing\Column\CustomerName">
+        <column name="customer_name" class="Lof\Mautic\Ui\Component\Listing\Column\CustomerName">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="component" xsi:type="string">Lof_Mautic/js/grid/columns/link</item>
                     <item name="filter" xsi:type="string">textRange</item>
                     <item name="label" xsi:type="string" translate="true">Customer</item>
+                    <item name="indexField" xsi:type="string">customer_id</item>
                 </item>
             </argument>
         </column>
@@ -198,54 +199,26 @@
 				</editor>
 			</settings>
 		</column>
-		<column name="haspurchased">
-			<settings>
-				<filter>text</filter>
-				<label translate="true">Has Purchased</label>
-				<editor>
-					<editorType>text</editorType>
-					<validation>
-						<rule name="required-entry" xsi:type="boolean">false</rule>
-					</validation>
-				</editor>
-			</settings>
-		</column>
-		<column name="prospect_or_customer">
-			<settings>
-				<filter>text</filter>
-				<label translate="true">Prospect Or Customer</label>
-				<editor>
-					<editorType>text</editorType>
-					<validation>
-						<rule name="required-entry" xsi:type="boolean">false</rule>
-					</validation>
-				</editor>
-			</settings>
-		</column>
-		<column name="stage">
-			<settings>
-				<filter>text</filter>
-				<label translate="true">Stage</label>
-				<editor>
-					<editorType>text</editorType>
-					<validation>
-						<rule name="required-entry" xsi:type="boolean">false</rule>
-					</validation>
-				</editor>
-			</settings>
-		</column>
-		<column name="tags">
-			<settings>
-				<filter>text</filter>
-				<label translate="true">Tags</label>
-				<editor>
-					<editorType>text</editorType>
-					<validation>
-						<rule name="required-entry" xsi:type="boolean">false</rule>
-					</validation>
-				</editor>
-			</settings>
-		</column>
+        <column name="stage_name" class="Lof\Mautic\Ui\Component\Listing\Column\StageName">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Lof_Mautic/js/grid/columns/link</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Stage</item>
+                    <item name="indexField" xsi:type="string">stage</item>
+                </item>
+            </argument>
+        </column>
+        <column name="tags_name" class="Lof\Mautic\Ui\Component\Listing\Column\TagsName">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Lof_Mautic/js/grid/columns/link</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Tags</item>
+                    <item name="indexField" xsi:type="string">tags</item>
+                </item>
+            </argument>
+        </column>
 		<column name="website">
 			<settings>
 				<filter>text</filter>

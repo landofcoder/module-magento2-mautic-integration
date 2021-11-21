@@ -9,4 +9,7 @@
     <event name="adminhtml_mautic_company_save_after">
         <observer name="mautic_adminhtml_company_save_after" instance="Lof\Mautic\Observer\CompanySaveAfter"/>
     </event>
+    <event name="checkout_submit_all_after">
+        <observer name="mautic_adminhtml_checkout_submit_all_after" instance="Lof\Mautic\Observer\BackendCheckoutSubmitAllAfter"/>
+    </event>
 </config>

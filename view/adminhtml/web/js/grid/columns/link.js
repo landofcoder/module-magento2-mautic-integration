@@ -17,12 +17,14 @@
  * @copyright  Copyright (c) 2021 Landofcoder (https://www.landofcoder.com/)
  * @license    https://landofcoder.com/terms
  */
-
 define([
-    './column',
+    'Magento_Ui/js/grid/columns/column',
     'jquery',
-], function (Column, $) {
+    'mage/template',
+    'Magento_Ui/js/modal/modal'
+], function (Column, $, mageTemplate) {
     'use strict';
+
     return Column.extend({
         defaults: {
             bodyTmpl: 'ui/grid/cells/html',
@@ -30,8 +32,17 @@ define([
                 'data-grid-html-cell': true
             }
         },
-        getFieldHandler: function (row) {
-            return false;
+        gethtml: function (row) {
+            return row[this.index + '_html'];
+        },
+        getFormaction: function (row) {
+            return row[this.index + '_formaction'];
+        },
+        getCustomerid: function (row) {
+            return row[this.index + '_customerid'];
+        },
+        getLabel: function (row) {
+            return row[this.index + '_html']
         }
     });
 });
