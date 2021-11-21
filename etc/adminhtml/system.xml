@@ -91,11 +91,13 @@
 
             <group id="fields_mapping" sortOrder="15" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 				<label>Fields Mapping</label>
-				<field id="fields" type="select" sortOrder="0" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+				<field id="fields" sortOrder="0" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 					<label>Fields Mapping</label>
 					<comment/>
-					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<frontend_model>Lof\Mautic\Block\Adminhtml\Form\Field\MappingOptions</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
 				</field>
+
             </group>
 
             <group id="company" sortOrder="25" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
