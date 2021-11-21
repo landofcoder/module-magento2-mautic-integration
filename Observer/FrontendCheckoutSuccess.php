@@ -73,9 +73,9 @@ class FrontendCheckoutSuccess implements ObserverInterface
         if ($address) {
 
             $country = $this->customerContact->getCountryModel()->loadByCode($address->getCountryId());
-
+            $street = $address->getStreet();
             return array(
-                AbstractApi::MAUTIC_CUSTOMER_ADRESS1 => $address->getStreet(),
+                AbstractApi::MAUTIC_CUSTOMER_ADRESS1 => is_array($street) ? implode(", ", $street) : $street,
                 AbstractApi::MAUTIC_CUSTOMER_ADRESS2 => "",
                 AbstractApi::MAUTIC_CUSTOMER_ZIPCODE => $address->getPostcode(),
                 AbstractApi::MAUTIC_CUSTOMER_COUNTRY => $country->getName(),
