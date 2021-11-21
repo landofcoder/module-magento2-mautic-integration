@@ -69,7 +69,7 @@ class MauticFieldColumn extends Select
         if (!$this->_options) {
 
             $this->_options = $this->mauticContact->getContactFields();
-
+            $this->_options = $this->_options ? $this->_options : [];
             array_unshift($this->_options, ['value' => '', 'label' => __('Please select a field.')]);
         }
         return $this->_options;
