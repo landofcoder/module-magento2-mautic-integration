@@ -26,6 +26,7 @@ use Magento\Framework\App\Cache\Type\Config;
 use Magento\Config\App\Config\Type\System;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Customer\Model\CustomerFactory;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 
 class Data extends AbstractHelper
 {
@@ -85,9 +86,19 @@ class Data extends AbstractHelper
     const NEWSLETTER_STATUS = 'newsletter/disable_magento_subscription';
 
     /**
+     * Mapping fieds
+     */
+    const XML_PATH_MAPPING_FIELDS_CONFIGURATION = 'fields_mapping/fields';
+
+    /**
      * Company integration status path
      */
     const COMPANY_INTEGRATION_STATUS = 'company/enabled';
+
+    /**
+     * Base url path
+     */
+    const XML_PATH_BASE_URL = 'web/unsecure/base_url';
 
     protected $_storeManager;
     protected $_directoryList;
@@ -420,7 +431,7 @@ class Data extends AbstractHelper
      *
      * @return string
      */
-    public function getStoreUrl()
+    public function getStoreUrl(): string
     {
         return $this->_storeManager->getStore()->getBaseUrl();
     }
@@ -430,7 +441,7 @@ class Data extends AbstractHelper
      *
      * @return string
      */
-    public function getCurrentStoreNmae()
+    public function getCurrentStoreNmae(): string
     {
         return $this->_storeManager->getStore()->getName();
     }
@@ -440,7 +451,7 @@ class Data extends AbstractHelper
      *
      * @return array
      */
-    public function getDefaultTags()
+    public function getDefaultTags(): array
     {
         $tags = [];
         $tags[] = "magento2";
@@ -449,13 +460,32 @@ class Data extends AbstractHelper
     }
 
     /**
-     * Get newsletter email id
+     * Get Mapping Fields
      *
-     * @return int|string
+     * @return array
      */
-    public function getNewsletterEmailId()
+    public function getMappingFields(): array
     {
-        return 0;
+        $value = $this->getConfig(self::XML_PATH_MAPPING_FIELDS_CONFIGURATION);
+        return !empty($value) ? $this->serializer->unserialize($value) : [];
+    }
+
+    /**
+     * Get website Base url
+     *
+     * @param int $websiteId
+     * @return string
+     */
+    public function getWebsiteBaseUrl(int $websiteId = 0): string
+    {
+        $scopeDefault = ScopeConfigInterface::SCOPE_TYPE_DEFAULT;
+        $scopeWebsite = ScopeConfigInterface::SCOPE_TYPE_DEFAULT;
+        $baseUrlDefault = $this->scopeConfig->getValue(self::XML_PATH_BASE_URL, $scopeDefault);
+        $baseUrl = "";
+        if ($websiteId) {
+            $baseUrl = $this->scopeConfig->getValue(self::XML_PATH_BASE_URL, $scopeWebsite, $websiteId);
+        }
+        return $baseUrl ? $baseUrl : $baseUrlDefault;
     }
 
 }

@@ -22,6 +22,8 @@ declare(strict_types=1);
 
 namespace Lof\Mautic\Helper;
 
+use Lof\Mautic\Model\Mautic\AbstractApi;
+
 class MappingField extends Data
 {
     /**
@@ -59,34 +61,6 @@ class MappingField extends Data
             array_unshift($this->_options, ['value' => '', 'label' => __('Please select a Field.')]);
         }
         return $this->_options;
-    }
-
-    /**
-     * @return array
-     */
-    public function getMauticCustomFieldsArray()
-    {
-
-    }
-
-   /**
-     * Mapping mautic data to contacts data
-     * @param array
-     * @return array
-     */
-    public function mappingMauticData(array $data = [])
-    {
-        return $data;
-    }
-
-    /**
-     * Mapping contact data to mautic data
-     * @param array
-     * @return array
-     */
-    public function mappingContactData(array $data = [])
-    {
-        return $data;
     }
 
     /**
