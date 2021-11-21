@@ -45,11 +45,13 @@ class BackendCheckoutSubmitAllAfter implements ObserverInterface
 
         $order = $observer->getOrder();
         if ($order && $order->getId() &&  $order->getState()== Order::STATE_NEW && $this->helper->isCustomerIntegrationEnabled()) {
+            $attribution = (float)$order->getSubtotal();
             $data = [
                 "email" => $order->getCustomerEmail(),
                 "firstname" => $order->getCustomerFirstname(),
                 "lastname" => $order->getCustomerLastname(),
                 "haspurchased" => true,
+                "attribution" => $attribution,
                 "tags" => "ordered"
             ];
             $address = $this->_getBillingAddress($order);

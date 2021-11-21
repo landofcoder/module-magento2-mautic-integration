@@ -44,11 +44,13 @@ class FrontendCheckoutSuccess implements ObserverInterface
 
         $order = $observer->getOrder();
         if ($order && $order->getId() && $this->helper->isCustomerIntegrationEnabled()) {
+            $attribution = (float)$order->getSubtotal();
             $data = [
                 "email" => $order->getCustomerEmail(),
                 "firstname" => $order->getCustomerFirstname(),
                 "lastname" => $order->getCustomerLastname(),
                 "haspurchased" => true,
+                "attribution" => $attribution,
                 "tags" => "ordered"
             ];
             $address = $this->_getBillingAddress($order);
