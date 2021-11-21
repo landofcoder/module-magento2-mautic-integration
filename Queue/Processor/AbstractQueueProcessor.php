@@ -45,6 +45,10 @@ abstract class AbstractQueueProcessor implements QueueProcessorInterface
     public function process()
     {
         return;
+    }
 
+    public function processMessage(string $_data)
+    {
+        // do something with message queue data
     }
 }

@@ -4,6 +4,7 @@
 		<lofmautic>
 			<general>
 				<enabled>1</enabled>
+                <async_api>1</async_api>
                 <webhook_secret>LandofcoderTeam</webhook_secret>
                 <webhook_mautic_secret></webhook_mautic_secret>
 			</general>

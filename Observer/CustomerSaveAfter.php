@@ -3,9 +3,15 @@
 namespace Lof\Mautic\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
+use Lof\Mautic\Queue\MessageQueues\Customer\Publisher;
 
 class CustomerSaveAfter implements ObserverInterface
 {
+    /**
+    * @var Publisher
+    */
+    private $_publisher;
+
     /**
      * @var \Lof\Mautic\Helper\Data
      */
@@ -21,14 +27,17 @@ class CustomerSaveAfter implements ObserverInterface
      *
      * @param \Lof\Mautic\Helper\Data $helper
      * @param \Lof\Mautic\Model\Mautic\Contact $customerContact
+     * @param Publisher $publisher
      */
     public function __construct(
         \Lof\Mautic\Helper\Data $helper,
-        \Lof\Mautic\Model\Mautic\Contact $customerContact
+        \Lof\Mautic\Model\Mautic\Contact $customerContact,
+        Publisher $publisher
     )
     {
         $this->helper = $helper;
         $this->customerContact = $customerContact;
+        $this->publisher = $publisher;
     }
 
     /**
@@ -43,7 +52,14 @@ class CustomerSaveAfter implements ObserverInterface
 
         $customer = $observer->getCustomer();
         if ($customer->getId() && $this->helper->isCustomerIntegrationEnabled()) {
-            $this->customerContact->exportCustomer($customer);
+            if (!$this->helper->isAyncApi()) {
+                $this->customerContact->exportCustomer($customer);
+            } else {
+                $data = $this->customerContact->getRequestData([], $customer);
+                $this->publisher->execute(
+                    $this->helper->encodeData($data)
+                );
+            }
         }
         return $this;
     }

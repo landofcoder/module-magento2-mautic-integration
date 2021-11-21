@@ -8,6 +8,7 @@ namespace Lof\Mautic\Override\Model;
 use Magento\Framework\App\ObjectManager;
 use Lof\Mautic\Helper\Data;
 use Lof\Mautic\Model\Mautic\Contact;
+use Lof\Mautic\Queue\MessageQueues\Subscriber\Publisher;
 
 /**
  * Subscriber model
@@ -15,6 +16,10 @@ use Lof\Mautic\Model\Mautic\Contact;
  */
 class Subscriber extends \Magento\Newsletter\Model\Subscriber
 {
+    /**
+    * @var Publisher|null
+    */
+    private $_publisher = null;
 
     /**
      * @var Lof\Mautic\Helper\Data|null
@@ -26,6 +31,9 @@ class Subscriber extends \Magento\Newsletter\Model\Subscriber
      */
     protected $_mauticModel = null;
 
+    /**
+     * @return Lof\Mautic\Helper\Data|null
+     */
     protected function getDataHelper()
     {
         if (!$this->_dataHelper) {
@@ -35,6 +43,21 @@ class Subscriber extends \Magento\Newsletter\Model\Subscriber
         return $this->_dataHelper;
     }
 
+    /**
+     * @return Publisher
+     */
+    protected function getQueuePublisher()
+    {
+        if (!$this->_publisher) {
+            $this->_publisher = ObjectManager::getInstance()
+            ->get(Publisher::class);
+        }
+        return $this->_publisher;
+    }
+
+    /**
+     * @return Lof\Mautic\Model\Mautic\Contact|null
+     */
     protected function getMauticModel()
     {
         if (!$this->_mauticModel) {
@@ -87,7 +110,13 @@ class Subscriber extends \Magento\Newsletter\Model\Subscriber
                 "firstname" => $this->getName(),
                 "tags" => implode(",", $tags)
             ];
-            $mauticModel->exportContact($subscriberData);
+            if (!$this->getDataHelper()->isAyncApi()) {
+                $mauticModel->exportContact($subscriberData);
+            } else {
+                $this->getQueuePublisher()->execute(
+                    json_encode($subscriberData)
+                );
+            }
         }
         return $mauticModel;
     }

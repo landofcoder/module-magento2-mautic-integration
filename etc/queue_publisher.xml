@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework-message-queue:etc/publisher.xsd">
+    <publisher topic="mautic.magento.customer.save">
+        <connection name="amqp" exchange="mautic.magento.customer.save" />
+    </publisher>
+
+    <publisher topic="mautic.magento.order.create">
+        <connection name="amqp" exchange="mautic.magento.order.create" />
+    </publisher>
+
+    <publisher topic="mautic.magento.review.save">
+        <connection name="amqp" exchange="mautic.magento.review.save" />
+    </publisher>
+
+    <publisher topic="mautic.magento.subscriber.save">
+        <connection name="amqp" exchange="mautic.magento.subscriber.save" />
+    </publisher>
+</config>

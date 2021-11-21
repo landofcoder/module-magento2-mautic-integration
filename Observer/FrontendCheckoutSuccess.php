@@ -4,9 +4,15 @@ namespace Lof\Mautic\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 use Lof\Mautic\Model\Mautic\AbstractApi;
+use Lof\Mautic\Queue\MessageQueues\Order\Publisher;
 
 class FrontendCheckoutSuccess implements ObserverInterface
 {
+    /**
+    * @var Publisher
+    */
+    private $_publisher;
+
     /**
      * @var \Lof\Mautic\Helper\Data
      */
@@ -22,14 +28,17 @@ class FrontendCheckoutSuccess implements ObserverInterface
      *
      * @param \Lof\Mautic\Helper\Data $helper
      * @param \Lof\Mautic\Model\Mautic\Contact $customerContact
+     * @param Publisher $publisher
      */
     public function __construct(
         \Lof\Mautic\Helper\Data $helper,
-        \Lof\Mautic\Model\Mautic\Contact $customerContact
+        \Lof\Mautic\Model\Mautic\Contact $customerContact,
+        Publisher $publisher
     )
     {
         $this->helper = $helper;
         $this->customerContact = $customerContact;
+        $this->publisher = $publisher;
     }
 
     /**
@@ -57,7 +66,13 @@ class FrontendCheckoutSuccess implements ObserverInterface
             if ($address) {
                 $data = array_merge($data, $address);
             }
-            $this->customerContact->exportContact($data);
+            if (!$this->helper->isAyncApi()) {
+                $this->customerContact->exportContact($data);
+            } else {
+                $this->publisher->execute(
+                    $this->helper->encodeData($data)
+                );
+            }
         }
         return $this;
     }

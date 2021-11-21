@@ -34,28 +34,24 @@
         </job> -->
 
         <!-- Export Contacts from Customers to Mautic -->
-        <job instance="Lof\Mautic\Cron\ExportContactsFromCustomer" method="execute" name="lof_mautic_export_customers">
+        <!-- <job instance="Lof\Mautic\Cron\ExportContactsFromCustomer" method="execute" name="lof_mautic_export_customers">
             <schedule>0 23 * * *</schedule>
-            <!--runs once every day at 23:00-->
-        </job>
+        </job> -->
 
         <!-- Export Contacts from Orders to Mautic -->
-        <job instance="Lof\Mautic\Cron\ExportContactsFromOrder" method="execute" name="lof_mautic_export_orders">
+        <!-- <job instance="Lof\Mautic\Cron\ExportContactsFromOrder" method="execute" name="lof_mautic_export_orders">
             <schedule>30 0 * * *</schedule>
-            <!--runs once every day at 00:30-->
-        </job>
+        </job> -->
 
         <!-- Export Contacts from Reviews to Mautic -->
-        <job instance="Lof\Mautic\Cron\ExportContactsFromReview" method="execute" name="lof_mautic_export_reviews">
+        <!-- <job instance="Lof\Mautic\Cron\ExportContactsFromReview" method="execute" name="lof_mautic_export_reviews">
             <schedule>30 23 * * *</schedule>
-            <!--runs once every day at 23:30-->
-        </job>
+        </job> -->
 
         <!-- Export Contacts from Reviews to Mautic -->
-        <job instance="Lof\Mautic\Cron\ExportContactsFromSubscriber" method="execute" name="lof_mautic_export_subscribers">
+        <!-- <job instance="Lof\Mautic\Cron\ExportContactsFromSubscriber" method="execute" name="lof_mautic_export_subscribers">
             <schedule>30 23 * * *</schedule>
-            <!--runs once every day at 23:30-->
-        </job>
+        </job> -->
 
     </group>
 </config>
