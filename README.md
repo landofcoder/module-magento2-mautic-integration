@@ -41,7 +41,7 @@
 - Support Cron jobs for contacts exporting: export customers, export orders, export reviews, export subscribers
 - Support trigger events after save to sync data to Mautic
 - Support Console commands for Sync processing: Export customers, Export Orders, Export Reviews, Export Subscribers
-- Support queue and cron job for calling Mautic APIs 
+- Asynchronous Data Export: Support queue and cron job for calling Mautic APIs 
 
 ## Installation
 \* = in production please use the `--keep-generated` option
