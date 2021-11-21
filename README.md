@@ -83,6 +83,18 @@
 
 ![Contacts](./assets/2_sync_customer_contacts.png)
 
+- Mapping Fields:
+
+![Mapping Contact Fields](./assets/8_field_mapping.png)
+
+- Mautic Tracking Settings:
+
+![Mautic JS Tracking Settings](./assets/9_tracking_settings.png)
+
+- Newsletter Settings:
+
+![Newsletter Settings](./assets/10_newsletter_settings.png)
+
 - Company Information:
 
 ![Companies](./assets/1_companies_sync.png)
