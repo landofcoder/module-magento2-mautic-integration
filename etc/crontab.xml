@@ -21,16 +21,41 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
     <group id="default">
         <!-- Sync Contacts from Mautic server to Magento 2 -->
-        <job instance="Lof\Mautic\Cron\SyncContact" method="execute" name="lof_mautic_sync_contact">
+        <!-- <job instance="Lof\Mautic\Cron\SyncContact" method="execute" name="lof_mautic_sync_contact">
             <schedule>*/10 * * * *</schedule>
-        </job>
+        </job> -->
         <!-- Sync Companies from Mautic server to Magento 2 -->
-        <job instance="Lof\Mautic\Cron\SyncCompany" method="execute" name="lof_mautic_sync_company">
+        <!-- <job instance="Lof\Mautic\Cron\SyncCompany" method="execute" name="lof_mautic_sync_company">
             <schedule>0 * * * *</schedule>
-        </job>
+        </job> -->
 
         <!-- <job name="lof_mautic_remove_old_queue_entries" instance="Lof\Mautic\Cron\OldQueueEntriesRemover" method="execute">
             <schedule>0 0 * * *</schedule>
         </job> -->
+
+        <!-- Export Contacts from Customers to Mautic -->
+        <job instance="Lof\Mautic\Cron\ExportContactsFromCustomer" method="execute" name="lof_mautic_export_customers">
+            <schedule>0 23 * * *</schedule>
+            <!--runs once every day at 23:00-->
+        </job>
+
+        <!-- Export Contacts from Orders to Mautic -->
+        <job instance="Lof\Mautic\Cron\ExportContactsFromOrder" method="execute" name="lof_mautic_export_orders">
+            <schedule>30 0 * * *</schedule>
+            <!--runs once every day at 00:30-->
+        </job>
+
+        <!-- Export Contacts from Reviews to Mautic -->
+        <job instance="Lof\Mautic\Cron\ExportContactsFromReview" method="execute" name="lof_mautic_export_reviews">
+            <schedule>30 23 * * *</schedule>
+            <!--runs once every day at 23:30-->
+        </job>
+
+        <!-- Export Contacts from Reviews to Mautic -->
+        <job instance="Lof\Mautic\Cron\ExportContactsFromSubscriber" method="execute" name="lof_mautic_export_subscribers">
+            <schedule>30 23 * * *</schedule>
+            <!--runs once every day at 23:30-->
+        </job>
+
     </group>
 </config>

@@ -99,7 +99,9 @@ class ExportAllCommand extends Command
             // fail gracefully
         }
 
-        $this->registry->register('isSecureArea', true);
+        if (!$this->registry->registry('isSecureArea')) {
+            $this->registry->register('isSecureArea', true);
+        }
 
         // Start export customers
         $this->executeCustomers($input, $output);

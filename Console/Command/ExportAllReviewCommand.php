@@ -76,7 +76,9 @@ class ExportAllReviewCommand extends Command
             // fail gracefully
         }
 
-        $this->registry->register('isSecureArea', true);
+        if (!$this->registry->registry('isSecureArea')) {
+            $this->registry->register('isSecureArea', true);
+        }
 
         $start = $this->getCurrentMs();
 
