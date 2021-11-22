@@ -100,7 +100,7 @@
 				</validation>
 			</settings>
 		</field>
-		<field name="companycity" formElement="input" sortOrder="200">
+		<!-- <field name="companycity" formElement="input" sortOrder="200">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -114,8 +114,8 @@
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
-		</field>
-		<field name="companystate" formElement="input" sortOrder="210">
+		</field> -->
+		<!-- <field name="companystate" formElement="input" sortOrder="210">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -129,8 +129,8 @@
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
-		</field>
-		<field name="companycountry" formElement="input" sortOrder="220">
+		</field> -->
+		<!-- <field name="companycountry" formElement="input" sortOrder="220">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -144,8 +144,8 @@
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
-		</field>
-		<field name="companyzipcode" formElement="input" sortOrder="230">
+		</field> -->
+		<!-- <field name="companyzipcode" formElement="input" sortOrder="230">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -159,7 +159,7 @@
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
-		</field>
+		</field> -->
 		<field name="companyemail" formElement="input" sortOrder="240">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
@@ -175,7 +175,7 @@
 				</validation>
 			</settings>
 		</field>
-		<field name="companyindustry" formElement="input" sortOrder="250">
+		<!-- <field name="companyindustry" formElement="input" sortOrder="250">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">
 					<item name="source" xsi:type="string">Company</item>
@@ -189,7 +189,7 @@
 					<rule name="required-entry" xsi:type="boolean">false</rule>
 				</validation>
 			</settings>
-		</field>
+		</field> -->
 		<field name="companynumber_of_employees" formElement="input" sortOrder="260">
 			<argument name="data" xsi:type="array">
 				<item name="config" xsi:type="array">

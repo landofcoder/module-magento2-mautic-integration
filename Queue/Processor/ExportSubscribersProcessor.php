@@ -8,12 +8,17 @@ use Magento\Framework\Event\ManagerInterface;
 use Magento\Newsletter\Model\SubscriberFactory;
 use Lof\Mautic\Model\Mautic\Contact;
 use Lof\Mautic\Helper\Data;
+use Lof\Mautic\Queue\MessageQueues\Subscriber\Publisher;
 
 /**
  * Class ExportSubscribersProcessor
  */
 class ExportSubscribersProcessor extends AbstractQueueProcessor
 {
+    /**
+    * @var Publisher|null
+    */
+    private $publisher = null;
     /**
      * @var SubscriberFactory
      */
@@ -25,14 +30,17 @@ class ExportSubscribersProcessor extends AbstractQueueProcessor
      * @param Contact $mauticContact
      * @param Data $helperData
      * @param SubscriberFactory $subscriberFactory
+     * @param Publisher $publisher
      */
     public function __construct(
         Contact $mauticContact,
         Data $helperData,
-        SubscriberFactory $subscriberFactory
+        SubscriberFactory $subscriberFactory,
+        Publisher $publisher
     ) {
         parent::__construct($mauticContact, $helperData);
         $this->subscriberFactory = $subscriberFactory;
+        $this->publisher = $publisher;
     }
 
     /**
@@ -53,8 +61,14 @@ class ExportSubscribersProcessor extends AbstractQueueProcessor
                     "email" => $subscriber->getSubscriberEmail(),
                     "tags" => implode(",", $tags)
                 ];
+                if (!$this->helperData->isAyncApi()) {
+                    $this->mauticContact->exportContact($subscriberData);
+                } else {
+                    $this->publisher->execute(
+                        json_encode($subscriberData)
+                    );
+                }
 
-                $this->mauticContact->exportContact($subscriberData);
             }
         } catch (\Exception $e) {
             //log exception at here

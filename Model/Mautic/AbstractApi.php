@@ -505,6 +505,17 @@ abstract class AbstractApi extends \Magento\Framework\Model\AbstractModel
     }
 
     /**
+     * get request data
+     * @param array|null $data
+     * @param mixed|array|object|null $customer
+     * @return array
+     */
+    public function getRequestData(array $data = [], $customer = null)
+    {
+        return $data;
+    }
+
+    /**
      * Retrieve mautic api for type: contacts, companies, campaigns, segments,..
      *
      * @param string $api_type

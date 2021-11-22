@@ -27,7 +27,7 @@
     + Get data of a contact
     + Get data of all contacts
     + Update a contact
-- Contact Segment
+- Contact Segment (Comming soon)
     + Add contact to a segment
     + Remove contact from a segment
 - Mapping Mautic Custom Fiels to Magento 2 Customer Attributes
@@ -99,7 +99,20 @@
 
 ![Companies](./assets/1_companies_sync.png)
 
+- Async API Queues in RabbitMQ:
 
+![Async API Queues](./assets/11_async_api_queues.png)
+
+Require setup and config RabbitMQ for Magento 2 [RabbitMQ Configrable Guide](https://blog.landofcoder.com/how-to-set-up-and-configure-rabbitmq-with-magento-2/)
+
+The module support there consummers:
+
+```
+mautic_customer_save
+mautic_order_create
+mautic_review_save
+mautic_subscriber_save
+```
 
 ## Donation
 

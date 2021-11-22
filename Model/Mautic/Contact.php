@@ -46,6 +46,18 @@ class Contact extends AbstractApi
     }
 
     /**
+     * get Customer Collection
+     *
+     * @return mixed|object|array|null
+     */
+    public function getCustomerCollection()
+    {
+        $collection = $this->customerFactory->create()->getCollection()
+            ->addAttributeToSelect('*');
+        return $collection;
+    }
+
+    /**
      * Export contacts from customer
      *
      * @return bool
@@ -87,37 +99,7 @@ class Contact extends AbstractApi
      */
     public function exportCustomer($customer, $customData = [])
     {
-        $data = $customer->getData();
-        $address = $this->_getCustomerAddress($customer);
-        if ($address) {
-            $data = array_merge($data, $address);
-        }
-
-        if ($customData) {
-            $data = array_merge($data, $customData);
-        }
-
-        $helper = $this->mauticModel->getHelperData();
-        $tags = [];
-        if (!isset($data["tags"]) || !$data["tags"]) {
-            $tags = $helper->getDefaultTags();
-        } else {
-            $tags = explode(",", $data["tags"]);
-            $tags = array_merge($tags, $helper->getDefaultTags());
-        }
-        $data["tags"] = implode(",", $tags);
-
-        $stage = isset($contact['stage']) && $contact['stage'] ? $contact['stage']: "";
-        $convertStages = null;
-        if ($stage) {
-            $convertStages = $this->mauticModel->unSerializeData($stage);
-            $data["stage"] = $convertStages;
-        } else {
-            unset($data["stage"]);
-        }
-
-        $data = $this->mappingContactData($data);//Mapping magento customer attributes (include address fields) to Mautic fields
-
+        $data = $this->getRequestData($customData, $customer);
         if (isset($data['mautic_contact_id']) && (int)$data['mautic_contact_id']) {
             $mautic_contact_id = (int)$data['mautic_contact_id'];
             unset($data['mautic_contact_id']);
@@ -147,26 +129,7 @@ class Contact extends AbstractApi
      */
     public function exportContact($data = [])
     {
-        $helper = $this->mauticModel->getHelperData();
-        $tags = [];
-        if (!isset($data["tags"]) || !$data["tags"]) {
-            $tags = $helper->getDefaultTags();
-        } else {
-            $tags = explode(",", $data["tags"]);
-            $tags = array_merge($tags, $helper->getDefaultTags());
-        }
-        $data["tags"] = implode(",", $tags);
-        $stage = isset($contact['stage']) && $contact['stage'] ? $contact['stage']: "";
-        $convertStages = null;
-        if ($stage) {
-            $convertStages = $this->mauticModel->unSerializeData($stage);
-            $data["stage"] = $convertStages;
-        } else {
-            unset($data["stage"]);
-        }
-
-        $data = $this->mappingContactData($data);//Mapping magento customer attributes (include address fields) to Mautic fields
-
+        $data = $this->getRequestData($data);
         if (isset($data['mautic_contact_id']) && (int)$data['mautic_contact_id']) {
             $mautic_contact_id = (int)$data['mautic_contact_id'];
             unset($data['mautic_contact_id']);
@@ -213,69 +176,6 @@ class Contact extends AbstractApi
     public function getResponseContactId()
     {
         return $this->_responseContactId;
-    }
-
-    /**
-     * create contact on magento table
-     * @param array|mixed $contact
-     * @return Object|mixed|boolean
-     */
-    public function createContact($contact = [])
-    {
-        if (isset($contact['fields']) && isset($contact['fields']['all']) && $contact['id']) {
-            $contactFields = $contact['fields']['all'];
-            $contactItem = $this->contactFactory->create()->getCollection()
-                                ->addFieldToFilter("mautic_contact_id", $contact['id'])
-                                ->getFirstItem();
-            $contactId = 0;
-            if($contactItem) {
-                $model = $this->contactFactory->create()->load($contactItem->getContactId());
-                $contactId = $model->getId();
-                $this->_responseContactId = $contactId;
-            } else {
-                $model = $this->contactFactory->create();
-            }
-
-            $email = isset($contactFields['email']) ? $contactFields['email'] :'';
-            $data = [
-                "mautic_contact_id" => $contact['id'],
-                "facebook" => isset($contactFields['facebook']) ? $contactFields['facebook'] :'',
-                "foursquare" => isset($contactFields['foursquare']) ? $contactFields['foursquare'] :'',
-                "instagram" => isset($contactFields['instagram']) ? $contactFields['instagram'] :'',
-                "linkedin" => isset($contactFields['linkedin']) ? $contactFields['linkedin'] :'',
-                "skype" => isset($contactFields['skype']) ? $contactFields['skype'] :'',
-                "twitter" => isset($contactFields['twitter']) ? $contactFields['twitter'] :'',
-                "website" => isset($contactFields['website']) ? $contactFields['website'] :''
-            ];
-            $tags = isset($contact['tags']) && $contact['tags'] ? $contact['tags']: [];
-            $stage = isset($contact['stage']) && $contact['stage'] ? $contact['stage']: [];
-            $convertStages = [];
-            if ($stage) {
-                $convertStages = [
-                    "id" => $stage["id"],
-                    "name" => $stage["name"],
-                    "weight" => $stage["weight"]
-                ];
-            }
-            $data['tags'] = $this->mauticModel->serializeData($tags);
-            $data['stage'] = $this->mauticModel->serializeData($convertStages);
-            $data['contact_id'] = $contactId;
-            $customerModel = $this->getCustomer($email);
-            if ($customerModel && $customerModel->getId()) {
-                $data['customer_id'] = $customerModel->getId();
-
-                $model->setData($data);
-                try {
-                    $model->save();
-                } catch (\Exception $e) {
-                    //log exception at here
-                    //echo $e->getMessage();
-                }
-                return $model;
-
-            }
-        }
-        return false;
     }
 
     /**
@@ -343,4 +243,121 @@ class Contact extends AbstractApi
         }
         return $data;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRequestData(array $data = [], $customer = null)
+    {
+        if ($customer) {
+            $customerData = $customer->getData();
+            $address = $this->_getCustomerAddress($customer);
+            if ($address) {
+                $customerData = array_merge($data, $address);
+            }
+            $data = is_array($data) ? $data : [];
+            $data = array_merge($customerData, $data);
+        }
+        $helper = $this->mauticModel->getHelperData();
+        $tags = [];
+        if (!isset($data["tags"]) || !$data["tags"]) {
+            $tags = $helper->getDefaultTags();
+        } else {
+            $tags = explode(",", $data["tags"]);
+            $tags = array_merge($tags, $helper->getDefaultTags());
+        }
+        $data["tags"] = implode(",", $tags);
+        $stage = isset($contact['stage']) && $contact['stage'] ? $contact['stage']: "";
+        $convertStages = null;
+        if ($stage) {
+            $convertStages = $this->mauticModel->unSerializeData($stage);
+            $data["stage"] = $convertStages;
+        } else {
+            unset($data["stage"]);
+        }
+
+        $data = $this->mappingContactData($data);//Mapping magento customer attributes (include address fields) to Mautic fields
+
+        if (isset($data["customer_id"])) {
+            unset($data["customer_id"]);
+        }
+        if (isset($data["contact_id"])) {
+            unset($data["contact_id"]);
+        }
+        if (isset($data["created_at"])) {
+            unset($data["created_at"]);
+        }
+        if (isset($data["updated_at"])) {
+            unset($data["updated_at"]);
+        }
+        if (isset($data["password_hash"])) {
+            unset($data["password_hash"]);
+        }
+
+        return $data;
+    }
+
+    /**
+     * create contact on magento table
+     * @param array|mixed $contact
+     * @return Object|mixed|boolean
+     */
+    public function createContact($contact = [])
+    {
+        if (isset($contact['fields']) && isset($contact['fields']['all']) && $contact['id']) {
+            $contactFields = $contact['fields']['all'];
+            $contactItem = $this->contactFactory->create()->getCollection()
+                                ->addFieldToFilter("mautic_contact_id", $contact['id'])
+                                ->getFirstItem();
+            $contactId = 0;
+            if($contactItem) {
+                $model = $this->contactFactory->create()->load($contactItem->getContactId());
+                $contactId = $model->getId();
+                $this->_responseContactId = $contactId;
+            } else {
+                $model = $this->contactFactory->create();
+            }
+
+            $email = isset($contactFields['email']) ? $contactFields['email'] :'';
+            $data = [
+                "mautic_contact_id" => $contact['id'],
+                "facebook" => isset($contactFields['facebook']) ? $contactFields['facebook'] :'',
+                "foursquare" => isset($contactFields['foursquare']) ? $contactFields['foursquare'] :'',
+                "instagram" => isset($contactFields['instagram']) ? $contactFields['instagram'] :'',
+                "linkedin" => isset($contactFields['linkedin']) ? $contactFields['linkedin'] :'',
+                "skype" => isset($contactFields['skype']) ? $contactFields['skype'] :'',
+                "twitter" => isset($contactFields['twitter']) ? $contactFields['twitter'] :'',
+                "website" => isset($contactFields['website']) ? $contactFields['website'] :''
+            ];
+            $tags = isset($contact['tags']) && $contact['tags'] ? $contact['tags']: [];
+            $stage = isset($contact['stage']) && $contact['stage'] ? $contact['stage']: [];
+            $convertStages = [];
+            if ($stage) {
+                $convertStages = [
+                    "id" => $stage["id"],
+                    "name" => $stage["name"],
+                    "weight" => $stage["weight"]
+                ];
+            }
+            $data['tags'] = $this->mauticModel->serializeData($tags);
+            $data['stage'] = $this->mauticModel->serializeData($convertStages);
+            $data['contact_id'] = $contactId;
+            $customerModel = $this->getCustomer($email);
+            if ($customerModel && $customerModel->getId()) {
+                $data['customer_id'] = $customerModel->getId();
+
+                $model->setData($data);
+                try {
+                    $model->save();
+                } catch (\Exception $e) {
+                    //log exception at here
+                    //echo $e->getMessage();
+                }
+                return $model;
+
+            }
+        }
+        return false;
+    }
+
 }

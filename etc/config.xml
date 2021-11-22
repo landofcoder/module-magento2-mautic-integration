@@ -23,6 +23,7 @@
                 <disable_magento_subscription>1</disable_magento_subscription>
             </newsletter>
             <sync_mautic>
+                <async_api>1</async_api>
                 <contact_filter>*</contact_filter>
                 <contact_limit>20</contact_limit>
                 <contact_sorting>id:DESC</contact_sorting>

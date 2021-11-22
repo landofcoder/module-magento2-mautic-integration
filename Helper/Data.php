@@ -41,59 +41,65 @@ class Data extends AbstractHelper
     const MODULE_STATUS_XML_PATH = 'general/enable';
 
     /**
+     * Path to enable async api
+     */
+    const MODULE_ASYNC_API_PATH = 'sync_mautic/async_api';
+
+    /**
      * Path to mautic url configuration
      */
-    const MAUTIC_URL_XML_PATH = 'general/mautic_url';
+    const MODULE_MAUTIC_URL_XML_PATH = 'general/mautic_url';
 
     /**
      * Path to client id configuration
      */
-    const CLIENT_ID_XML_PATH = 'general/client_id';
+    const MODULE_CLIENT_ID_XML_PATH = 'general/client_id';
 
     /**
      * Path to oauth version
      */
-    const OAUTH_TYPE_XML_PATH = 'general/oauth_version';
+    const MODULE_OAUTH_TYPE_XML_PATH = 'general/oauth_version';
 
     /**
      * Path to client secret configuration
      */
-    const CLIENT_SECRET_URL_XML_PATH = 'general/client_secret';
+    const MODULE_CLIENT_SECRET_URL_XML_PATH = 'general/client_secret';
 
     /**
      * Path to access token
      */
-    const CLIENT_ACCESS_TOKEN_XML_PATH = 'general/access_token_data';
+    const MODULE_CLIENT_ACCESS_TOKEN_XML_PATH = 'general/access_token_data';
 
     /**
      * Path to basic auth login configuration
      */
-    const BASE_AUTH_LOGIC = 'general/mautic_login';
+    const MODULE_BASE_AUTH_LOGIC = 'general/mautic_login';
 
     /**
      * Path to basic auth password configuration
      */
-    const BASE_AUTH_PASSWORD = 'general/mautic_password';
+    const MODULE_BASE_AUTH_PASSWORD = 'general/mautic_password';
+
 
     /**
      * Contact integration status path
      */
-    const CONTACT_INTEGRATION_STATUS = 'contact/enabled';
+    const MODULE_CONTACT_INTEGRATION_STATUS = 'contact/enabled';
 
     /**
      * Newsletter is disabled
      */
-    const NEWSLETTER_STATUS = 'newsletter/disable_magento_subscription';
+    const MODULE_NEWSLETTER_STATUS = 'newsletter/disable_magento_subscription';
 
     /**
      * Mapping fieds
      */
-    const XML_PATH_MAPPING_FIELDS_CONFIGURATION = 'fields_mapping/fields';
+    const MODULE_FIELDS_MAPPING_PATH = 'fields_mapping/fields';
 
     /**
      * Company integration status path
      */
-    const COMPANY_INTEGRATION_STATUS = 'company/enabled';
+    const MODULE_COMPANY_INTEGRATION_STATUS = 'company/enabled';
 
     /**
      * Base url path
@@ -198,7 +204,18 @@ class Data extends AbstractHelper
      */
     public function isDisabledNewsletter($store = null)
     {
-        return (bool)$this->getConfig(self::NEWSLETTER_STATUS, $store);
+        return (bool)$this->getConfig(self::MODULE_NEWSLETTER_STATUS, $store);
+    }
+
+    /**
+     * Is enable Async Mautic API
+     *
+     * @param mixed|Object|int|null $store
+     * @return bool
+     */
+    public function isAyncApi($store = null)
+    {
+        return (bool)$this->getConfig(self::MODULE_ASYNC_API_PATH, $store);
     }
 
     /**
@@ -219,7 +236,7 @@ class Data extends AbstractHelper
      */
     public function getMauticUrl($store = null)
     {
-        return $this->getConfig(self::MAUTIC_URL_XML_PATH, $store);
+        return $this->getConfig(self::MODULE_MAUTIC_URL_XML_PATH, $store);
     }
 
     /**
@@ -229,7 +246,7 @@ class Data extends AbstractHelper
      */
     public function getClientKey($store = null)
     {
-        return $this->getConfig(self::CLIENT_ID_XML_PATH, $store);
+        return $this->getConfig(self::MODULE_CLIENT_ID_XML_PATH, $store);
     }
 
     /**
@@ -239,7 +256,7 @@ class Data extends AbstractHelper
      */
     public function getClientSecret($store = null)
     {
-        return $this->decrypt($this->getConfig(self::CLIENT_SECRET_URL_XML_PATH, $store));
+        return $this->decrypt($this->getConfig(self::MODULE_CLIENT_SECRET_URL_XML_PATH, $store));
     }
 
     /**
@@ -249,7 +266,7 @@ class Data extends AbstractHelper
      */
     public function getAuthType($store = null)
     {
-        return $this->getConfig(self::OAUTH_TYPE_XML_PATH, $store);
+        return $this->getConfig(self::MODULE_OAUTH_TYPE_XML_PATH, $store);
     }
 
     /**
@@ -259,7 +276,7 @@ class Data extends AbstractHelper
      */
     public function getLogin($store = null)
     {
-        return $this->getConfig(self::BASE_AUTH_LOGIC, $store);
+        return $this->getConfig(self::MODULE_BASE_AUTH_LOGIC, $store);
     }
 
     /**
@@ -269,7 +286,7 @@ class Data extends AbstractHelper
      */
     public function getPassword($store = null)
     {
-        return $this->decrypt($this->getConfig(self::BASE_AUTH_PASSWORD, $store));
+        return $this->decrypt($this->getConfig(self::MODULE_BASE_AUTH_PASSWORD, $store));
     }
 
     /**
@@ -279,7 +296,7 @@ class Data extends AbstractHelper
      */
     public function isCustomerIntegrationEnabled($store = null)
     {
-        return (bool)$this->getConfig(self::CONTACT_INTEGRATION_STATUS, $store);
+        return (bool)$this->getConfig(self::MODULE_CONTACT_INTEGRATION_STATUS, $store);
     }
 
 
@@ -290,7 +307,7 @@ class Data extends AbstractHelper
      */
     public function isCompanyIntegrationEnabled($store = null)
     {
-        return (bool)$this->getConfig(self::COMPANY_INTEGRATION_STATUS, $store);
+        return (bool)$this->getConfig(self::MODULE_COMPANY_INTEGRATION_STATUS, $store);
     }
 
     /**
@@ -301,9 +318,9 @@ class Data extends AbstractHelper
      */
     public function getStoredAccessTokenData($store = null)
     {
-        if ($this->getConfig(self::OAUTH_TYPE_XML_PATH)) {
-            $oauth_version = strtolower($this->getConfig(self::OAUTH_TYPE_XML_PATH));
-            $token = $this->getConfig(self::CLIENT_ACCESS_TOKEN_XML_PATH.'_'.$oauth_version, $store);
+        if ($this->getConfig(self::MODULE_OAUTH_TYPE_XML_PATH)) {
+            $oauth_version = strtolower($this->getConfig(self::MODULE_OAUTH_TYPE_XML_PATH));
+            $token = $this->getConfig(self::MODULE_CLIENT_ACCESS_TOKEN_XML_PATH.'_'.$oauth_version, $store);
             if ($token) {
                 return $this->serializer->unserialize($token);
             }
@@ -321,13 +338,13 @@ class Data extends AbstractHelper
     public function updateStoredAccessTokenData($accessTokenData = array())
     {
         $tokenJson = $this->serializer->serialize($accessTokenData);
-        $oauth_version = $this->getConfig(self::OAUTH_TYPE_XML_PATH);
+        $oauth_version = $this->getConfig(self::MODULE_OAUTH_TYPE_XML_PATH);
         $oauth_version = $oauth_version ? strtolower($oauth_version) : null;
         if (empty($accessTokenData)) {
-            $this->configWriter->delete(self::MODULE_BASE_SETTING_XML_PATH."/".self::CLIENT_ACCESS_TOKEN_XML_PATH.'_'.$oauth_version);
+            $this->configWriter->delete(self::MODULE_BASE_SETTING_XML_PATH."/".self::MODULE_CLIENT_ACCESS_TOKEN_XML_PATH.'_'.$oauth_version);
         }
         else {
-            $this->configWriter->save(self::MODULE_BASE_SETTING_XML_PATH."/".self::CLIENT_ACCESS_TOKEN_XML_PATH.'_'.$oauth_version, $tokenJson);
+            $this->configWriter->save(self::MODULE_BASE_SETTING_XML_PATH."/".self::MODULE_CLIENT_ACCESS_TOKEN_XML_PATH.'_'.$oauth_version, $tokenJson);
         }
 
         $this->flushConfigCache();
@@ -466,7 +483,7 @@ class Data extends AbstractHelper
      */
     public function getMappingFields(): array
     {
-        $value = $this->getConfig(self::XML_PATH_MAPPING_FIELDS_CONFIGURATION);
+        $value = $this->getConfig(self::MODULE_FIELDS_MAPPING_PATH);
         return !empty($value) ? $this->serializer->unserialize($value) : [];
     }
 

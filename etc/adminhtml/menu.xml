@@ -25,7 +25,7 @@
 		<add id="Lof_Mautic::all" title="Mautic Integration" module="Lof_Mautic" sortOrder="1000" resource="Magento_Backend::mautic_elements" parent="Magento_Backend::marketing"/>
 
 		<!-- contact -->
-		<add id="Lof_Mautic::contacts" title="Manage Contacts" module="Lof_Mautic" sortOrder="10" parent="Lof_Mautic::all" action="mautic/contact/" resource="Lof_Mautic::contacts"/>
+		<!-- <add id="Lof_Mautic::contacts" title="Manage Contacts" module="Lof_Mautic" sortOrder="10" parent="Lof_Mautic::all" action="mautic/contact/" resource="Lof_Mautic::contacts"/> -->
 
         <!-- company -->
 		<add id="Lof_Mautic::company" title="Manage Company" module="Lof_Mautic" sortOrder="12" parent="Lof_Mautic::all" action="mautic/company/" resource="Lof_Mautic::company"/>

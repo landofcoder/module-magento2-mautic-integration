@@ -3,9 +3,15 @@
 namespace Lof\Mautic\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
+use Lof\Mautic\Queue\MessageQueues\Review\Publisher;
 
 class ReviewSaveAfter implements ObserverInterface
 {
+    /**
+    * @var Publisher
+    */
+    private $publisher;
+
     /**
      * @var \Lof\Mautic\Helper\Data
      */
@@ -21,14 +27,17 @@ class ReviewSaveAfter implements ObserverInterface
      *
      * @param \Lof\Mautic\Helper\Data $helper
      * @param \Lof\Mautic\Model\Mautic\Contact $customerContact
+     * @param Publisher $publisher
      */
     public function __construct(
         \Lof\Mautic\Helper\Data $helper,
-        \Lof\Mautic\Model\Mautic\Contact $customerContact
+        \Lof\Mautic\Model\Mautic\Contact $customerContact,
+        Publisher $publisher
     )
     {
         $this->helper = $helper;
         $this->customerContact = $customerContact;
+        $this->publisher = $publisher;
     }
 
     /**
@@ -48,7 +57,14 @@ class ReviewSaveAfter implements ObserverInterface
                 "firstname" => $review->getNickname(),
                 "tags" => "reviews"
             ];
-            $this->customerContact->exportCustomer($customer, $customData);
+            if (!$this->helper->isAyncApi()) {
+                $this->customerContact->exportCustomer($customer, $customData);
+            } else {
+                $data = $this->customerContact->getRequestData($customData, $customer);
+                $this->publisher->execute(
+                    $this->helper->encodeData($data)
+                );
+            }
         }
         return $this;
     }
