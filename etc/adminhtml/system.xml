@@ -126,6 +126,15 @@
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
             </group>
+
+            <group id="sync_mautic" sortOrder="40" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+				<label>Mautic API Settings</label>
+                <field id="async_api" type="select" sortOrder="0" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
+					<label>Enabled Asynchronous Data Export</label>
+					<comment>Enabled the option then Mautic API calling run asynchronously by Magento 2 cron job. When some data is added or changed extension knows this and add to Queues and schedules the export. At now just support for RabbitMQ, so you should setup and config RabbitMQ for your Magento 2 site before. Disable this option all Mautic API will been run Immediately.</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+            </group>
         </section>
     </system>
 </config>

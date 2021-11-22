@@ -266,17 +266,20 @@ class Contact extends AbstractApi
 
         $data = $this->mappingContactData($data);//Mapping magento customer attributes (include address fields) to Mautic fields
 
-        if (isset($customData["customer_id"])) {
-            unset($customData["customer_id"]);
+        if (isset($data["customer_id"])) {
+            unset($data["customer_id"]);
         }
-        if (isset($customData["contact_id"])) {
-            unset($customData["contact_id"]);
+        if (isset($data["contact_id"])) {
+            unset($data["contact_id"]);
         }
-        if (isset($customData["created_at"])) {
-            unset($customData["created_at"]);
+        if (isset($data["created_at"])) {
+            unset($data["created_at"]);
         }
-        if (isset($customData["updated_at"])) {
-            unset($customData["updated_at"]);
+        if (isset($data["updated_at"])) {
+            unset($data["updated_at"]);
+        }
+        if (isset($data["password_hash"])) {
+            unset($data["password_hash"]);
         }
 
         return $data;

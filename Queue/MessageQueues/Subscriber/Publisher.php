@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace Lof\Mautic\Queue\MessageQueues\Review;
+namespace Lof\Mautic\Queue\MessageQueues\Subscriber;
 
 use Lof\Mautic\Queue\MessageQueues\AbstractPublisher;
 

@@ -43,7 +43,7 @@ class Data extends AbstractHelper
     /**
      * Path to enable async api
      */
-    const MODULE_ASYNC_API_PATH = 'general/async_api';
+    const MODULE_ASYNC_API_PATH = 'sync_mautic/async_api';
 
     /**
      * Path to mautic url configuration
