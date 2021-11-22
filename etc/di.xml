@@ -53,9 +53,7 @@
             </argument>
         </arguments>
     </type>
-
-    <!-- <preference for="Magento\Newsletter\Model\Subscriber" type="Lof\Mautic\Override\Model\Subscriber"/> -->
-
+    
     <type name="Magento\Customer\Model\AccountManagement">
         <plugin name="mautic-abandoned-checkout-save-quote" type="Lof\Mautic\Model\Plugin\AccountManagement" sortOrder="10"/>
     </type>

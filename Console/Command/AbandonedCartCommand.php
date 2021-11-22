@@ -32,13 +32,13 @@ class AbandonedCartCommand extends Command
     /**
      * CategoryImport constructor.
      *
-     * @param ExportCustomersProcessorFactory $abandonedCartProcessorFactory
+     * @param AbandonedCartProcessorFactory $abandonedCartProcessorFactory
      * @param State $state
      * @param Registry $registry
      * @param null $name
      */
     public function __construct(
-        ExportCustomersProcessorFactory $abandonedCartProcessorFactory,
+        AbandonedCartProcessorFactory $abandonedCartProcessorFactory,
         State $state,
         Registry $registry,
         $name = null
