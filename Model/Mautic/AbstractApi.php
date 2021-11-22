@@ -229,8 +229,11 @@ abstract class AbstractApi extends \Magento\Framework\Model\AbstractModel
      */
     public function deleteRecord($id)
     {
-        return true;
-
+        if ($id) {
+            $mauticApi = $this->getCurrentMauticApi();
+            return $mauticApi->delete($id);
+        }
+        return false;
     }
 
     /**
