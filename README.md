@@ -9,27 +9,32 @@
 
 ## Main Features
 
-- Campaign Contact
-    + Add contact to a campaign
-    + Remove contact from a campaign
-- Company
-    + Create a new company
-    + Delete a company
-    + Get data of a company
-    + Get data of all companies
-    + Update a company
-- Company Contact
-    + Add contact to a company
-    + Remove a contact from a company
 - Contact
     + Create a new contact
     + Delete a contact
     + Get data of a contact
     + Get data of all contacts
     + Update a contact
+
+- Company
+    + Create a new company
+    + Delete a company
+    + Get data of a company
+    + Get data of all companies
+    + Update a company
+
+- Campaign Contact (Comming soon)
+    + Add contact to a campaign
+    + Remove contact from a campaign
+
+- Company Contact (Comming soon)
+    + Add contact to a company
+    + Remove a contact from a company
+
 - Contact Segment (Comming soon)
     + Add contact to a segment
     + Remove contact from a segment
+
 - Mapping Mautic Custom Fiels to Magento 2 Customer Attributes
 - Sync contacts data from Customers
 - Sync contacts data from Orders
@@ -113,6 +118,13 @@ mautic_order_create
 mautic_review_save
 mautic_subscriber_save
 ```
+
+## Compatible Modules
+
+- [Magento 2 GDPR Compatible](https://github.com/landofcoder/module-magento2-mautic-gdpr)
+- Magento 2 Formbuilder Mautic Compatible
+- Magento 2 B2B Company Account Mautic Compatible
+- Magento 2 Multi-Vendor Marketplace Mautic Compatible
 
 ## Donation
 
