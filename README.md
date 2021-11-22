@@ -47,6 +47,8 @@
 - Support trigger events after save to sync data to Mautic
 - Support Console commands for Sync processing: Export customers, Export Orders, Export Reviews, Export Subscribers
 - Asynchronous Data Export: Support queue and cron job for calling Mautic APIs 
+- Includes abandon card tags (Comming Soon)
+- Review reminder tags (Comming Soon)
 
 ## Installation
 \* = in production please use the `--keep-generated` option
