@@ -5,6 +5,10 @@ Back,Back
 "Save Company","Save Company"
 "Delete Contact","Delete Contact"
 "Save Contact","Save Contact"
+"Mautic Contact Fields","Mautic Contact Fields"
+"Magento Customer Fields","Magento Customer Fields"
+Add,Add
+"Please select a field.","Please select a field."
 Mautic,Mautic
 Company,Company
 "You deleted the Company.","You deleted the Company."
@@ -32,6 +36,30 @@ Contacts,Contacts
 "You saved the Contact.","You saved the Contact."
 "Something went wrong while saving the Contact.","Something went wrong while saving the Contact."
 "Synced Contacts.","Synced Contacts."
+OK,OK
+"OK, You unsubscribed.","OK, You unsubscribed."
+"OK, Your subscription has been confirmed.","OK, Your subscription has been confirmed."
+"Webhook not authentic!","Webhook not authentic!"
+"CUSTOMER INFORMATION","CUSTOMER INFORMATION"
+"CUSTOMER ADDRESS","CUSTOMER ADDRESS"
+"Please select a Field.","Please select a Field."
+City,City
+Country,Country
+Fax,Fax
+"First Name","First Name"
+"Last Name","Last Name"
+"Middle Name/Initial","Middle Name/Initial"
+"Zip/Postal Code","Zip/Postal Code"
+Prefix,Prefix
+State/Province,State/Province
+"Street Address","Street Address"
+Suffix,Suffix
+"Phone Number","Phone Number"
+"VAT Number","VAT Number"
+"VAT number validity","VAT number validity"
+"VAT number validation request date","VAT number validation request date"
+"VAT number validation request ID","VAT number validation request ID"
+"VAT number validation request success","VAT number validation request success"
 "Re Authorize API","Re Authorize API"
 "Authorize API","Authorize API"
 "Export All","Export All"
@@ -49,6 +77,7 @@ Delete,Delete
 "Delete ""${ $.$data.title }""","Delete ""${ $.$data.title }"""
 "Are you sure you wan't to delete a ""${ $.$data.title }"" record?","Are you sure you wan't to delete a ""${ $.$data.title }"" record?"
 "View Customer","View Customer"
+"(weight: %1)","(weight: %1)"
 "Process completed successfully!","Process completed successfully!"
 "Access token data have been stored in database!","Access token data have been stored in database!"
 "You may","You may"
@@ -59,6 +88,7 @@ close,close
 Close,Close
 "A webhook will automatically be configured in your Mautic account which will point to: <br/>OAuth 1 <a href=""%1"" target=""_blank"" rel=""noopener noreferrer"">%1</a> and <br/>OAuth 2: <a href=""%2"" target=""_blank"" rel=""noopener noreferrer"">%2</a>. Please ensure that this link is externally accessible. Existing webhook configurations will be upgraded. A reconfigure is necessary when you change your Mautic API keys or your website Base URL.","A webhook will automatically be configured in your Mautic account which will point to: <br/>OAuth 1 <a href=""%1"" target=""_blank"" rel=""noopener noreferrer"">%1</a> and <br/>OAuth 2: <a href=""%2"" target=""_blank"" rel=""noopener noreferrer"">%2</a>. Please ensure that this link is externally accessible. Existing webhook configurations will be upgraded. A reconfigure is necessary when you change your Mautic API keys or your website Base URL."
 "You must first configure your Mautic API keys before you can configure webhooks","You must first configure your Mautic API keys before you can configure webhooks"
+"A webhook will automatically be configured in your Mautic account which will point to: <br/>OAuth 1 <a href=""%1"" target=""_blank"" rel=""noopener noreferrer"">%1</a> and <br/>OAuth 2: <span>%2</span>. Please ensure that this link is externally accessible. Existing webhook configurations will be upgraded. A reconfigure is necessary when you change your Mautic API keys or your website Base URL.","A webhook will automatically be configured in your Mautic account which will point to: <br/>OAuth 1 <a href=""%1"" target=""_blank"" rel=""noopener noreferrer"">%1</a> and <br/>OAuth 2: <span>%2</span>. Please ensure that this link is externally accessible. Existing webhook configurations will be upgraded. A reconfigure is necessary when you change your Mautic API keys or your website Base URL."
 "The API was authorized.","The API was authorized."
 "Mautic Integration Settings","Mautic Integration Settings"
 General,General
@@ -72,7 +102,9 @@ Password,Password
 Authorize,Authorize
 "Authorize Mautic API. Please save config before click this button.","Authorize Mautic API. Please save config before click this button."
 "Webhook URL Secret Key","Webhook URL Secret Key"
-"<span>Please enter some random characters in ""Secret Key"" field, save config, and use this URL in Mautic settings for Webhooks: <br><input name=""webhook_url"" class=""webhook-link-input"" style=""width:100%"" id=""webhook_url""></span><br/>Webhook url: https://your_domain/mautic/webhook?secret=YOUR_KEY","<span>Please enter some random characters in ""Secret Key"" field, save config, and use this URL in Mautic settings for Webhooks: <br><input name=""webhook_url"" class=""webhook-link-input"" style=""width:100%"" id=""webhook_url""></span><br/>Webhook url: https://your_domain/mautic/webhook?secret=YOUR_KEY"
+"<span>Please enter some random characters in ""Secret Key"" field, save config, and use this URL in Mautic settings for Webhooks: <br><input name=""webhook_url"" class=""webhook-link-input"" style=""width:100%"" id=""webhook_url""></span><br/>Webhook url: <strong>https://your_domain/mautic/webhook?secret=YOUR_KEY</strong><br/>The Secret Key will been check on webhook controller before process other functions.","<span>Please enter some random characters in ""Secret Key"" field, save config, and use this URL in Mautic settings for Webhooks: <br><input name=""webhook_url"" class=""webhook-link-input"" style=""width:100%"" id=""webhook_url""></span><br/>Webhook url: <strong>https://your_domain/mautic/webhook?secret=YOUR_KEY</strong><br/>The Secret Key will been check on webhook controller before process other functions."
+"Mautic Webhook Secret Key","Mautic Webhook Secret Key"
+"This field will autogenerate on Mautic Webhook. Use this secret hash to verify authenticity of the webhook payload on the target server.","This field will autogenerate on Mautic Webhook. Use this secret hash to verify authenticity of the webhook payload on the target server."
 "Contacts Integration","Contacts Integration"
 Export,Export
 "Export contacts from Magento to your Mautic. If the site have lot of contacts, the export process can take some tiem. In this better use console commands:<br/>
@@ -94,19 +126,16 @@ Export,Export
 Newsletter,Newsletter
 "Disable Magento Subscription Confirmation Email","Disable Magento Subscription Confirmation Email"
 "Enable this option when you want to send email via Mautic campaign. You should create campaign send email on Mautic before.<a href=""https://docs.mautic.org/en/campaigns/creating-campaigns"" target=""_BLANK"" rel=""nofollow"">Create Campaign</a>","Enable this option when you want to send email via Mautic campaign. You should create campaign send email on Mautic before.<a href=""https://docs.mautic.org/en/campaigns/creating-campaigns"" target=""_BLANK"" rel=""nofollow"">Create Campaign</a>"
+"Mautic API Settings","Mautic API Settings"
+"Enabled Asynchronous Data Export","Enabled Asynchronous Data Export"
+"Enabled the option then Mautic API calling run asynchronously by Magento 2 cron job. When some data is added or changed extension knows this and add to Queues and schedules the export. At now just support for RabbitMQ, so you should setup and config RabbitMQ for your Magento 2 site before. Disable this option all Mautic API will been run Immediately.","Enabled the option then Mautic API calling run asynchronously by Magento 2 cron job. When some data is added or changed extension knows this and add to Queues and schedules the export. At now just support for RabbitMQ, so you should setup and config RabbitMQ for your Magento 2 site before. Disable this option all Mautic API will been run Immediately."
 "General Information","General Information"
 "Company Name","Company Name"
 "Mautic Company Id","Mautic Company Id"
 "Address 1","Address 1"
 "Address 2","Address 2"
-City,City
-State,State
-Country,Country
-"Zipcode / Postcode","Zipcode / Postcode"
 "Company Email","Company Email"
-Industry,Industry
 "Number of Employees","Number of Employees"
-"Phone Number","Phone Number"
 "Website Url","Website Url"
 "Anyannual Revenue","Anyannual Revenue"
 "Company Description","Company Description"
@@ -142,5 +171,3 @@ Website,Website
 "Are you sure you wan't to delete selected items?","Are you sure you wan't to delete selected items?"
 "Mautic Contact ID","Mautic Contact ID"
 Customer,Customer
-"Has Purchased","Has Purchased"
-"Prospect Or Customer","Prospect Or Customer"
