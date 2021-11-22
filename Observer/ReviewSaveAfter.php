@@ -48,16 +48,17 @@ class ReviewSaveAfter implements ObserverInterface
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        if (!$this->helper->isEnabled()) return $this;
-
         $review = $observer->getReview();
-        if ($review && $review->getCustomerId() && $this->helper->isCustomerIntegrationEnabled()) {
+
+        if (!$this->helper->isEnabled($review->getStoreId())) return $this;
+        
+        if ($review && $review->getCustomerId() && $this->helper->isCustomerIntegrationEnabled($review->getStoreId())) {
             $customer = $this->helper->getCustomerById($review->getCustomerId());
             $customData = [
                 "firstname" => $review->getNickname(),
                 "tags" => "reviews"
             ];
-            if (!$this->helper->isAyncApi()) {
+            if (!$this->helper->isAyncApi($review->getStoreId())) {
                 $this->customerContact->exportCustomer($customer, $customData);
             } else {
                 $data = $this->customerContact->getRequestData($customData, $customer);

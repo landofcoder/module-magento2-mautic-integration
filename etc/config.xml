@@ -31,6 +31,12 @@
                 <company_limit>20</company_limit>
                 <company_sorting>id:DESC</company_sorting>
             </sync_mautic>
+            <abandoned>
+                <firstdate></firstdate>
+                <diffdate>0</diffdate>
+                <customer_group_ids></customer_group_ids>
+                <loadquote_token>landofcoder</loadquote_token>
+            </abandoned>
 		</lofmautic>
         <csp>
             <policies>

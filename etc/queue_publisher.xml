@@ -15,4 +15,8 @@
     <publisher topic="mautic.magento.subscriber.save">
         <connection name="amqp" exchange="mautic.magento.subscriber.save" />
     </publisher>
+
+    <publisher topic="mautic.magento.contact.delete">
+        <connection name="amqp" exchange="mautic.magento.contact.delete" />
+    </publisher>
 </config>

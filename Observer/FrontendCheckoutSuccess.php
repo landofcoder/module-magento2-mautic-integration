@@ -49,10 +49,11 @@ class FrontendCheckoutSuccess implements ObserverInterface
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        if (!$this->helper->isEnabled()) return $this;
-
         $order = $observer->getOrder();
-        if ($order && $order->getId() && $this->helper->isCustomerIntegrationEnabled()) {
+
+        if (!$this->helper->isEnabled($order->getStoreId())) return $this;
+
+        if ($order && $order->getId() && $this->helper->isCustomerIntegrationEnabled($order->getStoreId())) {
             $attribution = (float)$order->getSubtotal();
             $data = [
                 "email" => $order->getCustomerEmail(),
@@ -66,7 +67,7 @@ class FrontendCheckoutSuccess implements ObserverInterface
             if ($address) {
                 $data = array_merge($data, $address);
             }
-            if (!$this->helper->isAyncApi()) {
+            if (!$this->helper->isAyncApi($order->getStoreId())) {
                 $this->customerContact->exportContact($data);
             } else {
                 $this->publisher->execute(

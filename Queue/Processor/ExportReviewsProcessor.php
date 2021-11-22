@@ -56,13 +56,13 @@ class ExportReviewsProcessor extends AbstractQueueProcessor
 
         try {
             foreach ($collection as $item) {
-                if ($item->getCustomerId()) {
+                if ($item->getCustomerId() && $this->helperData->isEnabled($item->getStoreId())) {
                     $customer = $this->helperData->getCustomerById($item->getCustomerId());
                     $customData = [
                         "firstname" => $item->getNickname(),
                         "tags" => "reviews"
                     ];
-                    if (!$this->helperData->isAyncApi()) {
+                    if (!$this->helperData->isAyncApi($item->getStoreId())) {
                         $this->mauticContact->exportCustomer($customer, $customData);
                     } else {
                         $data = $this->mauticContact->getRequestData($customData, $customer);

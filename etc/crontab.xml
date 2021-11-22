@@ -53,5 +53,8 @@
             <schedule>30 23 * * *</schedule>
         </job> -->
 
+        <job name="lof_mautic_abandonedcart" instance="Lof\Mautic\Cron\AbandonedCart" method="execute">
+            <schedule>*/5 * * * *</schedule>
+        </job>
     </group>
 </config>

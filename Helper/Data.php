@@ -31,6 +31,31 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 class Data extends AbstractHelper
 {
     /**
+     * Path of abandoned firstdate
+     */
+    const MODULE_FIRST_DATE = 'abandoned/firstdate';
+
+    /**
+     * Path of abandoned diffdate
+     */
+    const MODULE_DIFF_DATE = 'abandoned/diffdate';
+
+    /**
+     * Path of abandoned customer groups
+     */
+    const MODULE_ABANDONED_CUSTOMER_GROUP = 'abandoned/customer_group';
+
+    /**
+     * Path of abandoned page
+     */
+    const MODULE_ABANDONEDCART_PAGE = 'abandoned/page';
+
+    /**
+     * Path of abandoned token
+     */
+    const MODULE_ABANDONEDCART_TOKEN = 'abandoned/loadquote_token';
+
+    /**
      * Path of base module settings
      */
     const MODULE_BASE_SETTING_XML_PATH = 'lofmautic';
@@ -105,6 +130,11 @@ class Data extends AbstractHelper
      * Base url path
      */
     const XML_PATH_BASE_URL = 'web/unsecure/base_url';
+
+    /**
+     * Default tags for abandoned cart
+     */
+    const ABANDONED_CART_TAGS = 'AbandonedCart';
 
     protected $_storeManager;
     protected $_directoryList;
