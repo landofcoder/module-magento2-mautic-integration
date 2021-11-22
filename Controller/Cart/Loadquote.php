@@ -24,9 +24,22 @@ use Magento\Framework\App\Action\Action;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\View\Result\PageFactory;
 use Magento\Framework\App\Action\Context;
+use Lof\Mautic\Queue\MessageQueues\Order\Publisher;
+use Lof\Mautic\Model\Mautic\Contact;
+use Lof\Mautic\Helper\Data;
 
 class Loadquote extends \Magento\Framework\App\Action\Action
 {
+    /**
+    * @var Publisher|null
+    */
+    private $_publisher = null;
+
+    /**
+     * @var Lof\Mautic\Model\Mautic\Contact|null
+     */
+    protected $_mauticContact = null;
+
     /**
      * @var PageFactory
      */
@@ -70,6 +83,8 @@ class Loadquote extends \Magento\Framework\App\Action\Action
      * @param \Lof\Mautic\Helper\Data $helper
      * @param \Magento\Framework\Url $urlHelper
      * @param \Magento\Customer\Model\Url $customerUrl
+     * @param Publisher $publisher
+     * @param Contact $mauticContact
      */
     public function __construct(
         Context $context,
@@ -79,7 +94,9 @@ class Loadquote extends \Magento\Framework\App\Action\Action
         \Magento\Checkout\Model\Session $checkoutSession,
         \Lof\Mautic\Helper\Data $helper,
         \Magento\Framework\Url $urlHelper,
-        \Magento\Customer\Model\Url $customerUrl
+        \Magento\Customer\Model\Url $customerUrl,
+        Publisher $publisher,
+        Contact $mauticContact
     ) {
     
         $this->pageFactory      = $pageFactory;
@@ -90,6 +107,9 @@ class Loadquote extends \Magento\Framework\App\Action\Action
         $this->_message         = $context->getMessageManager();
         $this->_customerUrl     = $customerUrl;
         $this->_checkoutSession = $checkoutSession;
+        $this->_publisher = $publisher;
+        $this->_mauticContact = $mauticContact;
+
         parent::__construct($context);
     }
 
@@ -135,6 +155,10 @@ class Loadquote extends \Magento\Framework\App\Action\Action
 
                 $quote->getResource()->save($quote);
 
+                if ($emailAddress = $quote->getCustomerEmail()) {
+                    $this->processUpdateContactTag($emailAddress, $quote->getStoreId());
+                }
+                
                 if (!$quote->getCustomerId()) {
                     $this->_checkoutSession->setQuoteId($quote->getId());
                     $this->_redirect($url);
@@ -157,5 +181,31 @@ class Loadquote extends \Magento\Framework\App\Action\Action
             }
         }
         return $resultPage;
+    }
+
+    /**
+     * process update contact tags
+     * 
+     * @param string $email
+     * @param int|string|null $storeId
+     * @return bool
+     */
+    protected function processUpdateContactTag($email, $storeId = null)
+    {
+        if ($this->_helper->isEnabled($storeId)) {
+            $removeTags = "-".(Data::ABANDONED_CART_TAGS);
+            $data = [
+                "email" => $email,
+                "tags" => $removeTags
+            ];
+            if (!$this->_helper->isAyncApi($storeId)) {
+                $this->_mauticContact->exportContact($data);
+            } else {
+                $this->_publisher->execute(
+                    $this->_helper->encodeData($data)
+                );
+            }
+        }
+        return true;
     }
 }

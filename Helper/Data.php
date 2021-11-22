@@ -126,6 +126,11 @@ class Data extends AbstractHelper
      */
     const XML_PATH_BASE_URL = 'web/unsecure/base_url';
 
+    /**
+     * Default tags for abandoned cart
+     */
+    const ABANDONED_CART_TAGS = 'AbandonedCart';
+
     protected $_storeManager;
     protected $_directoryList;
     protected $encryptor;

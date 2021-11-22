@@ -120,7 +120,7 @@ class AbandonedCartProcessor extends AbstractQueueProcessor
                     "email" => $cart->getCustomerEmail(),
                     "firstname" => $cart->getFirstname(),
                     "lastname" => $cart->getLastname(),
-                    "tags" => "Abandoned Cart"
+                    "tags" => Data::ABANDONED_CART_TAGS
                 ];
                 $customer = $this->helperData->getCustomerById($cart->getCustomerId());
                 if (!$this->helperData->isAyncApi()) {
