@@ -51,7 +51,7 @@ class Subscriber
         Contact $mauticContact,
         DeletePublisher $deletePublisher
     ) {
-    
+
         $this->_helper          = $helper;
         $this->_storeManager    = $storeManager;
         $this->_publisher = $publisher;
@@ -107,7 +107,7 @@ class Subscriber
 
     /**
      * afterSendConfirmationSuccessEmail
-     * 
+     *
      * @param \Magento\Newsletter\Model\Subscriber $subscriber
      * @return \Magento\Newsletter\Model\Subscriber
      */
@@ -127,7 +127,7 @@ class Subscriber
 
      /**
      * aroundSendConfirmationRequestEmail
-     * 
+     *
      * @param \Magento\Newsletter\Model\Subscriber $subscriber
      * @param \Closure $proceed
      */
