@@ -135,6 +135,44 @@
 					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
 				</field>
             </group>
+
+            <group id="abandoned" sortOrder="45" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+				<label>Abandoned Cart Tags</label>
+				<field id="diffdate" type="text" sortOrder="0" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
+					<label>Abandoned Cart Active After Day</label>
+					<comment>Input number or day(s) to filter carts is abandoned. Empty or = 0 for disable the feature. Default = 0</comment>
+                    <depends>
+                        <field id="*/general/enabled">1</field>
+                    </depends>
+				</field>
+                <field id="firstdate" translate="label" type="date" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>First Date</label>
+                    <frontend_model>Lof\Mautic\Block\Adminhtml\System\Config\Date</frontend_model>
+                    <depends>
+                        <field id="*/general/enabled">1</field>
+                    </depends>
+                </field>
+                <field id="customer_group" translate="label comment" type="multiselect" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Customer Group</label>
+                    <comment>Choose customer groups to filter abandoned cart. Empty to disable filter customer group.</comment>
+                    <source_model>Lof\Mautic\Model\Config\Source\Customergroup</source_model>
+                    <depends>
+                        <field id="*/general/enabled">1</field>
+                    </depends>
+                </field>
+                <field id="page" translate="label" type="select" sortOrder="15" showInDefault="1" showInStore="0" showInWebsite="0">
+                    <label>Redirect Page</label>
+                    <source_model>Lof\Mautic\Model\Config\Source\Cmspage</source_model>
+                    <depends>
+                        <field id="*/general/enabled">1</field>
+                    </depends>
+                </field>
+                <field id="loadquote_token" type="text" sortOrder="45" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
+					<label>Load Quote Token</label>
+					<comment><![CDATA[<span>Please enter some random characters in "Quote Token" field, save config, and use this URL in looad adbandoned cart. The load quote url as this: http://your_domain/mautic/cart/loadquote?id=[QUOTE_ID]&token=[QUOTE_TOKEN] .]]></comment>
+				</field>
+            </group>
+
         </section>
     </system>
 </config>

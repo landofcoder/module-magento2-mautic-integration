@@ -22,4 +22,8 @@
     <exchange name="mautic.magento.subscriber.save" type="topic" connection="amqp">
         <binding id="mautic_subscriber_save" topic="mautic.magento.subscriber.save" destinationType="queue" destination="mautic_subscriber_save"/>
     </exchange>
+
+    <exchange name="mautic.magento.contact.delete" type="topic" connection="amqp">
+        <binding id="mautic_contact_delete" topic="mautic.magento.contact.delete" destinationType="queue" destination="mautic_contact_delete"/>
+    </exchange>
 </config>

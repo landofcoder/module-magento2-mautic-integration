@@ -40,6 +40,7 @@
                 <item name="mautic_export_order" xsi:type="object">Lof\Mautic\Console\Command\ExportAllOrderCommand</item>
                 <item name="mautic_export_review" xsi:type="object">Lof\Mautic\Console\Command\ExportAllReviewCommand</item>
                 <item name="mautic_export_subscriber" xsi:type="object">Lof\Mautic\Console\Command\ExportAllSubscriberCommand</item>
+                <item name="mautic_export_abandoned" xsi:type="object">Lof\Mautic\Console\Command\AbandonedCartCommand</item>
             </argument>
         </arguments>
     </type>
@@ -53,5 +54,13 @@
         </arguments>
     </type>
 
-    <preference for="Magento\Newsletter\Model\Subscriber" type="Lof\Mautic\Override\Model\Subscriber"/>
+    <!-- <preference for="Magento\Newsletter\Model\Subscriber" type="Lof\Mautic\Override\Model\Subscriber"/> -->
+
+    <type name="Magento\Customer\Model\AccountManagement">
+        <plugin name="mautic-abandoned-checkout-save-quote" type="Lof\Mautic\Model\Plugin\AccountManagement" sortOrder="10"/>
+    </type>
+
+    <type name="Magento\Newsletter\Model\Subscriber">
+        <plugin name="mautic-subscriber" type="Lof\Mautic\Model\Plugin\Subscriber" sortOrder="10"/>
+    </type>
 </config>

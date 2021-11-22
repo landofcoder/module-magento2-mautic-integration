@@ -2,3 +2,5 @@
 ./dev
 .test
 .test/*
+.ideal
+.ideal/
