@@ -1,10 +1,7 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Lof\Mautic\Model\Mautic;
 
-use Mautic\Auth\ApiAuth;
-use Mautic\MauticApi;
-use Lof\Mautic\Model\Config\Source\OauthVersion;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;
 
