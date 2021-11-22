@@ -6,5 +6,8 @@ use Lof\Mautic\Queue\MessageQueues\AbstractPublisher;
 
 class Publisher extends AbstractPublisher
 {
-    const TOPIC_NAME = 'mautic.magento.review.save';
+    /**
+     * {@inheritdoc}
+     */
+    protected $_topic_name = 'mautic.magento.review.save';
 }

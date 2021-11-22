@@ -6,7 +6,10 @@ use Magento\Framework\MessageQueue\PublisherInterface;
 
 class AbstractPublisher
 {
-    const TOPIC_NAME = 'mautic.magento.customer.save';
+    /**
+     * @var string
+     */
+    protected $_topic_name = 'mautic.magento.customer.save';
 
      /**
       * @var \Magento\Framework\MessageQueue\PublisherInterface
@@ -29,6 +32,6 @@ class AbstractPublisher
      */
     public function execute(string $_data)
     {
-        $this->publisher->publish(self::TOPIC_NAME, $_data);
+        $this->publisher->publish($this->_topic_name, $_data);
     }
 }
