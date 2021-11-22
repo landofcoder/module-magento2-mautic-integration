@@ -51,6 +51,11 @@ class Data extends AbstractHelper
     const MODULE_ABANDONEDCART_PAGE = 'abandoned/page';
 
     /**
+     * Path of abandoned token
+     */
+    const MODULE_ABANDONEDCART_TOKEN = 'abandoned/loadquote_token';
+
+    /**
      * Path of base module settings
      */
     const MODULE_BASE_SETTING_XML_PATH = 'lofmautic';

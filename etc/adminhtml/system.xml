@@ -167,7 +167,7 @@
                         <field id="*/general/enabled">1</field>
                     </depends>
                 </field>
-                <field id="loadquote_token" type="text" sortOrder="45" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
+                <field id="loadquote_token" type="text" sortOrder="20" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
 					<label>Load Quote Token</label>
 					<comment><![CDATA[<span>Please enter some random characters in "Quote Token" field, save config, and use this URL in looad adbandoned cart. The load quote url as this: http://your_domain/mautic/cart/loadquote?id=[QUOTE_ID]&token=[QUOTE_TOKEN] .]]></comment>
 				</field>

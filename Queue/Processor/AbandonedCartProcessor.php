@@ -42,6 +42,7 @@ class AbandonedCartProcessor extends AbstractQueueProcessor
      */
     protected $_storeManager;
 
+
     /**
      * CategoryImport constructor.
      *
@@ -90,6 +91,8 @@ class AbandonedCartProcessor extends AbstractQueueProcessor
     {
         $this->firstdate        = $this->helperData->getConfig(Data::MODULE_FIRST_DATE, $storeId);
         $this->customergroups        = $this->helperData->getConfig(Data::MODULE_ABANDONED_CUSTOMER_GROUP, $storeId);
+        $token        = $this->helperData->getConfig(Data::MODULE_ABANDONEDCART_TOKEN, $storeId);
+
         if ($this->customergroups) {
             $this->customergroups = explode(",", $this->customergroups);
         } else {
@@ -115,14 +118,18 @@ class AbandonedCartProcessor extends AbstractQueueProcessor
         }
 
         try {
-            foreach ($collection as $cart) {
+            foreach ($collection as $quote) {
+                $tokenNew = $token;//.md5(rand(0, 9999999));
+                $url = $this->_storeManager->getStore($storeId)->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK) . 'mautic/cart/loadquote?id=' . $quote->getEntityId() . '&token=' . $tokenNew;
+
                 $customData = [
-                    "email" => $cart->getCustomerEmail(),
-                    "firstname" => $cart->getFirstname(),
-                    "lastname" => $cart->getLastname(),
-                    "tags" => Data::ABANDONED_CART_TAGS
+                    "email" => $quote->getCustomerEmail(),
+                    "firstname" => $quote->getFirstname(),
+                    "lastname" => $quote->getLastname(),
+                    "tags" => Data::ABANDONED_CART_TAGS,
+                    "cart_url" => $url
                 ];
-                $customer = $this->helperData->getCustomerById($cart->getCustomerId());
+                $customer = $this->helperData->getCustomerById($quote->getCustomerId());
                 if (!$this->helperData->isAyncApi()) {
                     $this->mauticContact->exportCustomer($customer, $customData);
                 } else {
@@ -131,7 +138,6 @@ class AbandonedCartProcessor extends AbstractQueueProcessor
                         $this->helperData->encodeData($data)
                     );
                 }
-
             }
         } catch (\Exception $e) {
             //log exception at here

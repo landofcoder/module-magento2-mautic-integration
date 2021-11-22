@@ -122,7 +122,7 @@ class Loadquote extends \Magento\Framework\App\Action\Action
             $quote = $this->_quote->create();
             $quote->getResource()->load($quote, $params['id']);
             $magentoStoreId = $quote->getStoreId();
-            $configSecretKey = $this->_helper->getConfig("general/webhook_secret");
+            $configSecretKey = $this->_helper->getConfig(\Lof\Mautic\Helper\Data::MODULE_ABANDONEDCART_TOKEN);
 
             if (!isset($params['token']) || $params['token'] != $configSecretKey) {
                 // @error
