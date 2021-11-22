@@ -46,6 +46,18 @@ class Contact extends AbstractApi
     }
 
     /**
+     * get Customer Collection
+     *
+     * @return mixed|object|array|null
+     */
+    public function getCustomerCollection()
+    {
+        $collection = $this->customerFactory->create()->getCollection()
+            ->addAttributeToSelect('*');
+        return $collection;
+    }
+
+    /**
      * Export contacts from customer
      *
      * @return bool

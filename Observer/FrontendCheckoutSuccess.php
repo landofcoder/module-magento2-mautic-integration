@@ -11,7 +11,7 @@ class FrontendCheckoutSuccess implements ObserverInterface
     /**
     * @var Publisher
     */
-    private $_publisher;
+    private $publisher;
 
     /**
      * @var \Lof\Mautic\Helper\Data

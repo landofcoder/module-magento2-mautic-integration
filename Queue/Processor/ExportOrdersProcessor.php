@@ -9,12 +9,18 @@ use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 use Lof\Mautic\Model\Mautic\Contact;
 use Lof\Mautic\Helper\Data;
 use Lof\Mautic\Model\Mautic\AbstractApi;
+use Lof\Mautic\Queue\MessageQueues\Order\Publisher;
 
 /**
  * Class ExportOrdersProcessor
  */
 class ExportOrdersProcessor extends AbstractQueueProcessor
 {
+    /**
+    * @var Publisher
+    */
+    private $publisher;
+
     /**
      * @var CollectionFactory
      */
@@ -26,14 +32,17 @@ class ExportOrdersProcessor extends AbstractQueueProcessor
      * @param Contact $mauticContact
      * @param Data $helperData
      * @param CollectionFactory $collectionFactory
+     * @param Publisher $publisher
      */
     public function __construct(
         Contact $mauticContact,
         Data $helperData,
-        CollectionFactory $collectionFactory
+        CollectionFactory $collectionFactory,
+        Publisher $publisher
     ) {
         parent::__construct($mauticContact, $helperData);
         $this->collectionFactory = $collectionFactory;
+        $this->publisher = $publisher;
     }
 
     /**
@@ -59,7 +68,14 @@ class ExportOrdersProcessor extends AbstractQueueProcessor
                 if ($address) {
                     $data = array_merge($data, $address);
                 }
-                $this->mauticContact->exportContact($data);
+                if (!$this->helperData->isAyncApi()) {
+                    $this->mauticContact->exportContact($data);
+                } else {
+                    $this->publisher->execute(
+                        $this->helperData->encodeData($data)
+                    );
+                }
+
             }
         } catch (\Exception $e) {
             //log exception at here
