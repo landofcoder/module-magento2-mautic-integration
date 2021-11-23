@@ -90,6 +90,9 @@ class AbandonedCartProcessor extends AbstractQueueProcessor
     protected function _processAbandoned($storeId)
     {
         $this->firstdate        = $this->helperData->getConfig(Data::MODULE_FIRST_DATE, $storeId);
+        if (!$this->firstdate) {
+            $this->firstdate = $this->_getSuggestedZeroDate();
+        }
         $this->customergroups        = $this->helperData->getConfig(Data::MODULE_ABANDONED_CUSTOMER_GROUP, $storeId);
         $token        = $this->helperData->getConfig(Data::MODULE_ABANDONEDCART_TOKEN, $storeId);
 

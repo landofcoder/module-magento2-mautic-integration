@@ -112,6 +112,7 @@
 
 Require setup and config RabbitMQ for Magento 2 [RabbitMQ Configrable Guide](https://blog.landofcoder.com/how-to-set-up-and-configure-rabbitmq-with-magento-2/)
 
+
 The module support there consummers:
 
 ```
@@ -120,6 +121,10 @@ mautic_order_create
 mautic_review_save
 mautic_subscriber_save
 ```
+
+- Abandoned Cart Tags:
+![Abandoned Cart Tags Settings](./assets/12_abandoned_cart.png)
+the feature will run on each 5 minutes (cron job) find abandoned cart on reports which have last updated date <= Diff date number, and match customer groups (option), and updated date greater than first date (option). If found abandoned cart, it will add mautic contact with tag: AbandonedCart 
 
 ## Compatible Modules
 
