@@ -77,13 +77,13 @@ class AbandonedCartProcessor extends AbstractQueueProcessor
                 $this->_processAbandoned($storeId);
             }
         }
-        
+
         return;
     }
 
     /**
      * Process abandoned cart
-     * 
+     *
      * @param int $storeId
      * @return void
      */
@@ -99,6 +99,9 @@ class AbandonedCartProcessor extends AbstractQueueProcessor
             $this->customergroups = [];
         }
         $diff = $this->helperData->getConfig(Data::MODULE_DIFF_DATE, $storeId);
+        if (!$diff) { //Disable feature when diff date number is empty
+            return;
+        }
         $expr = sprintf('DATE_SUB(now(), %s)', $this->_getIntervalUnitSql($diff, 'DAY'));
         $from = new \Zend_Db_Expr($expr);
 
@@ -119,7 +122,7 @@ class AbandonedCartProcessor extends AbstractQueueProcessor
 
         try {
             foreach ($collection as $quote) {
-                $tokenNew = $token;//.md5(rand(0, 9999999));
+                $tokenNew = md5($token.$quote->getEntityId());
                 $url = $this->_storeManager->getStore($storeId)->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK) . 'mautic/cart/loadquote?id=' . $quote->getEntityId() . '&token=' . $tokenNew;
 
                 $customData = [
@@ -142,7 +145,7 @@ class AbandonedCartProcessor extends AbstractQueueProcessor
         } catch (\Exception $e) {
             //log exception at here
         }
-        
+
         return;
     }
 
