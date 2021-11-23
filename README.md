@@ -41,13 +41,14 @@
 - Sync contacts data from Reviews
 - Sync contacts data from Subscribers
 - Manage Companies and sync to Mautic
+- Auto remove contact when admin delete Guest Subscriber in Magento Backend
 - Allow send newsletter subscription email via Mautic (disable send email from magento 2)
 - Tracking visitor page view - logged in customer
 - Support Cron jobs for contacts exporting: export customers, export orders, export reviews, export subscribers
 - Support trigger events after save to sync data to Mautic
 - Support Console commands for Sync processing: Export customers, Export Orders, Export Reviews, Export Subscribers
 - Asynchronous Data Export: Support queue and cron job for calling Mautic APIs 
-- Includes abandon card tags (Comming Soon)
+- Includes abandon card tags
 - Review reminder tags (Comming Soon)
 
 ## Installation
