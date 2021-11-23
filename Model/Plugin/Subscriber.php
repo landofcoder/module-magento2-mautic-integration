@@ -51,7 +51,7 @@ class Subscriber
         Contact $mauticContact,
         DeletePublisher $deletePublisher
     ) {
-    
+
         $this->_helper          = $helper;
         $this->_storeManager    = $storeManager;
         $this->_publisher = $publisher;
@@ -107,7 +107,7 @@ class Subscriber
 
     /**
      * afterSendConfirmationSuccessEmail
-     * 
+     *
      * @param \Magento\Newsletter\Model\Subscriber $subscriber
      * @return \Magento\Newsletter\Model\Subscriber
      */
@@ -125,9 +125,29 @@ class Subscriber
         return $subscriber;
     }
 
+    /**
+     * afterUnsubscribe
+     *
+     * @param \Magento\Newsletter\Model\Subscriber $subscriber
+     * @return \Magento\Newsletter\Model\Subscriber
+     */
+    public function afterUnsubscribe(\Magento\Newsletter\Model\Subscriber $subscriber)
+    {
+        try {
+            if ($this->_helper->isEnabled($subscriber->getStoreId()) && $subscriber->getSubscriberStatus() == \Magento\Newsletter\Model\Subscriber::STATUS_UNSUBSCRIBE) {
+                $tags = ["-subscribed"];
+                $this->createMauticContact($subscriber->getEmail(), $subscriber->getName(), $tags, $subscriber->getStoreId());
+            }
+        } catch (\Exception $exception) {
+            //
+        }
+
+        return $subscriber;
+    }
+
      /**
      * aroundSendConfirmationRequestEmail
-     * 
+     *
      * @param \Magento\Newsletter\Model\Subscriber $subscriber
      * @param \Closure $proceed
      */
