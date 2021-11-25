@@ -47,8 +47,16 @@
 - Support trigger events after save to sync data to Mautic
 - Support Console commands for Sync processing: Export customers, Export Orders, Export Reviews, Export Subscribers
 - Asynchronous Data Export: Support queue and cron job for calling Mautic APIs 
-- Includes abandon card tags (Comming Soon)
+- Includes abandon card tags
 - Review reminder tags (Comming Soon)
+
+## TO DO
+- Review reminder tags (Comming Soon)
+- Contact Segment (Comming soon)
+    + Add contact to a segment. Support common segment by reports: Best Customers, Big Spenders, Lost Cheap Customers, Lost Customers, Low Spenders, Loyal Customers, Mid Spenders, New Customers, One Time Purchase Customers, Two Time Purchase Customers, Three Time Purchase Customers.
+    + Remove contact from a segment
+- Campaign Contact (Comming soon)
+- Company Contact (Comming soon)
 
 ## Installation
 \* = in production please use the `--keep-generated` option
