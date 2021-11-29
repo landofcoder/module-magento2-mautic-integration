@@ -57,6 +57,7 @@
     + Remove contact from a segment
 - Campaign Contact (Comming soon)
 - Company Contact (Comming soon)
+- Contact Tags, Points: support for New Customer, New Invoice, New Review, New Subscription
 
 ## Installation
 \* = in production please use the `--keep-generated` option
