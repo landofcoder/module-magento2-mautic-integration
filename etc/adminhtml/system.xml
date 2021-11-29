@@ -173,6 +173,69 @@
 				</field>
             </group>
 
+            <group id="tags_points" sortOrder="50" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+				<label>Contact Tags and Points </label>
+                <comment>Only apply for logged in customer - not trigger for guest</comment>
+                <field id="new_customer_points" type="text" sortOrder="0" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
+					<label>New Customer Add or Remove Points</label>
+					<comment>Points to be added or substracted</comment>
+                    <depends>
+                        <field id="*/general/enabled">1</field>
+                    </depends>
+				</field>
+				<field id="new_customer_tags" type="text" sortOrder="5" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
+					<label>New Customer Add Tags</label>
+					<comment>When a new customer register in the store. Separate by comma</comment>
+                    <depends>
+                        <field id="*/general/enabled">1</field>
+                    </depends>
+				</field>
+                <field id="new_invoice_points" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
+					<label>New Invoice Add or Remove Points</label>
+					<comment>Points to be added or substracted</comment>
+                    <depends>
+                        <field id="*/general/enabled">1</field>
+                    </depends>
+				</field>
+				<field id="new_customer_tags" type="text" sortOrder="15" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
+					<label>New Invoice Add Tags</label>
+					<comment>When the customer pays for an order. Those are reverted if the invoice is refunded or order is cancelled</comment>
+                    <depends>
+                        <field id="*/general/enabled">1</field>
+                    </depends>
+				</field>
+
+                <field id="new_review_points" type="text" sortOrder="20" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
+					<label>New Review Add or Remove Points</label>
+					<comment>Points to be added or substracted</comment>
+                    <depends>
+                        <field id="*/general/enabled">1</field>
+                    </depends>
+				</field>
+				<field id="new_review_tags" type="text" sortOrder="25" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
+					<label>New Invoice Add Tags</label>
+					<comment>When the customer review/rating for product. Require rating greater than 3</comment>
+                    <depends>
+                        <field id="*/general/enabled">1</field>
+                    </depends>
+				</field>
+
+                <field id="new_subscription_points" type="text" sortOrder="30" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
+					<label>New Subscriber Add or Remove Points</label>
+					<comment>Points to be added or substracted</comment>
+                    <depends>
+                        <field id="*/general/enabled">1</field>
+                    </depends>
+				</field>
+				<field id="new_subscription_tags" type="text" sortOrder="35" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
+					<label>New Subscriber Add Tags</label>
+					<comment>When the customer review/rating for product. Require rating greater than 3</comment>
+                    <depends>
+                        <field id="*/general/enabled">1</field>
+                    </depends>
+				</field>
+            </group>
+
         </section>
     </system>
 </config>
