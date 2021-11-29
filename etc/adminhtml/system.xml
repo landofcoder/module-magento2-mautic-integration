@@ -197,7 +197,7 @@
                         <field id="*/general/enabled">1</field>
                     </depends>
 				</field>
-				<field id="new_customer_tags" type="text" sortOrder="15" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
+				<field id="new_invoice_tags" type="text" sortOrder="15" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
 					<label>New Invoice Add Tags</label>
 					<comment>When the customer pays for an order. Those are reverted if the invoice is refunded or order is cancelled</comment>
                     <depends>
