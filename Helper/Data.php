@@ -507,6 +507,77 @@ class Data extends AbstractHelper
     }
 
     /**
+     * get mautic tags by type
+     *
+     * @param string $type - get by type: new_customer, new_invoice, subscription, review
+     * @param bool $add - is add or substract
+     * @param mixed|null $store
+     * @return array
+     */
+    public function getMauticTags($type = "new_customer", $add = true , $store = null)
+    {
+        $tags = [];
+        $tmpTags = [];
+        $value = "";
+        switch ($type) {
+            case "new_customer":
+                $value = $this->getConfig("tags_points/new_customer_tags", $store);
+                break;
+            case "new_invoice":
+                $value = $this->getConfig("tags_points/new_invoice_tags", $store);
+                break;
+            case "subscription":
+                $value = $this->getConfig("tags_points/new_subscription_tags", $store);
+                break;
+            case "review":
+                $value = $this->getConfig("tags_points/new_review_tags", $store);
+                break;
+            default:
+                break;
+        }
+        $tmpTags = $value ? explode(",", $value) : [];
+        if ($tmpTags) {
+            foreach ($tmpTags as $tag) {
+                if ($tags) {
+                    $tags[] = $add ? $tag : "-".$tag;
+                }
+            }
+        }
+        return $tags;
+    }
+
+    /**
+     * get mautic point by type
+     *
+     * @param string $type - get by type: new_customer, new_invoice, subscription, review
+     * @param bool $add - is add or substract
+     * @param mixed|null $store
+     * @return int
+     */
+    public function getMauticPoint($type = "new_customer", $add = true , $store = null)
+    {
+        $value = 0;
+        switch ($type) {
+            case "new_customer":
+                $value = (int)$this->getConfig("tags_points/new_customer_points", $store);
+                break;
+            case "new_invoice":
+                $value = (int)$this->getConfig("tags_points/new_invoice_points", $store);
+                break;
+            case "subscription":
+                $value = (int)$this->getConfig("tags_points/new_subscription_points", $store);
+                break;
+            case "review":
+                $value = (int)$this->getConfig("tags_points/new_review_points", $store);
+                break;
+            default:
+                break;
+        }
+
+        return $value > 0 && !$add ? -$value : $value;
+    }
+
+    /**
      * Get Mapping Fields
      *
      * @return array
