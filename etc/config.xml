@@ -37,6 +37,12 @@
                 <customer_group_ids></customer_group_ids>
                 <loadquote_token>landofcoder</loadquote_token>
             </abandoned>
+            <tags_points>
+                <new_customer_points>0</new_customer_points>
+                <new_review_points>0</new_review_points>
+                <new_invoice_points>0</new_invoice_points>
+                <new_subscription_points>0</new_subscription_points>
+            </tags_points>
 		</lofmautic>
         <csp>
             <policies>

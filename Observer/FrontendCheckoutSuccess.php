@@ -55,13 +55,22 @@ class FrontendCheckoutSuccess implements ObserverInterface
 
         if ($order && $order->getId() && $this->helper->isCustomerIntegrationEnabled($order->getStoreId())) {
             $attribution = (float)$order->getSubtotal();
+            $mauticPoints = 0;
+            $mauticTags = [];
+            if ($order->getCustomerId()) {
+                $mauticPoints = $this->helper->getMauticPoint("new_invoice", true, $order->getOrderId());
+                $mauticTags = $this->helper->getMauticTags("new_invoice", true, $order->getOrderId());
+                $mauticTags = is_array($mauticTags) && $mauticTags ? $mauticTags : [];
+            }
+            $mauticTags[] = "ordered";
             $data = [
                 "email" => $order->getCustomerEmail(),
                 "firstname" => $order->getCustomerFirstname(),
                 "lastname" => $order->getCustomerLastname(),
                 "haspurchased" => true,
                 "attribution" => $attribution,
-                "tags" => "ordered"
+                "points" => (int)$mauticPoints,
+                "tags" => implode(",", $mauticTags)
             ];
             $address = $this->_getBillingAddress($order);
             if ($address) {

@@ -51,7 +51,7 @@ class Subscriber
         Contact $mauticContact,
         DeletePublisher $deletePublisher
     ) {
-    
+
         $this->_helper          = $helper;
         $this->_storeManager    = $storeManager;
         $this->_publisher = $publisher;
@@ -87,6 +87,10 @@ class Subscriber
                                 }
                             }
                         }
+                    } else {
+                        //
+                        $tags = ["-subscribed"];
+                        $this->removeSubscriptionMauticContact($subscriber->getEmail(), $subscriber->getName(), $tags, $subscriber->getStoreId());
                     }
                 } catch (\Exception $e) {
                     //
@@ -107,7 +111,7 @@ class Subscriber
 
     /**
      * afterSendConfirmationSuccessEmail
-     * 
+     *
      * @param \Magento\Newsletter\Model\Subscriber $subscriber
      * @return \Magento\Newsletter\Model\Subscriber
      */
@@ -116,7 +120,7 @@ class Subscriber
         try {
             if ($this->_helper->isEnabled($subscriber->getStoreId())) {
                 $tags = ["subscribed"];
-                $this->createMauticContact($subscriber->getEmail(), $subscriber->getName(), $tags, $subscriber->getStoreId());
+                $this->createMauticContact($subscriber->getEmail(), $subscriber->getName(), $tags, $subscriber->getStoreId(), $subscriber->getCustomerId());
             }
         } catch (\Exception $exception) {
             //
@@ -127,7 +131,7 @@ class Subscriber
 
      /**
      * aroundSendConfirmationRequestEmail
-     * 
+     *
      * @param \Magento\Newsletter\Model\Subscriber $subscriber
      * @param \Closure $proceed
      */
@@ -137,7 +141,7 @@ class Subscriber
     ) {
         if ($this->_helper->isEnabled($subscriber->getStoreId()) && $this->_helper->isDisabledNewsletter($subscriber->getStoreId())) {
             $tags = ["confirm request"];
-            $this->createMauticContact($subscriber->getEmail(), $subscriber->getName(), $tags, $subscriber->getStoreId());
+            $this->createMauticContact($subscriber->getEmail(), $subscriber->getName(), $tags, $subscriber->getStoreId(), $subscriber->getCustomerId());
             return $subscriber;
         } else {
             return $proceed();
@@ -150,19 +154,74 @@ class Subscriber
      * @param string $name
      * @param array $tags
      * @param int|mixed|null $storeId
+     * @param int|null $customerId
      * @return mixed|object|null
      */
-    public function createMauticContact($email, $name, $tags = [], $storeId = null)
+    public function createMauticContact($email, $name, $tags = [], $storeId = null, $customerId = null)
     {
         if (!$email) {
             return null;
         }
         $mauticContact = $this->_mauticContact;
         if ($this->_helper->isEnabled($storeId)) {
+            $mauticPoints = 0;
+            if ($customerId) {
+                $mauticPoints = $this->_helper->getMauticPoint("new_invoice", true, $storeId);
+                $mauticTags = $this->_helper->getMauticTags("new_invoice", true, $storeId);
+                $mauticTags = is_array($mauticTags) && $mauticTags ? $mauticTags : [];
+                $tags = array_merge($tags, $mauticTags);
+            }
             $tags[] = "newsletter";//subscribed
             $subscriberData = [
                 "email" => $email,
                 "firstname" => $name,
+                "points" => (int)$mauticPoints,
+                "tags" => implode(",", $tags)
+            ];
+            if (!$this->_helper->isAyncApi($storeId)) {
+                $mauticContact->exportContact($subscriberData);
+            } else {
+                $this->_publisher->execute(
+                    json_encode($subscriberData)
+                );
+            }
+        }
+        return $mauticContact;
+    }
+
+    /**
+     * Update Mautic contact for subscriber
+     * @param string $email
+     * @param string $name
+     * @param array $tags
+     * @param int|mixed|null $storeId
+     * @param int|null $customerId
+     * @return mixed|object|null
+     */
+    public function removeSubscriptionMauticContact($email, $name, $tags = [], $storeId = null)
+    {
+        if (!$email) {
+            return null;
+        }
+        $mauticContact = $this->_mauticContact;
+        if ($this->_helper->isEnabled($storeId)) {
+            $mauticPoints = 0;
+            $mauticPoints = $this->_helper->getMauticPoint("new_invoice", true, $storeId);
+            $mauticTags = $this->_helper->getMauticTags("new_invoice", true, $storeId);
+            $mauticTags = is_array($mauticTags) && $mauticTags ? $mauticTags : [];
+            if ($mauticTags) {
+                foreach ($mauticTags as $_tag) {
+                    if ($_tag) {
+                        $tags[] = "-".$_tag;
+                    }
+                }
+            }
+            $tags = array_merge($tags, $mauticTags);
+            $tags[] = "-newsletter";//subscribed
+            $subscriberData = [
+                "email" => $email,
+                "firstname" => $name,
+                "points" => (int)$mauticPoints > 0 ? (int)$mauticPoints : -(int)$mauticPoints,
                 "tags" => implode(",", $tags)
             ];
             if (!$this->_helper->isAyncApi($storeId)) {

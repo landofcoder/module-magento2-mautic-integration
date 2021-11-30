@@ -51,12 +51,21 @@ class ReviewSaveAfter implements ObserverInterface
         $review = $observer->getReview();
 
         if (!$this->helper->isEnabled($review->getStoreId())) return $this;
-        
+
         if ($review && $review->getCustomerId() && $this->helper->isCustomerIntegrationEnabled($review->getStoreId())) {
             $customer = $this->helper->getCustomerById($review->getCustomerId());
+            $mauticPoints = 0;
+            $mauticTags = [];
+            if ($review->getCustomerId()) {
+                $mauticPoints = $this->helper->getMauticPoint("review");
+                $mauticTags = $this->helper->getMauticTags("review");
+                $mauticTags = is_array($mauticTags) && $mauticTags ? $mauticTags : [];
+            }
+            $mauticTags[] = "reviews";
             $customData = [
                 "firstname" => $review->getNickname(),
-                "tags" => "reviews"
+                "points" => (int)$mauticPoints,
+                "tags" => implode(",", $mauticTags)
             ];
             if (!$this->helper->isAyncApi($review->getStoreId())) {
                 $this->customerContact->exportCustomer($customer, $customData);
