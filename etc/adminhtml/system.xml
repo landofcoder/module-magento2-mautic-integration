@@ -213,7 +213,7 @@
                     </depends>
 				</field>
 				<field id="new_review_tags" type="text" sortOrder="25" showInWebsite="1" showInStore="1" showInDefault="1" translate="label comment">
-					<label>New Invoice Add Tags</label>
+					<label>New Review Add Tags</label>
 					<comment>When the customer review/rating for product. Require rating greater than 3</comment>
                     <depends>
                         <field id="*/general/enabled">1</field>
