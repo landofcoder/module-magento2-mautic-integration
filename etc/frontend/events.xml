@@ -3,6 +3,9 @@
 	<event name="customer_save_after">
         <observer name="lof_mautic_customer_save_after" instance="Lof\Mautic\Observer\CustomerSaveAfter" />
     </event>
+    <event name="customer_register_success">
+        <observer name="lof_mautic_customer_register_success" instance="Lof\Mautic\Observer\CustomerRegisterSuccess" />
+    </event>
     <event name="review_save_after">
         <observer name="lof_mautic_review_save_after" instance="Lof\Mautic\Observer\ReviewSaveAfter" />
     </event>

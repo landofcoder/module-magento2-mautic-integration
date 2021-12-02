@@ -538,7 +538,7 @@ class Data extends AbstractHelper
         $tmpTags = $value ? explode(",", $value) : [];
         if ($tmpTags) {
             foreach ($tmpTags as $tag) {
-                if ($tags) {
+                if ($tag) {
                     $tags[] = $add ? $tag : "-".$tag;
                 }
             }

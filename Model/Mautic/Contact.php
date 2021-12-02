@@ -22,6 +22,11 @@ class Contact extends AbstractApi
      */
     protected $_responseContactId = 0;
 
+    /**
+     * @var int|bool
+     */
+    protected $_isExportCustomerDataObject = false;
+
 
     /**
      * Initialize resource model
@@ -250,7 +255,11 @@ class Contact extends AbstractApi
     public function getRequestData(array $data = [], $customer = null)
     {
         if ($customer) {
-            $customerData = $customer->getData();
+            if ($this->_isExportCustomerDataObject) {
+                $customerData = $customer;
+            } else {
+                $customerData = $customer->getData();
+            }
             $address = $this->_getCustomerAddress($customer);
             if ($address) {
                 $customerData = array_merge($data, $address);
@@ -358,6 +367,18 @@ class Contact extends AbstractApi
             }
         }
         return false;
+    }
+
+    /**
+     * get flag
+     *
+     * @param bool|int $flag
+     * @return $this
+     */
+    public function setExportCustomerObject($flag = false)
+    {
+        $this->_isExportCustomerDataObject = $flag;
+        return $this;
     }
 
 }
