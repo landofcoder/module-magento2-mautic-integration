@@ -250,7 +250,11 @@ class Contact extends AbstractApi
     public function getRequestData(array $data = [], $customer = null)
     {
         if ($customer) {
-            $customerData = $customer->getData();
+            try {
+                $customerData = $customer->getData();
+            } catch (\Exception $e) {
+                $customerData = $customer->__toArray();
+            }
             $address = $this->_getCustomerAddress($customer);
             if ($address) {
                 $customerData = array_merge($data, $address);
