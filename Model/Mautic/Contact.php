@@ -181,19 +181,24 @@ class Contact extends AbstractApi
     /**
      * Retrieve customer address
      *
-     * @param \Magento\Customer\Model\Customer $customer
+     * @param \Magento\Customer\Model\Customer|\Magento\Customer\Model\Data\Customer $customer
      * @return array|mixed|bool
      */
     protected function _getCustomerAddress($customer)
     {
         $address = false;
-        if ($customer->getPrimaryBillingAddress()) {
-            $address = $customer->getPrimaryBillingAddress();
-        } elseif ($customer->getPrimaryShippingAddress()) {
-            $address = $customer->getPrimaryShippingAddress();
-        } elseif ($customer->getAddresses()) {
+        if ($customer instanceof \Magento\Customer\Model\Data\Customer) {
             $addresses = $customer->getAddresses();
             $address = array_shift($addresses);
+        } else {
+            if ($customer->getPrimaryBillingAddress()) {
+                $address = $customer->getPrimaryBillingAddress();
+            } elseif ($customer->getPrimaryShippingAddress()) {
+                $address = $customer->getPrimaryShippingAddress();
+            } elseif ($customer->getAddresses()) {
+                $addresses = $customer->getAddresses();
+                $address = array_shift($addresses);
+            }
         }
 
         if ($address) {
