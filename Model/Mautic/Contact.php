@@ -189,7 +189,7 @@ class Contact extends AbstractApi
         $address = false;
         if ($customer instanceof \Magento\Customer\Model\Data\Customer) {
             $addresses = $customer->getAddresses();
-            $address = array_shift($addresses);
+            $address = $addresses ? array_shift($addresses) : false;
         } else {
             if ($customer->getPrimaryBillingAddress()) {
                 $address = $customer->getPrimaryBillingAddress();
