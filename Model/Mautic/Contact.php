@@ -250,10 +250,10 @@ class Contact extends AbstractApi
     public function getRequestData(array $data = [], $customer = null)
     {
         if ($customer) {
-            try {
-                $customerData = $customer->getData();
-            } catch (\Exception $e) {
+            if ($customer instanceof \Magento\Customer\Model\Data\Customer) {
                 $customerData = $customer->__toArray();
+            } else {
+                $customerData = $customer->getData();
             }
             $address = $this->_getCustomerAddress($customer);
             if ($address) {
