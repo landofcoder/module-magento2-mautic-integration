@@ -3,6 +3,7 @@
 	<preference for="Lof\Mautic\Api\ContactRepositoryInterface" type="Lof\Mautic\Model\ContactRepository"/>
 	<preference for="Lof\Mautic\Api\Data\ContactInterface" type="Lof\Mautic\Model\Contact"/>
 	<preference for="Lof\Mautic\Api\Data\ContactSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+    <preference for="Mautic\Api\Api" type="Lof\Mautic\Lib\Api"/>
 	<virtualType name="Lof\Mautic\Model\ResourceModel\Contact\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
 		<arguments>
 			<argument name="mainTable" xsi:type="string">lof_mautic_contact</argument>
@@ -53,7 +54,7 @@
             </argument>
         </arguments>
     </type>
-    
+
     <type name="Magento\Customer\Model\AccountManagement">
         <plugin name="mautic-abandoned-checkout-save-quote" type="Lof\Mautic\Model\Plugin\AccountManagement" sortOrder="10"/>
     </type>
