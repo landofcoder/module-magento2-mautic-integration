@@ -78,7 +78,7 @@ class TagsName extends Column
             $fieldName = $this->getData('name');
             foreach ($dataSource['data']['items'] as &$item) {
                 if (isset($item['tags'])) {
-                    $tags = $item['tags'] ? json_decode($item['tags']): [];
+                    $tags = $item['tags'] ? json_decode($item['tags'], true): [];
                     $newTags = [];
                     foreach ($tags as $_tag) {
                         $newTags[] = $_tag->tag;
