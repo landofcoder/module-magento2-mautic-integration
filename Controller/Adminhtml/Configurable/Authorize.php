@@ -51,7 +51,7 @@ class Authorize extends \Lof\Mautic\Controller\Adminhtml\Configurable
     protected $resultPageFactory;
 
     /**
-     * @param \Magento\Framework\App\Action\Context $context
+     * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      * @param \Lof\Mautic\Helper\Data $helper
      * @param \Lof\Mautic\Model\Mautic $webhookSetup
@@ -60,15 +60,14 @@ class Authorize extends \Lof\Mautic\Controller\Adminhtml\Configurable
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
+        \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Lof\Mautic\Helper\Data $helper,
         \Lof\Mautic\Model\Mautic $webhookSetup,
         \Magento\Framework\DB\Transaction $dbTransaction,
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory
-    )
-    {
+    ) {
 
         parent::__construct($context, $coreRegistry);
 
@@ -79,6 +78,9 @@ class Authorize extends \Lof\Mautic\Controller\Adminhtml\Configurable
         $this->resultPageFactory = $resultPageFactory;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function execute()
     {
         $version = $this->getRequest()->getParam('version');
