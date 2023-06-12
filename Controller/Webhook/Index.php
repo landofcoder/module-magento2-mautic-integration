@@ -111,7 +111,7 @@ class Index extends \Lof\Mautic\Controller\MauticAbstract {
             //$this->logger->info($rawData);
             if ($flag) {
                 // @todo Process the $requestData as needed
-                $requestData = json_decode($rawData);
+                $requestData = json_decode($rawData, true);
                 $changedData = isset($requestData["mautic.lead_channel_subscription_changed"]) ? $requestData["mautic.lead_channel_subscription_changed"] : [];
                 //$oldStatus = isset($changedData['old_status']) ? $changedData['old_status']: "";//unsubscribed, contactable
                 $newStatus = isset($changedData['new_status']) ? $changedData['new_status']: "";//contactable, unsubscribed

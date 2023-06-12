@@ -78,7 +78,7 @@ class StageName extends Column
             $fieldName = $this->getData('name');
             foreach ($dataSource['data']['items'] as &$item) {
                 if (isset($item['stage'])) {
-                    $stage = $item['stage'] ? json_decode($item['stage']): [];
+                    $stage = $item['stage'] ? json_decode($item['stage'], true): [];
                     $item[$fieldName."_html"] = $stage ? "<strong>".$stage["name"].'</strong><br/><span class="small-text">'. __("(weight: %1)", $stage["weight"]).'</span>' : "";
                 }
             }
