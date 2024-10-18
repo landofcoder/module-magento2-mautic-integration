@@ -2,6 +2,8 @@
 
 [Mautic (opens new window)](https://www.mautic.org/) is an open-source marketing automation software that helps online businesses automate their repetitive marketing tasks such as lead generation, contact scoring, contact segmentation, and marketing campaigns.
 
+The Module is an example of how to use RabbitMQ Message Queuing in Magento 2.3.x - 2.4.x
+
 ![Magento 2 Mautic Integration Module](./assets/5_preview.png)
 
 * Compatible Magento Version: 2.3.7, 2.4.0, 2.4.1, 2.4.2, 2.4.3 - latest
