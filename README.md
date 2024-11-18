@@ -53,6 +53,14 @@ The Module is an example of how to use RabbitMQ Message Queuing in Magento 2.3.x
 - Includes abandon card tags
 - Review reminder tags (Comming Soon)
 
+## TO DO
+- Review reminder tags (Comming Soon)
+- Contact Segment (Comming soon)
+    + Add contact to a segment. Support common segment by reports: Best Customers, Big Spenders, Lost Cheap Customers, Lost Customers, Low Spenders, Loyal Customers, Mid Spenders, New Customers, One Time Purchase Customers, Two Time Purchase Customers, Three Time Purchase Customers.
+    + Remove contact from a segment
+- Campaign Contact (Comming soon)
+- Company Contact (Comming soon)
+
 ## Installation
 \* = in production please use the `--keep-generated` option
 
@@ -115,6 +123,7 @@ The Module is an example of how to use RabbitMQ Message Queuing in Magento 2.3.x
 
 Require setup and config RabbitMQ for Magento 2 [RabbitMQ Configrable Guide](https://blog.landofcoder.com/how-to-set-up-and-configure-rabbitmq-with-magento-2/)
 
+
 The module support there consummers:
 
 ```
@@ -123,6 +132,10 @@ mautic_order_create
 mautic_review_save
 mautic_subscriber_save
 ```
+
+- Abandoned Cart Tags:
+![Abandoned Cart Tags Settings](./assets/12_abandoned_cart.png)
+the feature will run on each 5 minutes (cron job) find abandoned cart on reports which have last updated date <= Diff date number, and match customer groups (option), and updated date greater than first date (option). If found abandoned cart, it will add mautic contact with tag: AbandonedCart 
 
 ## Compatible Modules
 

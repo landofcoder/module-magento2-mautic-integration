@@ -98,7 +98,7 @@ class Loadquote extends \Magento\Framework\App\Action\Action
         Publisher $publisher,
         Contact $mauticContact
     ) {
-    
+
         $this->pageFactory      = $pageFactory;
         $this->_quote           = $quote;
         $this->_customerSession = $customerSession;
@@ -123,8 +123,9 @@ class Loadquote extends \Magento\Framework\App\Action\Action
             $quote->getResource()->load($quote, $params['id']);
             $magentoStoreId = $quote->getStoreId();
             $configSecretKey = $this->_helper->getConfig(\Lof\Mautic\Helper\Data::MODULE_ABANDONEDCART_TOKEN);
+            $tokenNew = $configSecretKey ? md5($configSecretKey.$params['id']) : "";
 
-            if (!isset($params['token']) || $params['token'] != $configSecretKey) {
+            if (!isset($params['token']) || ($tokenNew && $params['token'] != $tokenNew)) {
                 // @error
                 $this->_message->addErrorMessage(__("You can't access this cart"));
                 $url = $this->_urlHelper->getUrl(
@@ -158,7 +159,7 @@ class Loadquote extends \Magento\Framework\App\Action\Action
                 if ($emailAddress = $quote->getCustomerEmail()) {
                     $this->processUpdateContactTag($emailAddress, $quote->getStoreId());
                 }
-                
+
                 if (!$quote->getCustomerId()) {
                     $this->_checkoutSession->setQuoteId($quote->getId());
                     $this->_redirect($url);
@@ -185,7 +186,7 @@ class Loadquote extends \Magento\Framework\App\Action\Action
 
     /**
      * process update contact tags
-     * 
+     *
      * @param string $email
      * @param int|string|null $storeId
      * @return bool

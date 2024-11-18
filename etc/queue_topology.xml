@@ -26,4 +26,12 @@
     <exchange name="mautic.magento.contact.delete" type="topic" connection="amqp">
         <binding id="mautic_contact_delete" topic="mautic.magento.contact.delete" destinationType="queue" destination="mautic_contact_delete"/>
     </exchange>
+
+    <exchange name="mautic.magento.segment.add" type="topic" connection="amqp">
+        <binding id="mautic_segment_add" topic="mautic.magento.segment.add" destinationType="queue" destination="mautic_segment_add"/>
+    </exchange>
+
+    <exchange name="mautic.magento.segment.remove" type="topic" connection="amqp">
+        <binding id="mautic_segment_remove" topic="mautic.magento.segment.remove" destinationType="queue" destination="mautic_segment_remove"/>
+    </exchange>
 </config>

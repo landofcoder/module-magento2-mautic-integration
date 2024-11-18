@@ -77,19 +77,22 @@ class AbandonedCartProcessor extends AbstractQueueProcessor
                 $this->_processAbandoned($storeId);
             }
         }
-        
+
         return;
     }
 
     /**
      * Process abandoned cart
-     * 
+     *
      * @param int $storeId
      * @return void
      */
     protected function _processAbandoned($storeId)
     {
         $this->firstdate        = $this->helperData->getConfig(Data::MODULE_FIRST_DATE, $storeId);
+        if (!$this->firstdate) {
+            $this->firstdate = $this->_getSuggestedZeroDate();
+        }
         $this->customergroups        = $this->helperData->getConfig(Data::MODULE_ABANDONED_CUSTOMER_GROUP, $storeId);
         $token        = $this->helperData->getConfig(Data::MODULE_ABANDONEDCART_TOKEN, $storeId);
 
@@ -99,6 +102,9 @@ class AbandonedCartProcessor extends AbstractQueueProcessor
             $this->customergroups = [];
         }
         $diff = $this->helperData->getConfig(Data::MODULE_DIFF_DATE, $storeId);
+        if (!$diff) { //Disable feature when diff date number is empty
+            return;
+        }
         $expr = sprintf('DATE_SUB(now(), %s)', $this->_getIntervalUnitSql($diff, 'DAY'));
         $from = new \Zend_Db_Expr($expr);
 
@@ -119,7 +125,7 @@ class AbandonedCartProcessor extends AbstractQueueProcessor
 
         try {
             foreach ($collection as $quote) {
-                $tokenNew = $token;//.md5(rand(0, 9999999));
+                $tokenNew = md5($token.$quote->getEntityId());
                 $url = $this->_storeManager->getStore($storeId)->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_LINK) . 'mautic/cart/loadquote?id=' . $quote->getEntityId() . '&token=' . $tokenNew;
 
                 $customData = [
@@ -142,7 +148,7 @@ class AbandonedCartProcessor extends AbstractQueueProcessor
         } catch (\Exception $e) {
             //log exception at here
         }
-        
+
         return;
     }
 

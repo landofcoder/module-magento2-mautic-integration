@@ -13,4 +13,8 @@
     <consumer name="mautic_subscriber_save" queue="mautic_subscriber_save" connection="amqp" handler="Lof\Mautic\Queue\MessageQueues\Consumer::processMessage"/>
 
     <consumer name="mautic_contact_delete" queue="mautic_contact_delete" connection="amqp" handler="Lof\Mautic\Queue\MessageQueues\ContactDelete\Consumer::processMessage"/>
+
+    <consumer name="mautic_segment_add" queue="mautic_segment_add" connection="amqp" handler="Lof\Mautic\Queue\MessageQueues\SegmentAdd\Consumer::processMessage"/>
+
+    <consumer name="mautic_segment_remove" queue="mautic_segment_remove" connection="amqp" handler="Lof\Mautic\Queue\MessageQueues\SegmentRemove\Consumer::processMessage"/>
 </config>

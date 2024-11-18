@@ -5,4 +5,6 @@
     <topic name="mautic.magento.review.save" request="string"/>
     <topic name="mautic.magento.subscriber.save" request="string"/>
     <topic name="mautic.magento.contact.delete" request="string"/>
+    <topic name="mautic.magento.segment.add" request="string"/>
+    <topic name="mautic.magento.segment.remove" request="string"/>
 </config>

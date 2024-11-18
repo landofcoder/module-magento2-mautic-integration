@@ -19,4 +19,12 @@
     <publisher topic="mautic.magento.contact.delete">
         <connection name="amqp" exchange="mautic.magento.contact.delete" />
     </publisher>
+
+    <publisher topic="mautic.magento.segment.add">
+        <connection name="amqp" exchange="mautic.magento.segment.add" />
+    </publisher>
+
+    <publisher topic="mautic.magento.segment.remove">
+        <connection name="amqp" exchange="mautic.magento.segment.remove" />
+    </publisher>
 </config>
